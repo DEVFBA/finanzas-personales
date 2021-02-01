@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+    useState,
+    useEffect
+} from 'react';
 import {
     Container,
     Row,
@@ -6,9 +9,10 @@ import {
 } from 'react-bootstrap';
 import Sidebar from './Sidebar';
 import '../styles/LoguedUser.css';
-import Overview from './Overview';
+import Summary from './Summary';
 
 const LoguedUser = () => {
+
     return(
         <Container fluid>
             <Row>
@@ -16,7 +20,7 @@ const LoguedUser = () => {
                     <Sidebar />
                 </Col>
                 <Col md={10}>
-                    <Overview />
+                    <Summary />
                 </Col>
             </Row>
         </Container>
