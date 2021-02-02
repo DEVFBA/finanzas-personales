@@ -6,7 +6,7 @@ import FirstCarouselItem from './FirstCarouselItem';
 import SecondCarouselItem from './SecondCarouselItem';
 import ThirdCarouselItem from './ThirdCarouselItem';
 
-const HeroCarousel = () => {
+const HeroCarousel = (props) => {
     return(
         <Carousel
             indicators={false}
@@ -17,7 +17,12 @@ const HeroCarousel = () => {
             </Carousel.Item>
 
             <Carousel.Item>
-                <SecondCarouselItem />
+                <SecondCarouselItem
+                    AAPL    =   { [props.AAPL[0],   props.AAPL[1],  props.AAPL[2]] }
+                    AMZN    =   { [props.AMZN[0],   props.AMZN[1],  props.AMZN[2]] }
+                    TSLA    =   { [props.TSLA[0],   props.TSLA[1],  props.TSLA[2]] }
+                    FB      =   { [props.FB[0],     props.FB[1],    props.FB[2]] }
+                />
             </Carousel.Item>
 
             <Carousel.Item>

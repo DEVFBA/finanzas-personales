@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import Quote from './Quote';
 
-const SecondCarouselItem = () => {
+const SecondCarouselItem = (props) => {
     return(
         <div className="row align-items-center justify-content-center">
             <div className="col-md-6">
@@ -15,30 +15,30 @@ const SecondCarouselItem = () => {
             <div className="row col-md-6">
                 <div className="col-md-5">
                     <Quote
-                        quote="IPC"
-                        value="42,985.73"
-                        change="-1,295.00"
-                        percentageChange="2.92"
+                        quote="AAPL"
+                        value={props.AAPL[0]}
+                        change={props.AAPL[1]}
+                        percentageChange={props.AAPL[2]}
                     />
                     <Quote
-                        quote="Nasdaq"
-                        value="13,070.69"
-                        change="-266.46"
-                        percentageChange="2.00"
+                        quote="AMZN"
+                        value={props.AMZN[0]}
+                        change={props.AMZN[1]}
+                        percentageChange={props.AMZN[2]}
                     />
                 </div>
                 <div className="col-md-5 offset-2">
                     <Quote
-                        quote="S&P 500"
-                        value="3,714.24"
-                        change="-620.74"
-                        percentageChange="2.03"
+                        quote="TSLA"
+                        value={props.TSLA[0]}
+                        change={props.TSLA[1]}
+                        percentageChange={props.TSLA[2]}
                     />
                     <Quote
-                        quote="Dow Jones"
-                        value="29,982.62"
-                        change="-620.74"
-                        percentageChange="2.03"
+                        quote="FB"
+                        value={props.FB[0]}
+                        change={props.FB[1]}
+                        percentageChange={props.FB[2]}
                     />
                 </div>
             </div>
