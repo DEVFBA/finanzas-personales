@@ -4,12 +4,16 @@ import {
     Form,
     Button
 } from 'react-bootstrap';
+import {
+    useHistory
+} from 'react-router-dom';
 import '../styles/SignIn.css';
 
 const SignIn = () => {
 
     const[eMail, setEmail] = useState('');
     const[password, setPassword] = useState('');
+    const history = useHistory();
 
     const onChangeEmail = (event) => {
         setEmail(event.target.value);
@@ -23,7 +27,7 @@ const SignIn = () => {
         event.preventDefault();
 
         if(eMail === 'angenrique.gutierrez@gmail.com' && password === 'admin'){
-            alert(`Ingreso exitoso de ${eMail} con password ${password}`);
+            history.push('/loguedUser');
         } else{
             alert(`El usuario ${eMail} y password ${password} no existen`);
         }

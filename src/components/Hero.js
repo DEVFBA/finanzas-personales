@@ -23,12 +23,16 @@ const Hero = () => {
     const token                         = 'a35e934121e757757642358d67c767b9';
     let AAPLChange                      = 0;
     let AAPLPercChange                  = 0;
+    let AAPLTextClass                   = '';
     let AMZNChange                      = 0;
     let AMZNPercChange                  = 0;
+    let AMZNTextClass                   = '';
     let TSLAChange                      = 0;
     let TSLAPercChange                  = 0;
+    let TSLATextClass                   = '';
     let FBChange                        = 0;
     let FBPercChange                    = 0;
+    let FBTextClass                     = '';
 
     const calcChange = (latest, previous) => {
         return (
@@ -42,6 +46,18 @@ const Hero = () => {
         );
     }
 
+    const determineTextClass = (change) => {
+        let textClass = '';
+
+        if(change >= 0){
+            textClass = 'text-right text-success';
+        } else{
+            textClass = 'text-right text-danger';
+        }
+
+        return textClass;
+    }
+
     useEffect(() => {
         fetch(`http://api.marketstack.com/v1/eod?access_key=${token}&symbols=AAPL,AMZN,TSLA,FB&limit=8`)
         .then((response) => {
@@ -50,7 +66,9 @@ const Hero = () => {
         .then((data) => {
             /* Retrieve Latest Close and Previous Close from each Ticker */
             /*
-                Considering API returns data sorting date descending
+                Considering API returns data sorting descending date
+                    Ticker[0] = Last Close
+                    Ticker[1] = The next fore date Close
             */
 
                 /* AAPL */
@@ -77,12 +95,16 @@ const Hero = () => {
 
     AAPLChange                  = calcChange(AAPLLatest, AAPLPrevious);
     AAPLPercChange              = calcPercChange(AAPLChange, AAPLPrevious);
+    AAPLTextClass               = determineTextClass(AAPLChange);
     AMZNChange                  = calcChange(AMZNLatest, AMZNPrevious);
     AMZNPercChange              = calcPercChange(AMZNChange, AMZNPrevious);
+    AMZNTextClass               = determineTextClass(AMZNChange);
     TSLAChange                  = calcChange(TSLALatest, TSLAPrevious);
     TSLAPercChange              = calcPercChange(TSLAChange, TSLAPrevious);
+    TSLATextClass               = determineTextClass(TSLAChange);
     FBChange                    = calcChange(FBLatest, FBPrevious);
     FBPercChange                = calcPercChange(FBChange, FBPrevious);
+    FBTextClass                 = determineTextClass(FBChange);
 
     return(
             <Jumbotron
@@ -91,10 +113,10 @@ const Hero = () => {
             >
                 <Container>
                     <HeroCarousel
-                        AAPL    =   { [AAPLLatest,  AAPLChange, AAPLPercChange] }
-                        AMZN    =   { [AMZNLatest,  AMZNChange, AMZNPercChange] }
-                        TSLA    =   { [TSLALatest,  TSLAChange, TSLAPercChange] }
-                        FB      =   { [FBLatest,    FBChange,   FBPercChange] }
+                        AAPL    =   { [AAPLLatest,  AAPLChange, AAPLPercChange, AAPLTextClass] }
+                        AMZN    =   { [AMZNLatest,  AMZNChange, AMZNPercChange, AMZNTextClass] }
+                        TSLA    =   { [TSLALatest,  TSLAChange, TSLAPercChange, TSLATextClass] }
+                        FB      =   { [FBLatest,    FBChange,   FBPercChange, FBTextClass] }
                     />
                 </Container>
             </Jumbotron>

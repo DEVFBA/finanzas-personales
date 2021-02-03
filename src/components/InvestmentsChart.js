@@ -8,7 +8,7 @@ const InvestmentsChart = () => {
     return(
         <>
             <h5 className="text-center">Portafolio Inversión</h5>
-            <Pie
+            <Pie 
                 data = {{
                     labels: ['CetesDirecto', 'GBM', 'Plan de Retiro'],
                     datasets: [{

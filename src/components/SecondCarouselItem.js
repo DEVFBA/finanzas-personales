@@ -19,12 +19,14 @@ const SecondCarouselItem = (props) => {
                         value={props.AAPL[0]}
                         change={props.AAPL[1]}
                         percentageChange={props.AAPL[2]}
+                        textClass={props.AAPL[3]}
                     />
                     <Quote
                         quote="AMZN"
                         value={props.AMZN[0]}
                         change={props.AMZN[1]}
                         percentageChange={props.AMZN[2]}
+                        textClass={props.AMZN[3]}
                     />
                 </div>
                 <div className="col-md-5 offset-2">
@@ -33,12 +35,14 @@ const SecondCarouselItem = (props) => {
                         value={props.TSLA[0]}
                         change={props.TSLA[1]}
                         percentageChange={props.TSLA[2]}
+                        textClass={props.TSLA[3]}
                     />
                     <Quote
                         quote="FB"
                         value={props.FB[0]}
                         change={props.FB[1]}
                         percentageChange={props.FB[2]}
+                        textClass={props.FB[3]}
                     />
                 </div>
             </div>
