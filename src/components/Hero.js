@@ -7,6 +7,10 @@ import {
     Container
 } from 'react-bootstrap';
 import HeroCarousel from './HeroCarousel';
+import calcChange, {
+    calcPercChange
+} from '../utils/Calculations.js';
+import determineTextClass from '../utils/TextFormat.js';
 import '../styles/Hero.css';
 
 const Hero = () => {
@@ -33,30 +37,6 @@ const Hero = () => {
     let FBChange                        = 0;
     let FBPercChange                    = 0;
     let FBTextClass                     = '';
-
-    const calcChange = (latest, previous) => {
-        return (
-            (latest - previous).toFixed(2)
-        );
-    }
-
-    const calcPercChange = (change, previous) => {
-        return(
-            ((change / previous) * 100).toFixed(2)
-        );
-    }
-
-    const determineTextClass = (change) => {
-        let textClass = '';
-
-        if(change >= 0){
-            textClass = 'text-right text-success';
-        } else{
-            textClass = 'text-right text-danger';
-        }
-
-        return textClass;
-    }
 
     useEffect(() => {
         fetch(`http://api.marketstack.com/v1/eod?access_key=${token}&symbols=AAPL,AMZN,TSLA,FB&limit=8`)

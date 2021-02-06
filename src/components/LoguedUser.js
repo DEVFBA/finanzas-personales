@@ -8,9 +8,8 @@ import Sidebar from './Sidebar';
 import '../styles/LoguedUser.css';
 import Summary from './Summary';
 
-const LoguedUser = () => {
-
-    return(
+const LoguedUser = (props) => {
+   return(
         <Container fluid>
             <Row>
                 <Col md={2} className="p-0">

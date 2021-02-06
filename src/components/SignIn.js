@@ -7,6 +7,9 @@ import {
 import {
     useHistory
 } from 'react-router-dom';
+import correctLogin, {
+    retrieveUserProfile
+} from '../utils/UserFunctions';
 import '../styles/SignIn.css';
 
 const SignIn = () => {
@@ -14,6 +17,7 @@ const SignIn = () => {
     const[eMail, setEmail] = useState('');
     const[password, setPassword] = useState('');
     const history = useHistory();
+    let userProfile = {};
 
     const onChangeEmail = (event) => {
         setEmail(event.target.value);
@@ -26,11 +30,18 @@ const SignIn = () => {
     const onSubmitForm = (event) => {
         event.preventDefault();
 
-        if(eMail === 'angenrique.gutierrez@gmail.com' && password === 'admin'){
-            history.push('/loguedUser');
+        if(correctLogin(eMail, password)){
+
+            userProfile = retrieveUserProfile(eMail, password);
+            history.push({
+                pathname: '/loguedUser',
+                state: {userProfile}
+            });
+
         } else{
             alert(`El usuario ${eMail} y password ${password} no existen`);
         }
+
     }
 
     return(
