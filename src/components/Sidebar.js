@@ -1,30 +1,13 @@
-import React, {
-    useEffect,
-    useState
-} from 'react';
+import React from 'react';
 import {
     Nav,
     Container,
     Row,
     Image
 } from 'react-bootstrap';
-import {
-    useLocation
-} from 'react-router-dom';
 import '../styles/Sidebar.css';
 
-const Sidebar = () => {
-
-    const [userName, setUserName] = useState('');
-    const [userLastName, setUserLastName] = useState('');
-    const [profilePicture, setProfilePicture] = useState('');
-    const location = useLocation();
-
-    useEffect(() => {
-        setUserName(location.state.userProfile.userName);
-        setProfilePicture(location.state.userProfile.profilePicture);
-        setUserLastName(location.state.userProfile.userLastName);
-    }, [location])
+const Sidebar = (props) => {
 
     return(
         <Container
@@ -39,7 +22,7 @@ const Sidebar = () => {
                     <Image
                         roundedCircle
                         fluid
-                        src={profilePicture}
+                        src={props.profilePicture}
                         className="profile-picture"
                     />
                 </Row>
@@ -49,7 +32,7 @@ const Sidebar = () => {
                     <h6
                         className="text-center text-white user-name"
                     >
-                        {`${userName} ${userLastName}`}
+                        {`${props.userName} ${props.userLastName}`}
                     </h6>
                 </Row>
             </div>

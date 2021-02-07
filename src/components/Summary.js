@@ -12,26 +12,37 @@ import InvestmentsChart from './InvestmentsChart';
 import SummaryHeader from './SummaryHeader';
 import '../styles/Summary.css';
 
-const Summary = () => {
+const Summary = (props) => {
+
     return(
-        <Container>
-            <Row className="overview ml-2">
+        <Container
+            className="summary"
+        >
+            <Row className="ml-2">
                 <SummaryHeader />
             </Row>
             <Row className="mt-5">
                 <Col md={6}>
-                    <GoalsChart />
+                    <GoalsChart
+                        userGoals={props.userGoals}
+                    />
                 </Col>
                 <Col md={6}>
-                    <InvestmentsChart />
+                    <InvestmentsChart
+                        userInvestments={props.userInvestments}
+                    />
                 </Col>
             </Row>
             <Row className="mt-5">
                 <Col md={6}>
-                    <MyGoals />
+                    <MyGoals
+                        userGoals={props.userGoals}
+                    />
                 </Col>
                 <Col md={6}>
-                    <MyInvestments />
+                    <MyInvestments
+                        userInvestments={props.userInvestments}
+                    />
                 </Col>
             </Row>
             <Row className="mt-5">

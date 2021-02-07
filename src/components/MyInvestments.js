@@ -4,11 +4,27 @@ import {
 } from 'react-bootstrap';
 import '../styles/MyInvestments.css';
 
-const MyInvestments = () => {
+const MyInvestments = (props) => {
+
+    const investedAmounts = props.userInvestments.map((investment) => {
+        return investment.investedAmount;
+    })
+
+    const totalInvested = investedAmounts.reduce((total, investmentAmount) => {
+        return total + investmentAmount;
+    }, 0)
+
+    console.log('Montos', investedAmounts);
+    console.log('Total', totalInvested);
+
     return(
         <>
             <h5 className="text-center">Mis Inversiones</h5>
-            <Table responsive="md" striped>
+            <Table 
+                responsive="md" 
+                striped
+                className="summary-table"
+            >
                 <thead>
                     <tr>
                         <th>Inversión</th>
@@ -17,21 +33,15 @@ const MyInvestments = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>CetesDirecto</td>
-                        <td>$ 15,000.00</td>
-                        <td>4.17 %</td>
-                    </tr>
-                    <tr>
-                        <td>GBM</td>
-                        <td>$ 95,000.00</td>
-                        <td>26.39 %</td>
-                    </tr>
-                    <tr>
-                        <td>Plan de Retiro</td>
-                        <td>$ 250,000.00</td>
-                        <td>69.44 %</td>
-                    </tr>
+                    {props.userInvestments.map((investment) => {
+                        return (
+                            <tr>
+                                <td>{investment.investingConcept}</td>
+                                <td className="td-amount">{investment.investedAmount.toLocaleString('en', { style: 'currency', currency: 'USD' })}</td>
+                                <td className="td-percentage">{`${(((investment.investedAmount) / totalInvested) * 100).toFixed(2)} %`}</td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </Table>
         </>

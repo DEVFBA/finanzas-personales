@@ -9,7 +9,11 @@ const MyBudget = () => {
     return(
         <>
             <h5 className="text-center">Mi Presupuesto</h5>
-            <Table responsive="md" striped>
+            <Table 
+                responsive="md" 
+                striped
+                className="summary-table"
+            >
                 <tbody>
                     <tr>
                         <td>Alimentos</td>
@@ -21,7 +25,7 @@ const MyBudget = () => {
                                 max="100"
                             />
                         </td>
-                        <td>4.28 %</td>
+                        <td className="td-percentage">4.28 %</td>
                     </tr>
                     <tr>
                         <td>Mantenimiento Casa</td>
@@ -31,7 +35,7 @@ const MyBudget = () => {
                                 variant="success"
                             />
                         </td>
-                        <td>30.00 %</td>
+                        <td className="td-percentage">30.00 %</td>
                     </tr>
                     <tr>
                         <td>Transporte</td>
@@ -41,7 +45,7 @@ const MyBudget = () => {
                                 variant="danger"
                             />
                         </td>
-                        <td>80.00 %</td>
+                        <td className="td-percentage">80.00 %</td>
                     </tr>
                     <tr>
                         <td>Recreación</td>
@@ -51,7 +55,7 @@ const MyBudget = () => {
                             variant="warning"
                         />
                         </td>
-                        <td>65.00 %</td>
+                        <td className="td-percentage">65.00 %</td>
                     </tr>
                     <tr>
                         <td>Ahorro</td>
@@ -61,7 +65,7 @@ const MyBudget = () => {
                                 variant="success"
                             />
                         </td>
-                        <td>45.00 %</td>
+                        <td className="td-percentage">45.00 %</td>
                     </tr>
                 </tbody>
             </Table>

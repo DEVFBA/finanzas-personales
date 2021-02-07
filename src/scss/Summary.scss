@@ -1,4 +1,21 @@
-.overview {
+.summary {
     margin-top: 5rem;
     width: 100%;
+
+    .summary-table {
+        color:white;
+        vertical-align: center;
+
+        th {
+            text-align: center;
+        }
+
+        .td-amount {
+            text-align: center;
+        }
+
+        .td-percentage {
+            text-align: right;
+        }
+    }
 }

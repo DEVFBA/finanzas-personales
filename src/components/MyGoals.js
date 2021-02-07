@@ -4,11 +4,16 @@ import {
 } from 'react-bootstrap';
 import '../styles/MyGoals.css';
 
-const MyGoals = () => {
+const MyGoals = (props) => {
+
     return(
         <>
             <h5 className="text-center">Mis Metas</h5>
-            <Table responsive="md" striped>
+            <Table 
+                responsive="md" 
+                striped
+                className="summary-table"
+            >
                 <thead>
                     <tr>
                         <th>Meta</th>
@@ -18,24 +23,16 @@ const MyGoals = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Auto</td>
-                        <td>$ 15,000.00</td>
-                        <td>$ 350,000.00</td>
-                        <td>4.28 %</td>
-                    </tr>
-                    <tr>
-                        <td>Casa</td>
-                        <td>$ 150,000.00</td>
-                        <td>$ 500,000.00</td>
-                        <td>30.00 %</td>
-                    </tr>
-                    <tr>
-                        <td>Curso BEDU</td>
-                        <td>$ 20,000.00</td>
-                        <td>$ 25,000.00</td>
-                        <td>80.00 %</td>
-                    </tr>
+                    {props.userGoals.map((goal) => {
+                        return(
+                            <tr>
+                                <td>{goal.goal}</td>
+                                <td className="td-amount">{goal.amountSaved.toLocaleString('en', { style: 'currency', currency: 'USD' })}</td>
+                                <td className="td-amount">{goal.totalObjective.toLocaleString('en', { style: 'currency', currency: 'USD' })}</td>
+                                <td className="td-percentage">{`${((goal.amountSaved / goal.totalObjective) * 100).toFixed(2)} %`}</td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </Table>
         </>

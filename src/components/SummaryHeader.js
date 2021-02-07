@@ -8,7 +8,10 @@ const SummaryHeader = () => {
     return(
         <>
             <h3 className="col-4">Resumen Financiero</h3>
-            <Form.Control as="select" custom className="offset-4 col-2">
+            <Form.Control 
+                as="select" 
+                custom className="offset-4 col-2"
+            >
                 <option>Enero</option>
                 <option>Diciembre</option>
                 <option>Noviembre</option>
