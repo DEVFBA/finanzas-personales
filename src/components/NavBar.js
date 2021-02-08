@@ -13,7 +13,8 @@ import {
     useHistory
 } from 'react-router-dom';
 import correctLogin, {
-    retrieveUserProfile
+    retrieveUserProfile,
+    completeLogin
 } from '../utils/UserFunctions';
 import '../styles/NavBar.css';
 
@@ -35,16 +36,22 @@ const NavBar = () => {
     const onSubmitForm = (event) => {
         event.preventDefault();
 
-        if(correctLogin(eMail, password)){
+        if(completeLogin(eMail, password)){
 
-            userProfile = retrieveUserProfile(eMail, password);
-            history.push({
-                pathname: '/loguedUser',
-                state: {userProfile}
-            });
+            if(correctLogin(eMail, password)){
 
-        } else{
-            alert(`El usuario ${eMail} y password ${password} no existen`);
+                userProfile = retrieveUserProfile(eMail, password);
+                history.push({
+                    pathname: '/loguedUser',
+                    state: {userProfile}
+                });
+
+            } else{
+                alert(`El usuario ${eMail} y password ${password} no existen`);
+            }
+
+        } else {
+            alert(`Ingrese contraseña y password`);
         }
 
     }
@@ -54,15 +61,18 @@ const NavBar = () => {
             bg="dark"
             expand="md"
             fixed="top"
-            variant="dark"
+            className="custom-navbar"
         >
-            <Navbar.Brand href="/">Finanzas Personales</Navbar.Brand>
+            <Navbar.Brand 
+                href="/"
+                className="brand-name"
+            >Finanzas Personales</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
                     <Link
                         to="/signIn"
-                        className="nav-link"
+                        className="nav-link register"
                     >
                         Regístrate
                     </Link>

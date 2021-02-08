@@ -1,26 +1,21 @@
 import React from 'react';
-import {
-    Form
-} from 'react-bootstrap';
+import FormSelect from './FormSelect';
 import '../styles/SummaryHeader.css';
 
-const SummaryHeader = () => {
+const SummaryHeader = (props) => {
     return(
         <>
             <h3 className="col-4">Resumen Financiero</h3>
-            <Form.Control 
-                as="select" 
-                custom className="offset-4 col-2"
+            <FormSelect
+                options={props.months}
+                className="offset-4 col-2 summary-header-select"
             >
-                <option>Enero</option>
-                <option>Diciembre</option>
-                <option>Noviembre</option>
-                <option>Octubre</option>
-            </Form.Control>
-            <Form.Control as="select" custom className="offset-1 col-1">
-                <option>2020</option>
-                <option>2021</option>
-            </Form.Control>
+            </FormSelect>
+            <FormSelect
+                options={props.years}
+                className="offset-1 col-1 summary-header-select"
+            >
+            </FormSelect>
         </>
     );
 }

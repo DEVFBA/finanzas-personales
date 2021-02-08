@@ -23,6 +23,9 @@ const LoguedUser = (props) => {
     const [userInvestments, setUserInvestments] = useState([]);
     const location = useLocation();
 
+    const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const years = [2021, 2020, 2019];
+
     useEffect(() => {
         setUserName(location.state.userProfile.userName);
         setProfilePicture(location.state.userProfile.profilePicture);
@@ -34,8 +37,8 @@ const LoguedUser = (props) => {
    return(
         <Container fluid>
             <Row>
-                <Col 
-                    md={2} 
+                <Col
+                    md={2}
                     className="p-0"
                 >
                     <Sidebar
@@ -44,13 +47,15 @@ const LoguedUser = (props) => {
                         profilePicture={profilePicture}
                     />
                 </Col>
-                <Col 
+                <Col
                     md={10}
                     className="logued-user-sections"
                 >
                     <Summary
                         userGoals={userGoals}
                         userInvestments={userInvestments}
+                        months={months}
+                        years={years}
                     />
                 </Col>
             </Row>

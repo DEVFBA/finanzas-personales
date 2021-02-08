@@ -27,8 +27,13 @@ const Sidebar = (props) => {
                     />
                 </Row>
                 <Row
-                    className="mt-2 justify-content-center"
+                    className="mt-4 justify-content-center  d-block"
                 >
+                    <h6
+                        className="text-center text-white user-name"
+                    >
+                        Bienvenid@
+                    </h6>
                     <h6
                         className="text-center text-white user-name"
                     >
@@ -41,32 +46,32 @@ const Sidebar = (props) => {
                 className="mt-3 flex-column"
             >
                 <Nav.Link
-                    className="text-white nav-pills"
+                    className="sidebar-link"
                 >
                     Resumen Financiero
                 </Nav.Link>
                 <Nav.Link
-                    className="text-white"
+                    className="sidebar-link"
                 >
                     Mi Presupesto
                 </Nav.Link>
                 <Nav.Link
-                    className="text-white"
+                    className="sidebar-link"
                 >
                     Mis Metas
                 </Nav.Link>
                 <Nav.Link
-                    className="text-white"
+                    className="sidebar-link"
                 >
                     Movimientos
                 </Nav.Link>
                 <Nav.Link
-                    className="text-white"
+                    className="sidebar-link"
                 >
                     Mis Inversiones
                 </Nav.Link>
                 <Nav.Link
-                    className="text-white"
+                    className="sidebar-link"
                 >
                     Salir
                 </Nav.Link>

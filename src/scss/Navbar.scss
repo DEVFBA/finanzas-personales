@@ -1,0 +1,17 @@
+.custom-navbar {
+    .brand-name {
+        color: white;
+    }
+
+    .register {
+        color:#343a40;
+        background-color: white;
+        border-radius: 10px;
+        margin-right: 40px;
+        font-weight: 200;
+    }
+
+    .register:hover {
+        font-weight: bold;
+    }
+}

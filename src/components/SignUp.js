@@ -1,19 +1,29 @@
-import React, {useState} from 'react';
-import '../styles/SignUp.css';
+import React, {
+    useState
+} from 'react';
 import {
     Form,
     Button,
     Container
 } from 'react-bootstrap';
+import {
+    completeRegister
+} from '../utils/UserFunctions';
+import '../styles/SignUp.css';
 
 const SignUp = () => {
 
     const[name, setName] = useState('');
-    const[email, setEmail] = useState('');
+    const[lastName, setLastName] = useState('');
+    const[eMail, setEmail] = useState('');
     const[password, setPassword] = useState('');
 
     const onChangeName = (event) => {
         setName(event.target.value);
+    }
+
+    const onChangeLastName = (event) => {
+        setLastName(event.target.value);
     }
 
     const onChangeEmail = (event) => {
@@ -24,13 +34,22 @@ const SignUp = () => {
         setPassword(event.target.value);
     }
 
-    console.log('Name', name);
-    console.log('Correo', email);
-    console.log('Password', password);
+    const onSubmitForm = (event) => {
+        event.preventDefault();
+
+        if(completeRegister(name, lastName, eMail, password)){
+            alert(`El usuario ${name} ${lastName} con correo ${eMail} y password ${password} fue registrado`);
+        } else {
+            alert(`Debes ingresar todos los datos para registrarte`);
+        }
+    }
 
     return(
         <Container className="signUp row justify-content-center">
-            <Form className="col-md-6 mt-4 offset-3">
+            <Form
+                className="col-md-6 mt-4 offset-3"
+                onSubmit={onSubmitForm}
+            >
 
                 <Form.Group controlId="formBasicUserName">
                     <Form.Label>
@@ -40,6 +59,17 @@ const SignUp = () => {
                         type="text"
                         placeholder="Ingresa tu Nombre"
                         onChange={onChangeName}
+                    />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicUserName">
+                    <Form.Label>
+                        Apellidos
+                    </Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Ingresa tu Nombre"
+                        onChange={onChangeLastName}
                     />
                 </Form.Group>
 

@@ -1,0 +1,15 @@
+.custom-navbar .brand-name {
+  color: white;
+}
+.custom-navbar .register {
+  color: #343a40;
+  background-color: white;
+  border-radius: 10px;
+  margin-right: 40px;
+  font-weight: 200;
+}
+.custom-navbar .register:hover {
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=Navbar.css.map */

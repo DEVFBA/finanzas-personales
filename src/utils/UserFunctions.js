@@ -213,5 +213,34 @@ function retrieveUserProfile(eMail, password) {
     return user[0];
 }
 
+function completeRegister(name, lastName, eMail, password) {
+  let completeRegister = false;
+
+  if(name && lastName && eMail && password){
+      completeRegister = true;
+  } else {
+      completeRegister = false;
+  }
+
+  return completeRegister;
+}
+
+function completeLogin(eMail, password) {
+  let completeLogin = false;
+
+  if(eMail && password){
+      completeLogin = true;
+  } else {
+      completeLogin = false;
+  }
+
+  return completeLogin;
+}
+
+
 export default userLogin;
-export {retrieveUserProfile};
+export {
+  retrieveUserProfile, 
+  completeRegister,
+  completeLogin
+};

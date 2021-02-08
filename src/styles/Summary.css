@@ -4,16 +4,18 @@
 }
 .summary .summary-table {
   color: white;
-  vertical-align: center;
 }
 .summary .summary-table th {
   text-align: center;
+  vertical-align: middle;
 }
 .summary .summary-table .td-amount {
   text-align: center;
+  vertical-align: middle;
 }
 .summary .summary-table .td-percentage {
   text-align: right;
+  vertical-align: middle;
 }
 
 /*# sourceMappingURL=Summary.css.map */

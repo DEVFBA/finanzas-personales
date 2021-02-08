@@ -19,7 +19,10 @@ const Summary = (props) => {
             className="summary"
         >
             <Row className="ml-2">
-                <SummaryHeader />
+                <SummaryHeader
+                    months={props.months}
+                    years={props.years}
+                />
             </Row>
             <Row className="mt-5">
                 <Col md={6}>

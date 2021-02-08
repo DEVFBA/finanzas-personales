@@ -4,18 +4,20 @@
 
     .summary-table {
         color:white;
-        vertical-align: center;
 
         th {
             text-align: center;
+            vertical-align: middle;
         }
 
         .td-amount {
             text-align: center;
+            vertical-align: middle;
         }
 
         .td-percentage {
             text-align: right;
+            vertical-align: middle;
         }
     }
 }

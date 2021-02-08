@@ -8,7 +8,8 @@ import {
     useHistory
 } from 'react-router-dom';
 import correctLogin, {
-    retrieveUserProfile
+    retrieveUserProfile,
+    completeLogin
 } from '../utils/UserFunctions';
 import '../styles/SignIn.css';
 
@@ -30,16 +31,22 @@ const SignIn = () => {
     const onSubmitForm = (event) => {
         event.preventDefault();
 
-        if(correctLogin(eMail, password)){
+        if(completeLogin(eMail, password)){
 
-            userProfile = retrieveUserProfile(eMail, password);
-            history.push({
-                pathname: '/loguedUser',
-                state: {userProfile}
-            });
+            if(correctLogin(eMail, password)){
 
-        } else{
-            alert(`El usuario ${eMail} y password ${password} no existen`);
+                userProfile = retrieveUserProfile(eMail, password);
+                history.push({
+                    pathname: '/loguedUser',
+                    state: {userProfile}
+                });
+
+            } else{
+                alert(`El usuario ${eMail} y password ${password} no existen`);
+            }
+
+        } else {
+            alert(`Ingrese contraseña y password`);
         }
 
     }

@@ -7,5 +7,14 @@
   height: 30%;
   width: 30%;
 }
+.sidebar .sidebar-link {
+  color: white;
+}
+.sidebar .sidebar-link:hover {
+  background-color: white;
+  color: #343a40;
+  border-radius: 50px;
+  font-weight: 500;
+}
 
 /*# sourceMappingURL=Sidebar.css.map */
