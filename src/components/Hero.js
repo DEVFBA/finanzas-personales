@@ -96,7 +96,7 @@ const Hero = () => {
                         AAPL    =   { [AAPLLatest,  AAPLChange, AAPLPercChange, AAPLTextClass] }
                         AMZN    =   { [AMZNLatest,  AMZNChange, AMZNPercChange, AMZNTextClass] }
                         TSLA    =   { [TSLALatest,  TSLAChange, TSLAPercChange, TSLATextClass] }
-                        FB      =   { [FBLatest,    FBChange,   FBPercChange, FBTextClass] }
+                        FB      =   { [FBLatest,    FBChange,   FBPercChange,   FBTextClass]   }
                     />
                 </Container>
             </Jumbotron>

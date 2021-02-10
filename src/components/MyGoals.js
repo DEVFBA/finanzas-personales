@@ -26,10 +26,16 @@ const MyGoals = (props) => {
                     {props.userGoals.map((goal) => {
                         return(
                             <tr>
-                                <td>{goal.goal}</td>
-                                <td className="td-amount">{goal.amountSaved.toLocaleString('en', { style: 'currency', currency: 'USD' })}</td>
-                                <td className="td-amount">{goal.totalObjective.toLocaleString('en', { style: 'currency', currency: 'USD' })}</td>
-                                <td className="td-percentage">{`${((goal.amountSaved / goal.totalObjective) * 100).toFixed(2)} %`}</td>
+                                <td>{ goal.goal }</td>
+                                <td className="td-amount">
+                                    { goal.amountSaved.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
+                                </td>
+                                <td className="td-amount">
+                                    { goal.totalObjective.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
+                                </td>
+                                <td className="td-percentage">
+                                    { `${((goal.amountSaved / goal.totalObjective) * 100).toFixed(2)} %` }
+                                </td>
                             </tr>
                         );
                     })}

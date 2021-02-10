@@ -16,15 +16,16 @@ import Summary from './Summary';
 
 const LoguedUser = (props) => {
 
-    const [userName, setUserName] = useState('');
-    const [userLastName, setUserLastName] = useState('');
-    const [profilePicture, setProfilePicture] = useState('');
-    const [userGoals, setUserGoals] = useState([]);
-    const [userInvestments, setUserInvestments] = useState([]);
-    const location = useLocation();
+    const [userName,        setUserName]            = useState('');
+    const [userLastName,    setUserLastName]        = useState('');
+    const [profilePicture,  setProfilePicture]      = useState('');
+    const [userGoals,       setUserGoals]           = useState([]);
+    const [userInvestments, setUserInvestments]     = useState([]);
+    
+    const location                                  = useLocation();
 
-    const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-    const years = [2021, 2020, 2019];
+    const months        = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const years         = [2021, 2020, 2019];
 
     useEffect(() => {
         setUserName(location.state.userProfile.userName);

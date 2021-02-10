@@ -12,9 +12,9 @@ const ThirdCarouselItem = () => {
                 <Button variant="dark">Ver más</Button>
             </div>
             <img
-                className="col-md-6 img-fluid"
-                src="/images/stock_entrepreneur.jpg"
-                alt=""
+                className   = "col-md-6 img-fluid"
+                src         = "/images/stock_entrepreneur.jpg"
+                alt         = ""
             />
         </div>
     );

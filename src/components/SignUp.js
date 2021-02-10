@@ -13,10 +13,10 @@ import '../styles/SignUp.css';
 
 const SignUp = () => {
 
-    const[name, setName] = useState('');
-    const[lastName, setLastName] = useState('');
-    const[eMail, setEmail] = useState('');
-    const[password, setPassword] = useState('');
+    const[name,         setName]                    = useState('');
+    const[lastName,     setLastName]                = useState('');
+    const[eMail,        setEmail]                   = useState('');
+    const[password,     setPassword]                = useState('');
 
     const onChangeName = (event) => {
         setName(event.target.value);
@@ -47,29 +47,29 @@ const SignUp = () => {
     return(
         <Container className="signUp row justify-content-center">
             <Form
-                className="col-md-6 mt-4 offset-3"
-                onSubmit={onSubmitForm}
+                className       = "col-md-6 mt-4 offset-3"
+                onSubmit        = { onSubmitForm }
             >
 
-                <Form.Group controlId="formBasicUserName">
+                <Form.Group controlId   = "formBasicUserName">
                     <Form.Label>
                         Nombre
                     </Form.Label>
                     <Form.Control
-                        type="text"
-                        placeholder="Ingresa tu Nombre"
-                        onChange={onChangeName}
+                        type            = "text"
+                        placeholder     = "Ingresa tu Nombre"
+                        onChange        = { onChangeName }
                     />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicUserName">
+                <Form.Group controlId   = "formBasicUserName">
                     <Form.Label>
                         Apellidos
                     </Form.Label>
                     <Form.Control
-                        type="text"
-                        placeholder="Ingresa tu Nombre"
-                        onChange={onChangeLastName}
+                        type            = "text"
+                        placeholder     = "Ingresa tu Nombre"
+                        onChange        = { onChangeLastName }
                     />
                 </Form.Group>
 
@@ -78,9 +78,9 @@ const SignUp = () => {
                         Correo Electrónico
                     </Form.Label>
                     <Form.Control
-                        type="email"
-                        placeholder="Ingresa tu Correo Electrónico"
-                        onChange={onChangeEmail}
+                        type            = "email"
+                        placeholder     = "Ingresa tu Correo Electrónico"
+                        onChange        = { onChangeEmail }
                     />
                 </Form.Group>
 
@@ -89,14 +89,14 @@ const SignUp = () => {
                         Password
                     </Form.Label>
                     <Form.Control
-                        type="password"
-                        placeholder="Password"
-                        onChange={onChangePassword}
+                        type            = "password"
+                        placeholder     = "Password"
+                        onChange        = { onChangePassword }
                     />
                 </Form.Group>
                 <Button
-                    variant="dark"
-                    type="submit"
+                    variant     =   "dark"
+                    type        =   "submit"
                 >
                     Regístrate
                 </Button>

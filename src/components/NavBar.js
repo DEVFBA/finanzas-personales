@@ -20,10 +20,12 @@ import '../styles/NavBar.css';
 
 const NavBar = () => {
 
-    const[eMail, setEmail] = useState('');
-    const[password, setPassword] = useState('');
-    const history = useHistory();
-    let userProfile = {};
+    const[eMail,        setEmail]       = useState('');
+    const[password,     setPassword]    = useState('');
+    
+    const history                       = useHistory();
+    
+    let userProfile                     = {};
 
     const onChangeEmail = (event) => {
         setEmail(event.target.value);

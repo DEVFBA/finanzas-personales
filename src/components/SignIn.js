@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { 
+    useState 
+} from 'react';
 import {
     Container,
     Form,
@@ -15,10 +17,12 @@ import '../styles/SignIn.css';
 
 const SignIn = () => {
 
-    const[eMail, setEmail] = useState('');
-    const[password, setPassword] = useState('');
-    const history = useHistory();
-    let userProfile = {};
+    const[eMail, setEmail]              = useState('');
+    const[password, setPassword]        = useState('');
+    
+    const history                       = useHistory();
+    
+    let userProfile                     = {};
 
     const onChangeEmail = (event) => {
         setEmail(event.target.value);
@@ -54,8 +58,8 @@ const SignIn = () => {
     return(
         <Container className="signIn row justify-content-center">
             <Form
-                className="col-md-6 mt-4 offset-3"
-                onSubmit={onSubmitForm}
+                className   = "col-md-6 mt-4 offset-3"
+                onSubmit    = { onSubmitForm }
             >
 
                 <Form.Group controlId="formBasicEmail">
@@ -63,25 +67,25 @@ const SignIn = () => {
                         Correo Electrónico
                     </Form.Label>
                     <Form.Control
-                        type="email"
-                        placeholder="Ingresa tu Correo Electrónico"
-                        onChange={onChangeEmail}
+                        type            = "email"
+                        placeholder     = "Ingresa tu Correo Electrónico"
+                        onChange        = { onChangeEmail }
                     />
                 </Form.Group>
 
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group controlId   ="formBasicPassword">
                     <Form.Label>
                         Password
                     </Form.Label>
                     <Form.Control
-                        type="password"
-                        placeholder="Password"
-                        onChange={onChangePassword}
+                        type        = "password"
+                        placeholder = "Password"
+                        onChange    = { onChangePassword }
                     />
                 </Form.Group>
                 <Button
-                    variant="dark"
-                    type="submit"
+                    variant     = "dark"
+                    type        = "submit"
                 >
                     Ingresar
                 </Button>

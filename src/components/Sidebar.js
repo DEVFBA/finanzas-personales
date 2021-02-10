@@ -22,8 +22,8 @@ const Sidebar = (props) => {
                     <Image
                         roundedCircle
                         fluid
-                        src={props.profilePicture}
-                        className="profile-picture"
+                        src             = {props.profilePicture}
+                        className       = "profile-picture"
                     />
                 </Row>
                 <Row
@@ -37,7 +37,7 @@ const Sidebar = (props) => {
                     <h6
                         className="text-center text-white user-name"
                     >
-                        {`${props.userName} ${props.userLastName}`}
+                        { `${props.userName} ${props.userLastName}` }
                     </h6>
                 </Row>
             </div>

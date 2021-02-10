@@ -14,14 +14,12 @@ const MyInvestments = (props) => {
         return total + investmentAmount;
     }, 0)
 
-    console.log('Montos', investedAmounts);
-    console.log('Total', totalInvested);
 
     return(
         <>
             <h5 className="text-center">Mis Inversiones</h5>
-            <Table 
-                responsive="md" 
+            <Table
+                responsive="md"
                 striped
                 className="summary-table"
             >
@@ -36,9 +34,13 @@ const MyInvestments = (props) => {
                     {props.userInvestments.map((investment) => {
                         return (
                             <tr>
-                                <td>{investment.investingConcept}</td>
-                                <td className="td-amount">{investment.investedAmount.toLocaleString('en', { style: 'currency', currency: 'USD' })}</td>
-                                <td className="td-percentage">{`${(((investment.investedAmount) / totalInvested) * 100).toFixed(2)} %`}</td>
+                                <td>{ investment.investingConcept }</td>
+                                <td className="td-amount">
+                                    { investment.investedAmount.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
+                                </td>
+                                <td className="td-percentage">
+                                    { `${(((investment.investedAmount) / totalInvested) * 100).toFixed(2)} %` }
+                                </td>
                             </tr>
                         );
                     })}

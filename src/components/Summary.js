@@ -20,35 +20,35 @@ const Summary = (props) => {
         >
             <Row className="ml-2">
                 <SummaryHeader
-                    months={props.months}
-                    years={props.years}
+                    months      = { props.months }
+                    years       = { props.years  }
                 />
             </Row>
             <Row className="mt-5">
                 <Col md={6}>
                     <GoalsChart
-                        userGoals={props.userGoals}
+                        userGoals   = { props.userGoals }
                     />
                 </Col>
                 <Col md={6}>
                     <InvestmentsChart
-                        userInvestments={props.userInvestments}
+                        userInvestments = { props.userInvestments }
                     />
                 </Col>
             </Row>
-            <Row className="mt-5">
+            <Row className  = "mt-5">
                 <Col md={6}>
                     <MyGoals
-                        userGoals={props.userGoals}
+                        userGoals      = { props.userGoals }
                     />
                 </Col>
                 <Col md={6}>
                     <MyInvestments
-                        userInvestments={props.userInvestments}
+                        userInvestments = { props.userInvestments }
                     />
                 </Col>
             </Row>
-            <Row className="mt-5">
+            <Row className  ="mt-5">
                 <Col>
                     <MyBudget />
                 </Col>

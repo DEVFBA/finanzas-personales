@@ -19,10 +19,10 @@ const InvestmentsChart = (props) => {
             <h5 className="text-center">Portafolio Inversión</h5>
             <Pie 
                 data = {{
-                    labels: investmentsLabels,
+                    labels:   investmentsLabels,
                     datasets: [{
                         label: '% Portafolio',
-                        data: investedAmounts,
+                        data:  investedAmounts,
                         backgroundColor: [
                             'rgba(0, 123, 255, 0.5)',
                             'rgba(255, 193, 7, 0.5)',
