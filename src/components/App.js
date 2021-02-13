@@ -1,13 +1,14 @@
 import React from 'react';
 import {
   BrowserRouter,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom';
 import '../styles/App.css';
 import NavBar from './NavBar';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import Hero from './Hero';
+import Home from './Home';
 import LoguedUser from './LoguedUser';
 
 const App = () => {
@@ -18,11 +19,12 @@ const App = () => {
         <BrowserRouter>
           <NavBar />
 
-          <Route exact path='/' component={Hero} />
-          <Route exact path='/signUp' component={SignUp} />
-          <Route exact path='/signIn' component={SignIn} />
-          <Route exact path='/loguedUser' component={LoguedUser} />
-
+          <Switch>
+            <Route exact path='/'           component = { Home } />
+            <Route exact path='/signUp'     component = { SignUp } />
+            <Route exact path='/signIn'     component = { SignIn } />
+            <Route exact path='/:userID/summary'    component = { LoguedUser } />
+          </Switch>
         </BrowserRouter>
       </>
     </div>

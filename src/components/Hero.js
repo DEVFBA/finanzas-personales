@@ -15,6 +15,8 @@ import '../styles/Hero.css';
 
 const Hero = () => {
 
+    //console.log('Token', process.env.REACT_APP_MARKETSTACK_TOKEN);
+
     const[AAPLLatest,       setAAPLLatest]                  = useState(0);
     const[AAPLPrevious,     setAAPLPrevious]                = useState(0);
     const[AMZNLatest,       setAMZNLatest]                  = useState(0);
