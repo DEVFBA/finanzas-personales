@@ -25,7 +25,7 @@ const SignIn = () => {
     let userProfile                     = {};
 
     const onChangeEmail = (event) => {
-        setEmail(event.target.value);
+        setEmail(event.target.value.trim());
     }
 
     const onChangePassword = (event) => {

@@ -22,15 +22,15 @@ const LoguedUser = (props) => {
     const [profilePicture,  setProfilePicture]      = useState('');
     const [userGoals,       setUserGoals]           = useState([]);
     const [userInvestments, setUserInvestments]     = useState([]);
-    
-    const  { userID } = useParams();
 
-    const userProfile = retrieveUserProfileByID(userID)
+    const  { userID } = useParams();
 
     const months        = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     const years         = [2021, 2020, 2019];
 
     useEffect(() => {
+
+        const userProfile = retrieveUserProfileByID(userID)
         
         setUserName(userProfile.userName);
         setProfilePicture(userProfile.profilePicture);

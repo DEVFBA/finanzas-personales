@@ -19,15 +19,15 @@ const SignUp = () => {
     const[password,     setPassword]                = useState('');
 
     const onChangeName = (event) => {
-        setName(event.target.value);
+        setName(event.target.value.trim());
     }
 
     const onChangeLastName = (event) => {
-        setLastName(event.target.value);
+        setLastName(event.target.value.trim());
     }
 
     const onChangeEmail = (event) => {
-        setEmail(event.target.value);
+        setEmail(event.target.value.trim());
     }
 
     const onChangePassword = (event) => {
