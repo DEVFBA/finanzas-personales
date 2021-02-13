@@ -1,5 +1,6 @@
 const users = [
     {
+      userID: "aegh",
       userName: "Ángel Enrique",
       userLastName: "Gutiérrez Huerta",
       eMail: "angenrique.gutierrez@gmail.com",
@@ -42,6 +43,7 @@ const users = [
       ]
     },
     {
+      userID: "dagh",
       userName: "Dulce Angélica",
       userLastName: "Gutiérrez Huerta",
       eMail: "dulce.angelica@hotmail.com",
@@ -75,6 +77,7 @@ const users = [
       ]
     },
     {
+      userID: "ahm",
       userName: "Angélica",
       userLastName: "Huerta Morales",
       eMail: "ardilla_2709@gmail.com",
@@ -109,6 +112,7 @@ const users = [
       ]
     },
     {
+      userID: "egt",
       userName: "Enrique",
       userLastName: "Gutiérrez Tovar",
       eMail: "egutierrez@gtcta.mx",
@@ -152,6 +156,7 @@ const users = [
       ]
     },
     {
+      userID: "ragh",
       userName: "Ricardo Antonio",
       userLastName: "Gutiérrez Huerta",
       eMail: "elenano@yahoo.com",
@@ -213,6 +218,12 @@ function retrieveUserProfile(eMail, password) {
     return user[0];
 }
 
+function retrieveUserProfileByID(userId) {
+  const user = users.filter((user) => user.userID === userId)
+
+  return user[0];
+}
+
 function completeRegister(name, lastName, eMail, password) {
   let completeRegister = false;
 
@@ -241,6 +252,7 @@ function completeLogin(eMail, password) {
 export default userLogin;
 export {
   retrieveUserProfile, 
+  retrieveUserProfileByID,
   completeRegister,
   completeLogin
 };

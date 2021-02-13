@@ -8,11 +8,12 @@ import {
     Col
 } from 'react-bootstrap';
 import {
-    useLocation
+    useParams
 } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import '../styles/LoguedUser.css';
 import Summary from './Summary';
+import { retrieveUserProfileByID } from '../utils/UserFunctions';
 
 const LoguedUser = (props) => {
 
@@ -22,18 +23,22 @@ const LoguedUser = (props) => {
     const [userGoals,       setUserGoals]           = useState([]);
     const [userInvestments, setUserInvestments]     = useState([]);
     
-    const location                                  = useLocation();
+    const  { userID } = useParams();
+
+    const userProfile = retrieveUserProfileByID(userID)
 
     const months        = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     const years         = [2021, 2020, 2019];
 
     useEffect(() => {
-        setUserName(location.state.userProfile.userName);
-        setProfilePicture(location.state.userProfile.profilePicture);
-        setUserLastName(location.state.userProfile.userLastName);
-        setUserGoals(location.state.userProfile.savingsGoals);
-        setUserInvestments(location.state.userProfile.investments);
-    }, [location])
+        
+        setUserName(userProfile.userName);
+        setProfilePicture(userProfile.profilePicture);
+        setUserLastName(userProfile.userLastName);
+        setUserGoals(userProfile.savingsGoals);
+        setUserInvestments(userProfile.investments);
+
+    }, [])
 
    return(
         <Container fluid>
