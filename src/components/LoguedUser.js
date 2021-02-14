@@ -8,11 +8,15 @@ import {
     Col
 } from 'react-bootstrap';
 import {
-    useParams
+    useParams,
+    BrowserRouter,
+    Route,
+    Switch
 } from 'react-router-dom';
 
 import Sidebar from './Sidebar';
 import Summary from './Summary';
+import FinancialMarkets from './FinancialMarkets';
 
 import '../styles/LoguedUser.css';
 
@@ -48,34 +52,41 @@ const LoguedUser = (props) => {
     }, [])
 
    return(
-        <Container fluid>
-            <Row>
-                <Col
-                    md={2}
-                    className="p-0"
-                >
-                    <Sidebar
-                        userName={userName}
-                        userLastName={userLastName}
-                        profilePicture={profilePicture}
-                    />
-                </Col>
-                <Col
-                    md={10}
-                    className="logued-user-sections"
-                >
-                    <Summary
-                        userGoals       = { userGoals }
-                        userInvestments = { userInvestments }
-                        userBudget      = { userBudget }
-                        months          = { months }
-                        years           = { years }
-                    />
-
-                    
-                </Col>
-            </Row>
-        </Container>
+        <BrowserRouter>
+            <Container fluid>
+                <Row>
+                    <Col
+                        md={2}
+                        className="p-0"
+                    >
+                        <Sidebar
+                            userName={userName}
+                            userLastName={userLastName}
+                            profilePicture={profilePicture}
+                        />
+                    </Col>
+                    <Col
+                        md={10}
+                        className="logued-user-sections"
+                    >
+                        <Switch>
+                            <Route path='/user/:userID/summary'>
+                                <Summary
+                                    userGoals       = { userGoals }
+                                    userInvestments = { userInvestments }
+                                    userBudget      = { userBudget }
+                                    months          = { months }
+                                    years           = { years }
+                                />
+                            </Route>
+                            <Route path='/user/:userID/finMarket'>
+                                <FinancialMarkets />
+                            </Route>
+                        </Switch>
+                    </Col>
+                </Row>
+            </Container>
+        </BrowserRouter>
     );
 }
 

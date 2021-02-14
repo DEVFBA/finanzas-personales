@@ -6,7 +6,8 @@ import {
     Image
 } from 'react-bootstrap';
 import {
-    withRouter
+    withRouter, 
+    Link
 } from 'react-router-dom';
 import '../styles/Sidebar.css';
 
@@ -48,11 +49,12 @@ const Sidebar = (props) => {
             <Nav
                 className="mt-3 flex-column"
             >
-                <Nav.Link
+                <Link
+                    to='/user/:userID/summary'
                     className="sidebar-link"
                 >
                     Resumen Financiero
-                </Nav.Link>
+                </Link>
                 <Nav.Link
                     className="sidebar-link"
                 >
@@ -73,11 +75,12 @@ const Sidebar = (props) => {
                 >
                     Mis Inversiones
                 </Nav.Link>
-                <Nav.Link
+                <Link
+                    to='/user/:userID/finMarket'
                     className="sidebar-link"
                 >
                     Mercados Financieros
-                </Nav.Link>
+                </Link>
                 <Nav.Link
                     className="sidebar-link"
                 >

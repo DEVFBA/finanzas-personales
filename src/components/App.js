@@ -25,6 +25,7 @@ const App = () => {
             <Route exact path='/signUp'                   component = { SignUp } />
             <Route exact path='/signIn'                   component = { SignIn } />
             <Route exact path='/user/:userID/summary'     component = { LoguedUser } />
+            <Route exact path='/user/:userID/finMarket'     component = { LoguedUser } />
           </Switch>
         </BrowserRouter>
       </>
