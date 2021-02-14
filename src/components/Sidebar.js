@@ -73,6 +73,11 @@ const Sidebar = (props) => {
                 <Nav.Link
                     className="sidebar-link"
                 >
+                    Mercados Financieros
+                </Nav.Link>
+                <Nav.Link
+                    className="sidebar-link"
+                >
                     Salir
                 </Nav.Link>
             </Nav>

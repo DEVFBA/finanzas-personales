@@ -15,8 +15,6 @@ import '../styles/Hero.css';
 
 const Hero = () => {
 
-    //console.log('Token', process.env.REACT_APP_MARKETSTACK_TOKEN);
-
     const[AAPLLatest,       setAAPLLatest]                  = useState(0);
     const[AAPLPrevious,     setAAPLPrevious]                = useState(0);
     const[AMZNLatest,       setAMZNLatest]                  = useState(0);
@@ -26,7 +24,6 @@ const Hero = () => {
     const[FBLatest,         setFBLatest]                    = useState(0);
     const[FBPrevious,       setFBPrevious]                  = useState(0);
 
-    const token                         = 'a35e934121e757757642358d67c767b9';
     let AAPLChange                      = 0;
     let AAPLPercChange                  = 0;
     let AAPLTextClass                   = '';
@@ -41,6 +38,8 @@ const Hero = () => {
     let FBTextClass                     = '';
 
     useEffect(() => {
+        const token                     = process.env.REACT_APP_MARKETSTACK_TOKEN;
+
         fetch(`http://api.marketstack.com/v1/eod?access_key=${token}&symbols=AAPL,AMZN,TSLA,FB&limit=8`)
         .then((response) => {
             return response.json()
