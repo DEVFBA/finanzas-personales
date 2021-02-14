@@ -3,9 +3,17 @@ import {
     Table,
     ProgressBar
 } from 'react-bootstrap';
+
+import {
+    calcPercChange
+} from '../utils/Calculations.js';
+import {
+    determineProgressColor
+} from '../utils/TextFormat.js';
+
 import '../styles/MyBudget.css';
 
-const MyBudget = () => {
+const MyBudget = (props) => {
     return(
         <>
             <h5 className="text-center">Mi Presupuesto</h5>
@@ -15,58 +23,35 @@ const MyBudget = () => {
                 className="summary-table"
             >
                 <tbody>
-                    <tr>
-                        <td>Alimentos</td>
-                        <td className="budgetProgress">
-                            <ProgressBar
-                                animated now={4.28}
-                                variant="success"
-                                min="0"
-                                max="100"
-                            />
-                        </td>
-                        <td className="td-percentage">4.28 %</td>
-                    </tr>
-                    <tr>
-                        <td>Mantenimiento Casa</td>
-                        <td className="budgetProgress">
-                            <ProgressBar
-                                animated now={30}
-                                variant="success"
-                            />
-                        </td>
-                        <td className="td-percentage">30.00 %</td>
-                    </tr>
-                    <tr>
-                        <td>Transporte</td>
-                        <td className="budgetProgress">
-                            <ProgressBar
-                                animated now={80}
-                                variant="danger"
-                            />
-                        </td>
-                        <td className="td-percentage">80.00 %</td>
-                    </tr>
-                    <tr>
-                        <td>Recreación</td>
-                        <td className="budgetProgress">
-                            <ProgressBar
-                            animated now={65}
-                            variant="warning"
-                        />
-                        </td>
-                        <td className="td-percentage">65.00 %</td>
-                    </tr>
-                    <tr>
-                        <td>Ahorro</td>
-                        <td className="budgetProgress">
-                            <ProgressBar
-                                animated now={45}
-                                variant="success"
-                            />
-                        </td>
-                        <td className="td-percentage">45.00 %</td>
-                    </tr>
+
+                    {props.userBudget.map((concept) => {
+
+                        const percentageExpended    = calcPercChange(concept.expendedAmount, concept.budgetedAmount);
+                        const progressColor         = determineProgressColor(percentageExpended);
+
+                        return(
+                            <tr>
+                                <td>{ concept.concept }</td>
+                                <td
+                                    className="budgetProgress"
+                                >
+                                    <ProgressBar
+                                        animated 
+                                        now         = { percentageExpended }
+                                        variant     = { progressColor }
+                                        min         = "0"
+                                        max         = "100"
+                                    />
+                                </td>
+                                <td 
+                                    className="td-percentage"
+                                >
+                                    { `${ percentageExpended } %` }
+                                </td>
+                            </tr>
+                        );
+                    })}
+
                 </tbody>
             </Table>
         </>

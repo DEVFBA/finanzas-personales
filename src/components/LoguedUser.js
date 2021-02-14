@@ -13,7 +13,6 @@ import {
 
 import Sidebar from './Sidebar';
 import Summary from './Summary';
-import Test from './test';
 
 import '../styles/LoguedUser.css';
 
@@ -23,11 +22,12 @@ import {
 
 const LoguedUser = (props) => {
 
-    const [userName,        setUserName]            = useState('');
-    const [userLastName,    setUserLastName]        = useState('');
-    const [profilePicture,  setProfilePicture]      = useState('');
-    const [userGoals,       setUserGoals]           = useState([]);
-    const [userInvestments, setUserInvestments]     = useState([]);
+    const [userName,        setUserName         ]       = useState('');
+    const [userLastName,    setUserLastName     ]       = useState('');
+    const [profilePicture,  setProfilePicture   ]       = useState('');
+    const [userGoals,       setUserGoals        ]       = useState([]);
+    const [userInvestments, setUserInvestments  ]       = useState([]);
+    const [userBudget,      setUserBudget       ]       = useState([]);
 
     const  { userID } = useParams();
 
@@ -43,6 +43,7 @@ const LoguedUser = (props) => {
         setUserLastName(userProfile.userLastName);
         setUserGoals(userProfile.savingsGoals);
         setUserInvestments(userProfile.investments);
+        setUserBudget(userProfile.budget);
 
     }, [])
 
@@ -64,10 +65,11 @@ const LoguedUser = (props) => {
                     className="logued-user-sections"
                 >
                     <Summary
-                        userGoals={userGoals}
-                        userInvestments={userInvestments}
-                        months={months}
-                        years={years}
+                        userGoals       = { userGoals }
+                        userInvestments = { userInvestments }
+                        userBudget      = { userBudget }
+                        months          = { months }
+                        years           = { years }
                     />
 
                     

@@ -27,7 +27,7 @@ const Summary = (props) => {
             <Row className="mt-5">
                 <Col md={6}>
                     <GoalsChart
-                        userGoals   = { props.userGoals }
+                        userGoals = { props.userGoals }
                     />
                 </Col>
                 <Col md={6}>
@@ -39,7 +39,7 @@ const Summary = (props) => {
             <Row className  = "mt-5">
                 <Col md={6}>
                     <MyGoals
-                        userGoals      = { props.userGoals }
+                        userGoals = { props.userGoals }
                     />
                 </Col>
                 <Col md={6}>
@@ -50,7 +50,9 @@ const Summary = (props) => {
             </Row>
             <Row className  ="mt-5">
                 <Col>
-                    <MyBudget />
+                    <MyBudget 
+                        userBudget = { props.userBudget }  
+                    />
                 </Col>
             </Row>
         </Container>

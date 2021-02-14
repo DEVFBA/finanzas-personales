@@ -40,6 +40,33 @@ const users = [
           investingConcept: "Allianz No Deducible",
           investedAmount: 350000.00
         }
+      ],
+      budget: [
+        {
+          concept: 'Alimentos',
+          budgetedAmount: 8000,
+          expendedAmount: 342.40
+        },
+        {
+          concept: 'Mantenimiento Casa',
+          budgetedAmount: 2500,
+          expendedAmount: 750
+        },
+        {
+          concept: 'Transporte',
+          budgetedAmount: 3100,
+          expendedAmount: 2480
+        },
+        {
+          concept: 'Recreacion',
+          budgetedAmount: 4000,
+          expendedAmount: 2600
+        },
+        {
+          concept: 'Ahorro',
+          budgetedAmount: 8000,
+          expendedAmount: 3600
+        }
       ]
     },
     {
@@ -73,6 +100,33 @@ const users = [
         {
           investingConcept: "Plan de Retiro",
           investedAmount: 250000.00
+        }
+      ],
+      budget: [
+        {
+          concept: 'Alimentos',
+          budgetedAmount: 10000,
+          expendedAmount: 6400
+        },
+        {
+          concept: 'Automóvil',
+          budgetedAmount: 12000,
+          expendedAmount: 500
+        },
+        {
+          concept: 'Salud y Belleza',
+          budgetedAmount: 2500,
+          expendedAmount: 1750
+        },
+        {
+          concept: 'Recreacion',
+          budgetedAmount: 4000,
+          expendedAmount: 3500
+        },
+        {
+          concept: 'Ahorro',
+          budgetedAmount: 6000,
+          expendedAmount: 3600
         }
       ]
     },
@@ -108,6 +162,33 @@ const users = [
         {
           investingConcept: "Pagaré",
           investedAmount: 350000.00
+        }
+      ],
+      budget: [
+        {
+          concept: 'Alimentos',
+          budgetedAmount: 8000,
+          expendedAmount: 4000
+        },
+        {
+          concept: 'Mantenimiento Casa',
+          budgetedAmount: 10000,
+          expendedAmount: 2560
+        },
+        {
+          concept: 'Transporte',
+          budgetedAmount: 2500,
+          expendedAmount: 1230
+        },
+        {
+          concept: 'Recreacion',
+          budgetedAmount: 4000,
+          expendedAmount: 1200
+        },
+        {
+          concept: 'Ahorro',
+          budgetedAmount: 10000,
+          expendedAmount: 8900
         }
       ]
     },
@@ -153,6 +234,28 @@ const users = [
           investingConcept: "Plan de Retiro",
           investedAmount: 2500000.00
         }
+      ],
+      budget: [
+        {
+          concept: 'Alimentos',
+          budgetedAmount: 8000,
+          expendedAmount: 4500
+        },
+        {
+          concept: 'Transporte',
+          budgetedAmount: 3100,
+          expendedAmount: 2300
+        },
+        {
+          concept: 'Recreacion',
+          budgetedAmount: 4000,
+          expendedAmount: 1500
+        },
+        {
+          concept: 'Ahorro',
+          budgetedAmount: 8000,
+          expendedAmount: 3600
+        }
       ]
     },
     {
@@ -174,9 +277,9 @@ const users = [
           totalObjective: 500000.00
         },
         {
-          goal: "Curso BEDU",
-          amountSaved: 20000.00,
-          totalObjective: 25000.00
+          goal: "Universidad",
+          amountSaved: 150000.00,
+          totalObjective: 750000.00
         }
       ],
       investments: [
@@ -192,8 +295,30 @@ const users = [
           investingConcept: "Acciones",
           investedAmount: 257000.00
         }
+      ],
+      budget: [
+        {
+          concept: 'Alimentos',
+          budgetedAmount: 8000,
+          expendedAmount: 2300
+        },
+        {
+          concept: 'Juegos PlayStation',
+          budgetedAmount: 1200,
+          expendedAmount: 750
+        },
+        {
+          concept: 'Recreacion',
+          budgetedAmount: 2000,
+          expendedAmount: 1200
+        },
+        {
+          concept: 'Ahorro',
+          budgetedAmount: 8000,
+          expendedAmount: 3600
+        }
       ]
-    },
+    }
   ]
 
 function userLogin(eMail, password) {
