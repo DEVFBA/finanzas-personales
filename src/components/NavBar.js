@@ -1,59 +1,14 @@
-import React, {
-    useState
-} from 'react';
+import React from 'react';
 import {
     Navbar,
-    Nav,
-    Form,
-    FormControl,
-    Button
+    Nav
 } from 'react-bootstrap';
 import {
-    Link,
-    useHistory
+    Link
 } from 'react-router-dom';
-import correctLogin, {
-    retrieveUserProfile,
-    completeLogin
-} from '../utils/UserFunctions';
 import '../styles/NavBar.css';
 
 const NavBar = () => {
-
-    const[eMail,        setEmail]       = useState('');
-    const[password,     setPassword]    = useState('');
-    
-    const history                       = useHistory();
-    
-    let userProfile                     = {};
-
-    const onChangeEmail = (event) => {
-        setEmail(event.target.value.trim());
-    }
-
-    const onChangePassword = (event) => {
-        setPassword(event.target.value);
-    }
-
-    const onSubmitForm = (event) => {
-        event.preventDefault();
-
-        if(completeLogin(eMail, password)){
-
-            if(correctLogin(eMail, password)){
-
-                userProfile = retrieveUserProfile(eMail, password);
-                history.push(`/${userProfile.userID}/summary`);
-
-            } else{
-                alert(`El usuario ${eMail} y password ${password} no existen`);
-            }
-
-        } else {
-            alert(`Ingrese contraseña y password`);
-        }
-
-    }
 
     return(
         <Navbar
@@ -70,29 +25,19 @@ const NavBar = () => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
                     <Link
-                        to="/signIn"
+                        to="/signUp"
                         className="nav-link register"
                     >
                         Regístrate
                     </Link>
-                    <Form
-                        inline
-                        onSubmit={onSubmitForm}
+
+                    <Link
+                        to="/signIn"
+                        className="nav-link register"
                     >
-                        <FormControl
-                            type="text"
-                            placeholder="E-Mail"
-                            className="mr-sm-2"
-                            onChange={onChangeEmail}
-                        />
-                        <FormControl
-                            type="password"
-                            placeholder="Password"
-                            className="mr-sm-2"
-                            onChange={onChangePassword}
-                        />
-                        <Button type="submit" variant="outline-light">Ingresa</Button>
-                    </Form>
+                        Inicia Sesión
+                    </Link>
+
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

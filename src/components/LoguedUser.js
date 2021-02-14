@@ -10,10 +10,16 @@ import {
 import {
     useParams
 } from 'react-router-dom';
+
 import Sidebar from './Sidebar';
-import '../styles/LoguedUser.css';
 import Summary from './Summary';
-import { retrieveUserProfileByID } from '../utils/UserFunctions';
+import Test from './test';
+
+import '../styles/LoguedUser.css';
+
+import { 
+    retrieveUserProfileByID 
+} from '../utils/UserFunctions';
 
 const LoguedUser = (props) => {
 
@@ -63,6 +69,8 @@ const LoguedUser = (props) => {
                         months={months}
                         years={years}
                     />
+
+                    
                 </Col>
             </Row>
         </Container>

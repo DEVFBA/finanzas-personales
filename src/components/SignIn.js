@@ -40,7 +40,7 @@ const SignIn = () => {
             if(correctLogin(eMail, password)){
 
                 userProfile = retrieveUserProfile(eMail, password);
-                history.push(`/${userProfile.userID}/summary`);
+                history.push(`/user/${userProfile.userID}/summary`);
 
             } else{
                 alert(`El usuario ${eMail} y password ${password} no existen`);
