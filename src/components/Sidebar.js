@@ -5,6 +5,9 @@ import {
     Row,
     Image
 } from 'react-bootstrap';
+import {
+    withRouter
+} from 'react-router-dom';
 import '../styles/Sidebar.css';
 
 const Sidebar = (props) => {
@@ -85,4 +88,4 @@ const Sidebar = (props) => {
     );
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);

@@ -10,6 +10,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Home from './Home';
 import LoguedUser from './LoguedUser';
+import Test from './test';
 
 const App = () => {
 
@@ -20,10 +21,10 @@ const App = () => {
           <NavBar />
 
           <Switch>
-            <Route exact path='/'           component = { Home } />
-            <Route exact path='/signUp'     component = { SignUp } />
-            <Route exact path='/signIn'     component = { SignIn } />
-            <Route exact path='/user/:userID/summary'    component = { LoguedUser } />
+            <Route exact path='/'                         component = { Home } />
+            <Route exact path='/signUp'                   component = { SignUp } />
+            <Route exact path='/signIn'                   component = { SignIn } />
+            <Route exact path='/user/:userID/summary'     component = { LoguedUser } />
           </Switch>
         </BrowserRouter>
       </>
