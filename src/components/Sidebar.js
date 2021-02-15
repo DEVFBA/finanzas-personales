@@ -7,11 +7,16 @@ import {
 } from 'react-bootstrap';
 import {
     withRouter, 
-    Link
+    Link,
+    useParams
 } from 'react-router-dom';
 import '../styles/Sidebar.css';
 
 const Sidebar = (props) => {
+
+    //const { userID } = useParams();
+    
+    console.log('In Sidebar params: ', props);
 
     return(
         <Container
@@ -51,41 +56,45 @@ const Sidebar = (props) => {
             >
                 <Link
                     to='/user/:userID/summary'
-                    className="sidebar-link"
+                    className="sidebar-link mt-1 ml-3"
                 >
                     Resumen Financiero
                 </Link>
-                <Nav.Link
-                    className="sidebar-link"
+                <Link
+                    to='/user/:userID/budget'
+                    className="sidebar-link mt-1 ml-3"
                 >
                     Mi Presupesto
-                </Nav.Link>
-                <Nav.Link
-                    className="sidebar-link"
+                </Link>
+                <Link
+                    to='/user/:userID/goals'
+                    className="sidebar-link mt-1 ml-3"
                 >
                     Mis Metas
-                </Nav.Link>
-                <Nav.Link
-                    className="sidebar-link"
+                </Link>
+                <Link
+                    to='/user/:userID/transactions'
+                    className="sidebar-link mt-1 ml-3"
                 >
                     Movimientos
-                </Nav.Link>
-                <Nav.Link
-                    className="sidebar-link"
+                </Link>
+                <Link
+                    to='/user/:userID/investments'
+                    className="sidebar-link mt-1 ml-3"
                 >
                     Mis Inversiones
-                </Nav.Link>
+                </Link>
                 <Link
                     to='/user/:userID/finMarket'
-                    className="sidebar-link"
+                    className="sidebar-link mt-1 ml-3"
                 >
                     Mercados Financieros
                 </Link>
-                <Nav.Link
-                    className="sidebar-link"
+                <Link
+                    className="sidebar-link mt-1 ml-3"
                 >
                     Salir
-                </Nav.Link>
+                </Link>
             </Nav>
         </Container>
     );

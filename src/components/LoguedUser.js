@@ -11,12 +11,17 @@ import {
     useParams,
     BrowserRouter,
     Route,
-    Switch
+    Switch,
+    withRouter
 } from 'react-router-dom';
 
 import Sidebar from './Sidebar';
 import Summary from './Summary';
 import FinancialMarkets from './FinancialMarkets';
+import Investments from './Investments';
+import Transactions from './Transactions';
+import Goals from './Goals';
+import Budget from './Budget';
 
 import '../styles/LoguedUser.css';
 
@@ -34,6 +39,8 @@ const LoguedUser = (props) => {
     const [userBudget,      setUserBudget       ]       = useState([]);
 
     const  { userID } = useParams();
+
+    console.log('In Logued User params', userID);
 
     const months        = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     const years         = [2021, 2020, 2019];
@@ -82,6 +89,18 @@ const LoguedUser = (props) => {
                             <Route path='/user/:userID/finMarket'>
                                 <FinancialMarkets />
                             </Route>
+                            <Route path='/user/:userID/investments'>
+                                <Investments />
+                            </Route>
+                            <Route path='/user/:userID/transactions'>
+                                <Transactions />
+                            </Route>
+                            <Route path='/user/:userID/goals'>
+                                <Goals />
+                            </Route>
+                            <Route path='/user/:userID/budget'>
+                                <Budget />
+                            </Route>
                         </Switch>
                     </Col>
                 </Row>
@@ -90,4 +109,4 @@ const LoguedUser = (props) => {
     );
 }
 
-export default LoguedUser;
+export default withRouter(LoguedUser);
