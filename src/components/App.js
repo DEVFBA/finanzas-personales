@@ -10,7 +10,6 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Home from './Home';
 import LoguedUser from './LoguedUser';
-import Test from './test';
 
 const App = () => {
 

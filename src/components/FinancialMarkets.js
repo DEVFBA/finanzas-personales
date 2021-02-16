@@ -12,8 +12,6 @@ import {
     Line
 } from 'react-chartjs-2';
 
-import PageConstruction from './PageConstruction';
-
 import '../styles/FinancialMarkets.css';
 
 const FinancialMarkets = () => {
@@ -21,7 +19,9 @@ const FinancialMarkets = () => {
     const [ticker, setTicker]           = useState('');
     const [dateFrom, setDateFrom]       = useState('');
     const [dateThru, setDateThru]       = useState('');
-    const [tickerData, setTickerData]   = useState([{}]);
+    //const [tickerData, setTickerData]   = useState([{}]);
+    const [dates, setDates]             = useState([]);
+    const [closes, setCloses]           = useState([]);
 
     const onChangeTicker = (event) => {
         setTicker(event.target.value.trim());
@@ -46,36 +46,20 @@ const FinancialMarkets = () => {
             return response.json();
         })
         .then((data) => {
-            setTickerData(data.data);
-            //console.log('Data', data.data);
-            //console.log('Data for State', ...data.data);
-            //console.log('Ticker 1', tickerData);
+            setDates(data.data.map((e) => e.date.substring(0, 10)).reverse());
+            setCloses(data.data.map((e) => e.close).reverse());
         });
     }
-
-    console.log('Ticker Data Out', tickerData);
-
-    const dates = tickerData.map((e) => e.date.substring(0, 10)).reverse();
-    const closes = tickerData.map((e) => e.close).reverse();
-
-    console.log('Dates', dates);
-    console.log('Closes', closes);
-    //const dates = tickerData.map((data) => data.date);
-
-
 
     return(
         <Container
             fluid
             className='financial-markets'
         >
-            <Row>
+            <Row className = 'ml-2'>
                 <h3>Mercados Financieros</h3>
             </Row>
-            <Row>
-                <PageConstruction />
-            </Row>
-            <Row>
+            <Row className = 'mt-5 ml-2'>
                 <Form
                     onSubmit = { onSubmitTicker }
                 >
@@ -118,8 +102,9 @@ const FinancialMarkets = () => {
                             md = { 3 }
                         >
                             <Button
-                                variant = 'outline-light'
-                                type    = 'submit'
+                                variant     = 'outline-light'
+                                type        = 'submit'
+                                className   = 'stock-search'
                             >
                                 Buscar
                             </Button>
@@ -128,7 +113,7 @@ const FinancialMarkets = () => {
                 </Form>
             </Row>
             <Row
-                className = "mt-5"
+                className = "mt-5 col-10 ml-2"
             >
                 <Line 
                     data = {{
@@ -136,9 +121,35 @@ const FinancialMarkets = () => {
                         datasets: [{
                             label: 'Close',
                             data: closes,
-                            backgroundColor: 'rgba(255, 255, 255, 0.5)'
-                        }]
-                    }}
+                            fill: false,
+                            borderColor: 'rgba(255, 255, 255)',
+                            lineTension: 0.2
+                        }
+                        ]
+                    }
+                    }
+                    options = {{
+                        scales: {
+                            xAxes:[{
+                                ticks: {
+                                    fontColor: 'rgba(255, 255, 255)'
+                                },
+                                scaleLabel: {
+                                    fontColor: 'rgba(255, 255, 255)'
+                                }
+                            }
+                            ],
+                            yAxes:[{
+                                ticks: {
+                                    fontColor: 'rgba(255, 255, 255)'
+                                },
+                                scaleLabel: {
+                                    fontColor: 'rgba(255, 255, 255)'
+                                }
+                            }
+                            ]
+                        }
+                    }}                    
                 />
             </Row>
         </Container>

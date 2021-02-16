@@ -60,7 +60,10 @@ const LoguedUser = (props) => {
 
    return(
         <BrowserRouter>
-            <Container fluid>
+            <Container 
+                className = "logued-user"
+                fluid
+            >
                 <Row>
                     <Col
                         md={2}
