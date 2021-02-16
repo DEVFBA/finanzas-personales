@@ -6,11 +6,15 @@ import {
     Jumbotron,
     Container
 } from 'react-bootstrap';
+
 import HeroCarousel from './HeroCarousel';
+
 import calcChange, {
     calcPercChange
 } from '../utils/Calculations.js';
 import determineTextClass from '../utils/TextFormat.js';
+import getMarketStackToken from '../utils/APIFunctions.js';
+
 import '../styles/Hero.css';
 
 const Hero = () => {
@@ -38,7 +42,7 @@ const Hero = () => {
     let FBTextClass                     = '';
 
     useEffect(() => {
-        const token                     = process.env.REACT_APP_MARKETSTACK_TOKEN;
+        const token                     = getMarketStackToken();
 
         fetch(`http://api.marketstack.com/v1/eod?access_key=${token}&symbols=AAPL,AMZN,TSLA,FB&limit=8`)
         .then((response) => {

@@ -12,6 +12,9 @@ import {
     Line
 } from 'react-chartjs-2';
 
+import getMarketStackToken from '../utils/APIFunctions.js';
+
+
 import '../styles/FinancialMarkets.css';
 
 const FinancialMarkets = () => {
@@ -37,7 +40,7 @@ const FinancialMarkets = () => {
 
     const onSubmitTicker = (event) => {
 
-        const token                     = process.env.REACT_APP_MARKETSTACK_TOKEN;
+        const token                     = getMarketStackToken();
 
         event.preventDefault();
 
