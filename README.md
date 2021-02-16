@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Environment variables
+
+File .env
+
+    REACT_APP_MARKETSTACK_TOKEN=a35e934121e757757642358d67c767b9
+
 ## Available Scripts
 
 In the project directory, you can run:
