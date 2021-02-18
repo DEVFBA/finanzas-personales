@@ -1,5 +1,5 @@
 import React from 'react';
-import FormSelect from './FormSelect';
+import FormSelect from '../components/FormSelect';
 import '../styles/SummaryHeader.css';
 
 const SummaryHeader = (props) => {

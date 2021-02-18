@@ -2,7 +2,7 @@ import React from 'react';
 import {
     Button
 } from 'react-bootstrap';
-import Quote from './Quote';
+import Quote from '../components/Quote';
 
 const SecondCarouselItem = (props) => {
     return(

@@ -5,7 +5,7 @@ import {
     Col
 } from 'react-bootstrap';
 
-import PageConstruction from './PageConstruction';
+import PageConstruction from '../components/PageConstruction';
 
 import '../styles/Goals.css';
 

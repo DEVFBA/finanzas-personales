@@ -15,13 +15,13 @@ import {
     withRouter
 } from 'react-router-dom';
 
-import Sidebar from './Sidebar';
-import Summary from './Summary';
-import FinancialMarkets from './FinancialMarkets';
-import Investments from './Investments';
-import Transactions from './Transactions';
-import Goals from './Goals';
-import Budget from './Budget';
+import Sidebar from '../containers/Sidebar';
+import Summary from '../containers/Summary';
+import FinancialMarkets from '../containers/FinancialMarkets';
+import Investments from '../containers/Investments';
+import Transactions from '../containers/Transactions';
+import Goals from '../containers/Goals';
+import Budget from '../containers/Budget';
 
 import '../styles/LoguedUser.css';
 

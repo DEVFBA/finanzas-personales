@@ -4,11 +4,11 @@ import {
     Row,
     Col
 } from 'react-bootstrap';
-import MyGoals from './MyGoals';
-import MyInvestments from './MyInvestments';
-import MyBudget from './MyBudget';
-import GoalsChart from './GoalsChart';
-import InvestmentsChart from './InvestmentsChart';
+import MyGoals from '../components/MyGoals';
+import MyInvestments from '../components/MyInvestments';
+import MyBudget from '../components/MyBudget';
+import GoalsChart from '../components/GoalsChart';
+import InvestmentsChart from '../components/InvestmentsChart';
 import SummaryHeader from './SummaryHeader';
 import '../styles/Summary.css';
 

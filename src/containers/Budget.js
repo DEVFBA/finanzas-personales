@@ -5,17 +5,17 @@ import {
     Col
 } from 'react-bootstrap';
 
-import PageConstruction from './PageConstruction';
+import PageConstruction from '../components/PageConstruction';
 
-import '../styles/Investments.css';
+import '../styles/Budget.css';
 
-const Investments = () => {
+const Budget = () => {
     return(
         <Container
-        className = 'investments'
+            className='budget'
         >
             <Row>
-                <h3>Mis Inversiones</h3>
+                <h3>Mi Presupuesto</h3>
             </Row>
             <Row>
                 <PageConstruction />
@@ -24,4 +24,4 @@ const Investments = () => {
     );
 }
 
-export default Investments;
+export default Budget;

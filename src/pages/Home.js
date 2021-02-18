@@ -1,5 +1,5 @@
 import React from 'react';
-import Hero from './Hero';
+import Hero from '../containers/Hero';
 import '../styles/Home.css';
 
 const Home = () => {

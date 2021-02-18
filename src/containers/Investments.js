@@ -5,17 +5,17 @@ import {
     Col
 } from 'react-bootstrap';
 
-import PageConstruction from './PageConstruction';
+import PageConstruction from '../components/PageConstruction';
 
-import '../styles/Transactions.css';
+import '../styles/Investments.css';
 
-const Transactions = () => {
+const Investments = () => {
     return(
         <Container
-            className='transactions'
+        className = 'investments'
         >
             <Row>
-                <h3>Mis Movimientos</h3>
+                <h3>Mis Inversiones</h3>
             </Row>
             <Row>
                 <PageConstruction />
@@ -24,4 +24,4 @@ const Transactions = () => {
     );
 }
 
-export default Transactions;
+export default Investments;
