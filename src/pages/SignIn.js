@@ -1,5 +1,6 @@
 import React, { 
-    useState 
+    useState,
+    useContext 
 } from 'react';
 import {
     Container,
@@ -9,16 +10,23 @@ import {
 import {
     useHistory
 } from 'react-router-dom';
+
+import {
+    UserContext
+} from '../context/UserContext';
 import correctLogin, {
     retrieveUserProfile,
     completeLogin
 } from '../utils/UserFunctions';
+
 import '../styles/SignIn.css';
 
 const SignIn = () => {
 
     const[eMail, setEmail]              = useState('');
     const[password, setPassword]        = useState('');
+
+    const { setUser }                   = useContext(UserContext);
     
     const history                       = useHistory();
     
@@ -40,7 +48,9 @@ const SignIn = () => {
             if(correctLogin(eMail, password)){
 
                 userProfile = retrieveUserProfile(eMail, password);
+                setUser(userProfile);
                 history.push(`/user/${userProfile.userID}/summary`, { userProfile });
+                console.log('User', userProfile);
 
             } else{
                 alert(`El usuario ${eMail} y password ${password} no existen`);

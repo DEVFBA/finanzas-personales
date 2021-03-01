@@ -7,14 +7,12 @@ import {
 } from 'react-bootstrap';
 import {
     withRouter, 
-    Link,
-    useParams
+    Link
 } from 'react-router-dom';
+
 import '../styles/Sidebar.css';
 
 const Sidebar = (props) => {
-
-    //const { userID } = useParams();
     
     console.log('In Sidebar params: ', props);
 
@@ -55,43 +53,44 @@ const Sidebar = (props) => {
                 className="mt-3 flex-column"
             >
                 <Link
-                    to='/user/:userID/summary'
-                    className="sidebar-link mt-1 ml-3"
+                    to          = { `/user/${props.userID}/summary` }
+                    className   ="sidebar-link mt-1 ml-3"
                 >
                     Resumen Financiero
                 </Link>
                 <Link
-                    to='/user/:userID/budget'
-                    className="sidebar-link mt-1 ml-3"
+                    to          = { `/user/${props.userID}/budget` }
+                    className   = "sidebar-link mt-1 ml-3"
                 >
                     Mi Presupesto
                 </Link>
                 <Link
-                    to='/user/:userID/goals'
-                    className="sidebar-link mt-1 ml-3"
+                    to          = { `/user/${props.userID}/goals` }
+                    className   = "sidebar-link mt-1 ml-3"
                 >
                     Mis Metas
                 </Link>
                 <Link
-                    to='/user/:userID/transactions'
+                    to          = { `/user/${props.userID}/transactions` }
                     className="sidebar-link mt-1 ml-3"
                 >
                     Movimientos
                 </Link>
                 <Link
-                    to='/user/:userID/investments'
+                    to          = { `/user/${props.userID}/investments` }
                     className="sidebar-link mt-1 ml-3"
                 >
                     Mis Inversiones
                 </Link>
                 <Link
-                    to='/user/:userID/finMarket'
-                    className="sidebar-link mt-1 ml-3"
+                    to          = { `/user/${props.userID}/finMarket` }
+                    className   = "sidebar-link mt-1 ml-3"
                 >
                     Mercados Financieros
                 </Link>
                 <Link
-                    className="sidebar-link mt-1 ml-3"
+                    to          = { `/` }
+                    className   ="sidebar-link mt-1 ml-3"
                 >
                     Salir
                 </Link>

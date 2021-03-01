@@ -70,9 +70,10 @@ const LoguedUser = (props) => {
                         className="p-0"
                     >
                         <Sidebar
-                            userName={userName}
-                            userLastName={userLastName}
-                            profilePicture={profilePicture}
+                            userName        = { userName }
+                            userLastName    = { userLastName }
+                            profilePicture  = { profilePicture }
+                            userID          = { userID }
                         />
                     </Col>
                     <Col
@@ -80,7 +81,7 @@ const LoguedUser = (props) => {
                         className="logued-user-sections"
                     >
                         <Switch>
-                            <Route path='/user/:userID/summary'>
+                            <Route path = { `/user/${userID}/summary` }>
                                 <Summary
                                     userGoals       = { userGoals }
                                     userInvestments = { userInvestments }
@@ -89,19 +90,19 @@ const LoguedUser = (props) => {
                                     years           = { years }
                                 />
                             </Route>
-                            <Route path='/user/:userID/finMarket'>
+                            <Route path = { `/user/${userID}/finMarket` }>
                                 <FinancialMarkets />
                             </Route>
-                            <Route path='/user/:userID/investments'>
+                            <Route path = { `/user/${userID}/investments` }>
                                 <Investments />
                             </Route>
-                            <Route path='/user/:userID/transactions'>
+                            <Route path = { `/user/${userID}/transactions` }>
                                 <Transactions />
                             </Route>
-                            <Route path='/user/:userID/goals'>
+                            <Route path = { `/user/${userID}/goals` }>
                                 <Goals />
                             </Route>
-                            <Route path='/user/:userID/budget'>
+                            <Route path = { `/user/${userID}/budget` }>
                                 <Budget />
                             </Route>
                         </Switch>

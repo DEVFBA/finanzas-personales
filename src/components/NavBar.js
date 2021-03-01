@@ -6,6 +6,7 @@ import {
 import {
     Link
 } from 'react-router-dom';
+
 import '../styles/NavBar.css';
 
 const NavBar = () => {
@@ -37,7 +38,6 @@ const NavBar = () => {
                     >
                         Inicia Sesión
                     </Link>
-
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
