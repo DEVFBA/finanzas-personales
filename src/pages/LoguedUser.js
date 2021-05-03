@@ -26,7 +26,10 @@ import Budget from '../containers/Budget';
 import '../styles/LoguedUser.css';
 
 import { 
-    retrieveUserProfileByID 
+    retrieveUserProfileByID,
+    retrieveUserGoals,
+    retrieveUserInvestments,
+    retrieveUserBudget 
 } from '../utils/UserFunctions';
 
 const LoguedUser = (props) => {
@@ -45,18 +48,28 @@ const LoguedUser = (props) => {
     const months        = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     const years         = [2021, 2020, 2019];
 
-    useEffect(() => {
+    useEffect(async() => {
 
-        const userProfile = retrieveUserProfileByID(userID)
+        const userProfile = await retrieveUserProfileByID(localStorage.getItem("loginToken"));
+
+        const savingsGoals = await retrieveUserGoals(localStorage.getItem("loginToken"));
+        
+        const investments = await retrieveUserInvestments(localStorage.getItem("loginToken"));
+
+        const budgets = await retrieveUserBudget(localStorage.getItem("loginToken"));
         
         setUserName(userProfile.userName);
         setProfilePicture(userProfile.profilePicture);
         setUserLastName(userProfile.userLastName);
-        setUserGoals(userProfile.savingsGoals);
-        setUserInvestments(userProfile.investments);
-        setUserBudget(userProfile.budget);
+        setUserGoals(savingsGoals);
+        setUserInvestments(investments);
+        setUserBudget(budgets);
 
-    }, [])
+    }, []);
+
+    console.log('Goals', userGoals);
+    console.log('Investments ', userInvestments);
+    console.log('Budget', userBudget);
 
    return(
         <BrowserRouter>

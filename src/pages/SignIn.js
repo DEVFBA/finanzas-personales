@@ -14,7 +14,7 @@ import {
 import {
     UserContext
 } from '../context/UserContext';
-import correctLogin, {
+import userLogin, {
     retrieveUserProfile,
     completeLogin
 } from '../utils/UserFunctions';
@@ -40,24 +40,33 @@ const SignIn = () => {
         setPassword(event.target.value);
     }
 
-    const onSubmitForm = (event) => {
+    async function onSubmitForm(event){
         event.preventDefault();
+        
+        let userData = {};
+        let completeData = false;
 
-        if(completeLogin(eMail, password)){
-
-            if(correctLogin(eMail, password)){
-
-                userProfile = retrieveUserProfile(eMail, password);
-                setUser(userProfile);
-                history.push(`/user/${userProfile.userID}/summary`, { userProfile });
-                console.log('User', userProfile);
-
-            } else{
-                alert(`El usuario ${eMail} y password ${password} no existen`);
-            }
-
+        completeData = await completeLogin(eMail, password);
+        
+        if(completeData){
+            userData = await userLogin(eMail, password);
         } else {
             alert(`Ingrese contraseña y password`);
+        }
+
+        localStorage.setItem("loginToken", userData.user.token)
+        const user = await retrieveUserProfile(userData.user.token);
+
+        if(user){
+
+            console.log('Usuario ', user.userName);
+            
+            history.push(`/user/${user.id}/summary`, { user });
+
+        } else {
+
+            alert(`Ingrese contraseña y password`);
+        
         }
 
     }
@@ -96,6 +105,7 @@ const SignIn = () => {
                 >
                     Ingresar
                 </Button>
+
             </Form>
         </Container>
     );

@@ -7,7 +7,8 @@ import {
 } from 'react-bootstrap';
 import {
     withRouter, 
-    Link
+    Link,
+    useHistory
 } from 'react-router-dom';
 
 import '../styles/Sidebar.css';
@@ -50,47 +51,47 @@ const Sidebar = (props) => {
             </div>
 
             <Nav
-                className="mt-3 flex-column"
+                className   =   "mt-3 flex-column"
             >
                 <Link
-                    to          = { `/user/${props.userID}/summary` }
-                    className   ="sidebar-link mt-1 ml-3"
+                    to          =   { `/user/${props.userID}/summary` }
+                    className   =   "sidebar-link mt-1 ml-3"
                 >
                     Resumen Financiero
                 </Link>
                 <Link
-                    to          = { `/user/${props.userID}/budget` }
-                    className   = "sidebar-link mt-1 ml-3"
+                    to          =   { `/user/${props.userID}/budget` }
+                    className   =   "sidebar-link mt-1 ml-3"
                 >
                     Mi Presupesto
                 </Link>
                 <Link
-                    to          = { `/user/${props.userID}/goals` }
-                    className   = "sidebar-link mt-1 ml-3"
+                    to          =   { `/user/${props.userID}/goals` }
+                    className   =   "sidebar-link mt-1 ml-3"
                 >
                     Mis Metas
                 </Link>
                 <Link
-                    to          = { `/user/${props.userID}/transactions` }
-                    className="sidebar-link mt-1 ml-3"
+                    to          =   { `/user/${props.userID}/transactions` }
+                    className   =   "sidebar-link mt-1 ml-3"
                 >
                     Movimientos
                 </Link>
                 <Link
-                    to          = { `/user/${props.userID}/investments` }
-                    className="sidebar-link mt-1 ml-3"
+                    to          =   { `/user/${props.userID}/investments` }
+                    className   =   "sidebar-link mt-1 ml-3"
                 >
                     Mis Inversiones
                 </Link>
                 <Link
-                    to          = { `/user/${props.userID}/finMarket` }
-                    className   = "sidebar-link mt-1 ml-3"
+                    to          =   { `/user/${props.userID}/finMarket` }
+                    className   =   "sidebar-link mt-1 ml-3"
                 >
                     Mercados Financieros
                 </Link>
                 <Link
-                    to          = { `/` }
-                    className   ="sidebar-link mt-1 ml-3"
+                    to          =   { `/` }
+                    className   =   "sidebar-link mt-1 ml-3"
                 >
                     Salir
                 </Link>

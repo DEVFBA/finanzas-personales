@@ -31,10 +31,10 @@ const MyGoals = (props) => {
                                     { goal.amountSaved.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
                                 </td>
                                 <td className="td-amount">
-                                    { goal.totalObjective.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
+                                    { goal.targetAmount.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
                                 </td>
                                 <td className="td-percentage">
-                                    { `${((goal.amountSaved / goal.totalObjective) * 100).toFixed(2)} %` }
+                                    { `${((goal.amountSaved / goal.targetAmount) * 100).toFixed(2)} %` }
                                 </td>
                             </tr>
                         );

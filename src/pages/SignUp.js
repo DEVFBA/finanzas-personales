@@ -57,7 +57,7 @@ const SignUp = () => {
                     </Form.Label>
                     <Form.Control
                         type            = "text"
-                        placeholder     = "Ingresa tu Nombre"
+                        placeholder     = "Nombre"
                         onChange        = { onChangeName }
                     />
                 </Form.Group>
@@ -68,7 +68,7 @@ const SignUp = () => {
                     </Form.Label>
                     <Form.Control
                         type            = "text"
-                        placeholder     = "Ingresa tu Nombre"
+                        placeholder     = "Apellido"
                         onChange        = { onChangeLastName }
                     />
                 </Form.Group>

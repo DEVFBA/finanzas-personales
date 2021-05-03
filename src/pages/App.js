@@ -34,6 +34,7 @@ const App = () => {
             <Route exact path='/signIn'                         component = { SignIn } />
             <Route exact path='/user/:userID/summary'           component = { LoguedUser } />
           </Switch>
+
         </BrowserRouter>
       </UserContext.Provider>
     </div>
