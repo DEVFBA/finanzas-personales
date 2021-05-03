@@ -55,6 +55,18 @@ async function retrieveUserProfileByID(token) {
 
 }
 
+function completeLogin(eMail, password) {
+  let completeLogin = false;
+
+  if(eMail && password){
+      completeLogin = true;
+  } else {
+      completeLogin = false;
+  }
+
+  return completeLogin;
+}
+
 function completeRegister(name, lastName, eMail, password) {
   let completeRegister = false;
 
@@ -67,16 +79,36 @@ function completeRegister(name, lastName, eMail, password) {
   return completeRegister;
 }
 
-function completeLogin(eMail, password) {
-  let completeLogin = false;
+async function signUp(name, lastName, eMail, password) {
 
-  if(eMail && password){
-      completeLogin = true;
-  } else {
-      completeLogin = false;
+  const body = {
+
+    userName: `${name}`,
+    userLastName: `${lastName}`,
+    email: `${eMail}`,
+    password: `${password}`,
+    profilePicture: `/images/default.png`
+
   }
 
-  return completeLogin;
+  console.log(JSON.stringify(body));
+
+  const response = await fetch('https://personal-finance-mexico.herokuapp.com/v1/users', {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  const userData = await response.json();
+
+  if(response.ok) {
+    return userData;
+  } else {
+    return userData;
+  }  
+
 }
 
 async function retrieveUserGoals(token){
@@ -136,5 +168,6 @@ export {
   completeLogin,
   retrieveUserGoals,
   retrieveUserInvestments,
-  retrieveUserBudget
+  retrieveUserBudget,
+  signUp
 };

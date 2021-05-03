@@ -7,7 +7,12 @@ import {
     Container
 } from 'react-bootstrap';
 import {
-    completeRegister
+    useHistory
+} from 'react-router-dom';
+import userLogin, {
+    completeRegister,
+    signUp,  
+    retrieveUserProfile
 } from '../utils/UserFunctions';
 import '../styles/SignUp.css';
 
@@ -17,6 +22,8 @@ const SignUp = () => {
     const[lastName,     setLastName]                = useState('');
     const[eMail,        setEmail]                   = useState('');
     const[password,     setPassword]                = useState('');
+
+    const history                       = useHistory();
 
     const onChangeName = (event) => {
         setName(event.target.value.trim());
@@ -34,14 +41,26 @@ const SignUp = () => {
         setPassword(event.target.value);
     }
 
-    const onSubmitForm = (event) => {
+    async function onSubmitForm(event) {
         event.preventDefault();
 
-        if(completeRegister(name, lastName, eMail, password)){
-            alert(`El usuario ${name} ${lastName} con correo ${eMail} y password ${password} fue registrado`);
+        let completeData = false;
+        let userData = {};
+
+        completeData = await completeRegister(name, lastName, eMail, password);
+
+        if(completeData){
+            userData = await signUp(name, lastName, eMail, password);
+
+            localStorage.setItem("loginToken", userData.user.token);
+
+            const user = await retrieveUserProfile(userData.user.token);
+
+            history.push(`/user/${user.id}/summary`, { user });
         } else {
             alert(`Debes ingresar todos los datos para registrarte`);
         }
+
     }
 
     return(

@@ -44,6 +44,8 @@ const Hero = () => {
     useEffect(() => {
         const token                     = getMarketStackToken();
 
+        console.log('Token ', token);
+
         fetch(`http://api.marketstack.com/v1/eod?access_key=${token}&symbols=AAPL,AMZN,TSLA,FB&limit=8`)
         .then((response) => {
             return response.json()
