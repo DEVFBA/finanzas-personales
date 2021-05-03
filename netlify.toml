@@ -1,2 +1,0 @@
-[context.production]
-  environment = { REACT_APP_MARKETSTACK_TOKEN="a35e934121e757757642358d67c767b9" }
