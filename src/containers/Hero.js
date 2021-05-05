@@ -42,15 +42,19 @@ const Hero = () => {
     let FBTextClass                     = '';
 
     useEffect(() => {
-        const token                     = getMarketStackToken();
         
-        const apiURL = `http://api.marketstack.com/v1/eod?access_key=${token}&symbols=AAPL,AMZN,TSLA,FB&limit=8`
+        //const token                     = getMarketStackToken();
+        
+        //const apiURL = `http://api.marketstack.com/v1/eod?access_key=${token}&symbols=AAPL,AMZN,TSLA,NVDA&limit=8`
+        const apiURL = 'https://personal-finance-mexico.herokuapp.com/v1/quotesEOD/'
 
         fetch(apiURL)
         .then((response) => {
             return response.json()
         })
         .then((data) => {
+
+            console.log(data);
             /* Retrieve Latest Close and Previous Close from each Ticker */
             /*
                 Considering API returns data sorting descending date
@@ -59,22 +63,22 @@ const Hero = () => {
             */
 
                 /* AAPL */
-                const AAPL = data.data.filter(ticker => ticker.symbol === 'AAPL');
+                const AAPL = data.filter(ticker => ticker.symbol === 'AAPL');
                 setAAPLLatest(AAPL[0].close);
                 setAAPLPrevious(AAPL[1].close);
 
                 /* AMZN */
-                const AMZN = data.data.filter(ticker => ticker.symbol === 'AMZN');
+                const AMZN = data.filter(ticker => ticker.symbol === 'AMZN');
                 setAMZNLatest(AMZN[0].close);
                 setAMZNPrevious(AMZN[1].close);
 
                 /* TSLA */
-                const TSLA = data.data.filter(ticker => ticker.symbol === 'TSLA');
+                const TSLA = data.filter(ticker => ticker.symbol === 'TSLA');
                 setTSLALatest(TSLA[0].close);
                 setTSLAPrevious(TSLA[1].close);
 
-                /* FB */
-                const FB = data.data.filter(ticker => ticker.symbol === 'FB');
+                /* NVDA */
+                const FB = data.filter(ticker => ticker.symbol === 'NVDA');
                 setFBLatest(FB[0].close);
                 setFBPrevious(FB[1].close);
         })

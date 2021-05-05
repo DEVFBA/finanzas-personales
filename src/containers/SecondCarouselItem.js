@@ -38,7 +38,7 @@ const SecondCarouselItem = (props) => {
                         textClass           = { props.TSLA[3] }
                     />
                     <Quote
-                        quote               = "FB"
+                        quote               = "NVDA"
                         value               = { props.FB[0] }
                         change              = { props.FB[1] }
                         percentageChange    = { props.FB[2] }
