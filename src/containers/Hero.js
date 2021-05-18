@@ -54,7 +54,6 @@ const Hero = () => {
         })
         .then((data) => {
 
-            console.log(data);
             /* Retrieve Latest Close and Previous Close from each Ticker */
             /*
                 Considering API returns data sorting descending date

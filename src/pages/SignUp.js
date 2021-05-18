@@ -52,9 +52,11 @@ const SignUp = () => {
         if(completeData){
             userData = await signUp(name, lastName, eMail, password);
 
-            localStorage.setItem("loginToken", userData.user.token);
+            console.log(userData);
 
-            const user = await retrieveUserProfile(userData.user.token);
+            localStorage.setItem("loginToken", userData.token);
+
+            const user = await retrieveUserProfile(userData.token);
 
             history.push(`/user/${user.id}/summary`, { user });
         } else {
