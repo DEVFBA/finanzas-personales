@@ -26,13 +26,13 @@ const App = () => {
     <div className="App">
       <UserContext.Provider value = {{ user, setUser }}>
         <BrowserRouter>
-          <NavBar />
+          {/* <NavBar /> */}
 
           <Switch>
-            <Route exact path='/'                               component = { Home } />
-            <Route exact path='/signUp'                         component = { SignUp } />
-            <Route exact path='/signIn'                         component = { SignIn } />
-            <Route exact path='/user/:userID/summary'           component = { LoguedUser } />
+            <Route path='/signUp'                         component = { SignUp } />
+            <Route path='/signIn'                         component = { SignIn } />
+            <Route path='/user'                           component = { LoguedUser } />
+            <Route path='/'                               component = { Home } />
           </Switch>
 
         </BrowserRouter>

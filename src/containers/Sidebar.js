@@ -7,15 +7,12 @@ import {
 } from 'react-bootstrap';
 import {
     withRouter, 
-    Link,
-    useHistory
+    Link
 } from 'react-router-dom';
 
 import '../styles/Sidebar.css';
 
 const Sidebar = (props) => {
-    
-    console.log('In Sidebar params: ', props);
 
     return(
         <Container
@@ -54,37 +51,37 @@ const Sidebar = (props) => {
                 className   =   "mt-3 flex-column"
             >
                 <Link
-                    to          =   { `/user/${props.userID}/summary` }
+                    to          =   { `/user/summary` }
                     className   =   "sidebar-link mt-1 ml-3"
                 >
                     Resumen Financiero
                 </Link>
                 <Link
-                    to          =   { `/user/${props.userID}/budget` }
+                    to          =   { `/user/budget` }
                     className   =   "sidebar-link mt-1 ml-3"
                 >
                     Mi Presupesto
                 </Link>
                 <Link
-                    to          =   { `/user/${props.userID}/goals` }
+                    to          =   { `/user/goals` }
                     className   =   "sidebar-link mt-1 ml-3"
                 >
                     Mis Metas
                 </Link>
                 <Link
-                    to          =   { `/user/${props.userID}/transactions` }
+                    to          =   { `/user/transactions` }
                     className   =   "sidebar-link mt-1 ml-3"
                 >
                     Movimientos
                 </Link>
                 <Link
-                    to          =   { `/user/${props.userID}/investments` }
+                    to          =   { `/user/investments` }
                     className   =   "sidebar-link mt-1 ml-3"
                 >
                     Mis Inversiones
                 </Link>
                 <Link
-                    to          =   { `/user/${props.userID}/finMarket` }
+                    to          =   { `/user/finMarket` }
                     className   =   "sidebar-link mt-1 ml-3"
                 >
                     Mercados Financieros

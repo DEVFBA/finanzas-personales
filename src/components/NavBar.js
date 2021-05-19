@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {
+    useState,
+    useEffect
+} from 'react';
+
 import {
     Navbar,
     Nav
 } from 'react-bootstrap';
+
 import {
     Link
 } from 'react-router-dom';
@@ -10,6 +15,14 @@ import {
 import '../styles/NavBar.css';
 
 const NavBar = () => {
+
+    const [user, setUser]           =   useState('');
+
+    useEffect(() => {
+        
+        setUser(localStorage.getItem('loginToken'));
+
+    },[user])
 
     return(
         <Navbar
@@ -25,6 +38,7 @@ const NavBar = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="ml-auto">
+                 
                     <Link
                         to="/signUp"
                         className="nav-link register"
@@ -38,6 +52,7 @@ const NavBar = () => {
                     >
                         Inicia Sesión
                     </Link>
+                    
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

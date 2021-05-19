@@ -16,8 +16,6 @@ import NoDataRegistered from '../components/NoDataRegistered';
 
 const Summary = (props) => {
 
-    console.log('Props ', props);
-
     return(
         <Container
             className="summary"

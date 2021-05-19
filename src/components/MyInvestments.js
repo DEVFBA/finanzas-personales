@@ -6,6 +6,8 @@ import '../styles/MyInvestments.css';
 
 const MyInvestments = (props) => {
 
+    console.log(props);
+
     const investedAmounts = props.userInvestments.map((investment) => {
         return investment.investedAmount;
     })
@@ -34,7 +36,7 @@ const MyInvestments = (props) => {
                     {props.userInvestments.map((investment) => {
                         return (
                             <tr>
-                                <td>{ investment.investingConcept }</td>
+                                <td>{ investment.investingCompany }</td>
                                 <td className="td-amount">
                                     { investment.investedAmount.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
                                 </td>

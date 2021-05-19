@@ -52,13 +52,11 @@ const SignUp = () => {
         if(completeData){
             userData = await signUp(name, lastName, eMail, password);
 
-            console.log(userData);
-
             localStorage.setItem("loginToken", userData.token);
 
             const user = await retrieveUserProfile(userData.token);
 
-            history.push(`/user/${user.id}/summary`, { user });
+            history.push(`/user/summary`, { user });
         } else {
             alert(`Debes ingresar todos los datos para registrarte`);
         }

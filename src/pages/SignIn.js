@@ -54,6 +54,8 @@ const SignIn = () => {
             alert(`Ingrese contraseña y password`);
         }
 
+        console.log('Aqui ', userData);
+
         localStorage.setItem("loginToken", userData.user.token)
         const user = await retrieveUserProfile(userData.user.token);
 
@@ -61,7 +63,7 @@ const SignIn = () => {
 
             console.log('Usuario ', user.userName);
             
-            history.push(`/user/${user.id}/summary`, { user });
+            history.push(`/user/summary`, { user });
 
         } else {
 

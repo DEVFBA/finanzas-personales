@@ -13,7 +13,6 @@ import calcChange, {
     calcPercChange
 } from '../utils/Calculations.js';
 import determineTextClass from '../utils/TextFormat.js';
-import getMarketStackToken from '../utils/APIFunctions.js';
 
 import '../styles/Hero.css';
 
@@ -43,9 +42,6 @@ const Hero = () => {
 
     useEffect(() => {
         
-        //const token                     = getMarketStackToken();
-        
-        //const apiURL = `http://api.marketstack.com/v1/eod?access_key=${token}&symbols=AAPL,AMZN,TSLA,NVDA&limit=8`
         const apiURL = 'https://personal-finance-mexico.herokuapp.com/v1/quotesEOD/'
 
         fetch(apiURL)

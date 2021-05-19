@@ -3,5 +3,27 @@
   width: 100%;
   height: 100vh;
 }
+.goals .goals-table {
+  color: white;
+}
+.goals .goals-table th {
+  text-align: center;
+  vertical-align: middle;
+}
+.goals .goals-table .td-amount {
+  text-align: center;
+  vertical-align: middle;
+}
+.goals .goals-table .td-date {
+  text-align: center;
+  vertical-align: middle;
+}
+.goals .goals-table a {
+  text-decoration: none;
+  color: white;
+}
+.goals .goals-table a:hover {
+  text-decoration: underline;
+}
 
 /*# sourceMappingURL=Goals.css.map */

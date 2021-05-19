@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 function determineTextClass(change) {
     let textClass = '';
 
@@ -24,5 +26,26 @@ function determineProgressColor(value) {
     return color;
 }
 
+function getDateString(date){
+
+    let dateString = '';
+
+    let dateToFormat = new Date(date);
+
+    dateToFormat = new Date(dateToFormat.setDate(dateToFormat.getDate() + 1));
+
+    const day = dateToFormat.getDate();
+    const month = dateToFormat.getMonth() + 1;
+    const year = dateToFormat.getFullYear();
+
+    dateString = `${day} / ${month} / ${year}`
+
+    return dateString;
+
+}
+
 export default determineTextClass;
-export { determineProgressColor };
+export { 
+    determineProgressColor,
+    getDateString 
+};

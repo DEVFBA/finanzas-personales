@@ -91,8 +91,6 @@ async function signUp(name, lastName, eMail, password) {
 
   }
 
-  console.log(JSON.stringify(body));
-
   const response = await fetch('https://personal-finance-mexico.herokuapp.com/v1/users', {
     method: 'POST',
     body: JSON.stringify(body),

@@ -7,7 +7,7 @@ import '../styles/InvestmentsChart.css';
 const InvestmentsChart = (props) => {
 
     const investmentsLabels = props.userInvestments.map((investment) => {
-        return (investment.investingConcept);
+        return (investment.investingCompany);
     })
 
     const investedAmounts = props.userInvestments.map((investment) => {
