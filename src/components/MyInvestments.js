@@ -9,7 +9,7 @@ const MyInvestments = (props) => {
     console.log(props);
 
     const investedAmounts = props.userInvestments.map((investment) => {
-        return investment.investedAmount;
+        return investment.total;
     })
 
     const totalInvested = investedAmounts.reduce((total, investmentAmount) => {
@@ -36,12 +36,14 @@ const MyInvestments = (props) => {
                     {props.userInvestments.map((investment) => {
                         return (
                             <tr>
-                                <td>{ investment.investingCompany }</td>
+                                <td>
+                                    { investment.investingCompany }
+                                </td>
                                 <td className="td-amount">
-                                    { investment.investedAmount.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
+                                    { investment.total.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
                                 </td>
                                 <td className="td-percentage">
-                                    { `${(((investment.investedAmount) / totalInvested) * 100).toFixed(2)} %` }
+                                    { `${(((investment.total) / totalInvested) * 100).toFixed(2)} %` }
                                 </td>
                             </tr>
                         );

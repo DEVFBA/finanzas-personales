@@ -17,7 +17,6 @@ const GoalsChart = (props) => {
 
     return(
         <>
-            <h5 className="text-center">Metas</h5>
             <Bar
                 data = {{
                     labels: goalsLabels,

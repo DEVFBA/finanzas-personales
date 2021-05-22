@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 function determineTextClass(change) {
     let textClass = '';
 
@@ -44,8 +42,23 @@ function getDateString(date){
 
 }
 
+function convertStrAmountToNum(stringAmount){
+    
+    let amount = 0;
+
+    if(stringAmount){
+        amount = parseFloat(stringAmount.replace('$', '').replace(',','')).toFixed(2);
+    } else {
+        amount = 0
+    }
+
+    return amount;
+
+}
+
 export default determineTextClass;
 export { 
     determineProgressColor,
-    getDateString 
+    getDateString,
+    convertStrAmountToNum
 };

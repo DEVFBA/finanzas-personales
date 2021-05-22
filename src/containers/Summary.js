@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+    Fragment
+} from 'react';
 import {
     Container,
     Row,
@@ -29,9 +31,12 @@ const Summary = (props) => {
             <Row className="mt-5">
                 <Col md={6}>
                     {props.userGoals?
-                        <GoalsChart
-                            userGoals = { props.userGoals }
-                        />:<NoDataRegistered />
+                        <Fragment>
+                            <h5 className="text-center">Metas</h5>
+                            <GoalsChart
+                                userGoals = { props.userGoals }
+                            />
+                        </Fragment>:<NoDataRegistered />
                     }
                 </Col>
                 <Col md={6}>

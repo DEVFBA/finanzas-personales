@@ -42,11 +42,18 @@ const LoguedUser = (props) => {
     const [userGoals,       setUserGoals        ]       = useState([]);
     const [userInvestments, setUserInvestments  ]       = useState([]);
     const [userBudget,      setUserBudget       ]       = useState([]);
+    const [dataChanged,     setDataChange       ]       = useState(true);
 
     const { path, url } = useRouteMatch();
 
     const months        = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     const years         = [2021, 2020, 2019];
+
+    const updateDataChange = () => {
+        
+        setDataChange(!dataChanged);
+
+    }
 
     useEffect(async() => {
 
@@ -65,7 +72,7 @@ const LoguedUser = (props) => {
         setUserInvestments(investments);
         setUserBudget(budgets);
 
-    }, []);
+    }, [dataChanged]);
 
    return(
         <BrowserRouter>
@@ -176,7 +183,10 @@ const LoguedUser = (props) => {
                                 <FinancialMarkets />
                             </Route>
                             <Route exact path = { `${path}/investments` }>
-                                <Investments />
+                                <Investments 
+                                    userInvestments = { userInvestments }
+                                    dataChange      = { updateDataChange }
+                                />
                             </Route>
                             <Route exact path = { `${path}/transactions` }>
                                 <Transactions />
@@ -184,6 +194,7 @@ const LoguedUser = (props) => {
                             <Route exact path = { `${path}/goals` }>
                                 <Goals 
                                     userGoals       = { userGoals }
+                                    dataChange      = { updateDataChange }
                                 />
                             </Route>
                             <Route exact path = { `${path}/budget` }>
