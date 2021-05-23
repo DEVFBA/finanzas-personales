@@ -25,7 +25,9 @@ const MyGoals = (props) => {
                 <tbody>
                     {props.userGoals.map((goal) => {
                         return(
-                            <tr>
+                            <tr
+                                key = { goal._id }
+                            >
                                 <td>{ goal.goal }</td>
                                 <td className="td-amount">
                                     { goal.amountSaved.toLocaleString('en', { style: 'currency', currency: 'USD' }) }

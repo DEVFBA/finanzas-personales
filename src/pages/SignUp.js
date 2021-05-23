@@ -4,7 +4,8 @@ import React, {
 import {
     Form,
     Button,
-    Container
+    Container,
+    Spinner
 } from 'react-bootstrap';
 import {
     useHistory
@@ -18,12 +19,13 @@ import '../styles/SignUp.css';
 
 const SignUp = () => {
 
-    const[name,         setName]                    = useState('');
-    const[lastName,     setLastName]                = useState('');
-    const[eMail,        setEmail]                   = useState('');
-    const[password,     setPassword]                = useState('');
+    const [name,            setName     ]                   = useState('');
+    const [lastName,        setLastName ]                   = useState('');
+    const [eMail,           setEmail    ]                   = useState('');
+    const [password,        setPassword ]                   = useState('');
+    const [loading,         setLoading  ]                   = useState(false);
 
-    const history                       = useHistory();
+    const history                                           = useHistory();
 
     const onChangeName = (event) => {
         setName(event.target.value.trim());
@@ -42,7 +44,10 @@ const SignUp = () => {
     }
 
     async function onSubmitForm(event) {
+
         event.preventDefault();
+
+        setLoading(true);
 
         let completeData = false;
         let userData = {};
@@ -113,12 +118,28 @@ const SignUp = () => {
                         onChange        = { onChangePassword }
                     />
                 </Form.Group>
-                <Button
-                    variant     =   "dark"
-                    type        =   "submit"
-                >
-                    Regístrate
-                </Button>
+
+                {
+                    loading?
+                        <Button variant="dark" disabled>
+                            <Spinner
+                                as          = "span"
+                                animation   = "border"
+                                size        = "sm"
+                                role        = "status"
+                                aria-hidden = "true"
+                                className   = "mr-3"
+                            />
+                            Registrando Usuario
+                        </Button>:
+                        <Button
+                            variant     = "dark"
+                            type        = "submit"
+                        >
+                            Regístrate
+                        </Button>
+                }
+
             </Form>
         </Container>
     );

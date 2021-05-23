@@ -6,8 +6,6 @@ import '../styles/MyInvestments.css';
 
 const MyInvestments = (props) => {
 
-    console.log(props);
-
     const investedAmounts = props.userInvestments.map((investment) => {
         return investment.total;
     })
@@ -35,7 +33,9 @@ const MyInvestments = (props) => {
                 <tbody>
                     {props.userInvestments.map((investment) => {
                         return (
-                            <tr>
+                            <tr
+                                key = { investment._id }
+                            >
                                 <td>
                                     { investment.investingCompany }
                                 </td>

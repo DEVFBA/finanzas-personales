@@ -30,7 +30,9 @@ const MyBudget = (props) => {
                         const progressColor         = determineProgressColor(percentageExpended);
 
                         return(
-                            <tr>
+                            <tr
+                                key = { concept._id }
+                            >
                                 <td>{ concept.concept }</td>
                                 <td
                                     className="budgetProgress"

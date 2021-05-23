@@ -6,25 +6,23 @@ import {
     Row,
     Col,
     Form,
-    Button
+    Button,
+    Spinner
 } from 'react-bootstrap';
 import {
     Line
 } from 'react-chartjs-2';
 
-import getMarketStackToken from '../utils/APIFunctions.js';
-
-
 import '../styles/FinancialMarkets.css';
 
 const FinancialMarkets = () => {
 
-    const [ticker, setTicker]           = useState('');
-    const [dateFrom, setDateFrom]       = useState('');
-    const [dateThru, setDateThru]       = useState('');
-    //const [tickerData, setTickerData]   = useState([{}]);
-    const [dates, setDates]             = useState([]);
-    const [closes, setCloses]           = useState([]);
+    const [ticker,      setTicker   ]           = useState('');
+    const [dateFrom,    setDateFrom ]           = useState('');
+    const [dateThru,    setDateThru ]           = useState('');
+    const [dates,       setDates    ]           = useState([]);
+    const [closes,      setCloses   ]           = useState([]);
+    const [searching,   setSearching]           = useState(false);
 
     const onChangeTicker = (event) => {
         setTicker(event.target.value.trim());
@@ -38,11 +36,13 @@ const FinancialMarkets = () => {
         setDateThru(event.target.value);
     }
 
-    const onSubmitTicker = (event) => {
-
-        const token                     = getMarketStackToken();
+    async function onSubmitTicker(event){
 
         event.preventDefault();
+
+        setSearching(true);
+
+        const token                     = 'a35e934121e757757642358d67c767b9';
 
         fetch(`http://api.marketstack.com/v1/eod?access_key=${token}&symbols=${ticker}&date_from=${dateFrom}&date_to=${dateThru}`)
         .then((response) => {
@@ -51,6 +51,7 @@ const FinancialMarkets = () => {
         .then((data) => {
             setDates(data.data.map((e) => e.date.substring(0, 10)).reverse());
             setCloses(data.data.map((e) => e.close).reverse());
+            setSearching(false);
         });
     }
 
@@ -104,13 +105,30 @@ const FinancialMarkets = () => {
                         <Col
                             md = { 3 }
                         >
-                            <Button
-                                variant     = 'outline-light'
-                                type        = 'submit'
-                                className   = 'stock-search'
-                            >
-                                Buscar
-                            </Button>
+                            {
+                                searching?
+                                    <Button
+                                        variant         = 'outline-light'
+                                        className       = 'stock-search'
+                                    >
+                                        <Spinner
+                                            as          = "span"
+                                            animation   = "border"
+                                            size        = "sm"
+                                            role        = "status"
+                                            aria-hidden = "true"
+                                            className   = "mr-3"
+                                        />
+                                        Buscando...
+                                    </Button>:
+                                    <Button
+                                        variant         = 'outline-light'
+                                        type            = 'submit'
+                                        className       = 'stock-search'
+                                    >
+                                        Buscar
+                                    </Button>
+                            }
                         </Col>
                     </Form.Row>
                 </Form>

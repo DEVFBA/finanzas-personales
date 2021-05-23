@@ -1,12 +1,16 @@
 import React, { 
     useState,
-    useContext 
+    useContext, 
+    useEffect
 } from 'react';
+
 import {
     Container,
     Form,
-    Button
+    Button,
+    Spinner
 } from 'react-bootstrap';
+
 import {
     useHistory
 } from 'react-router-dom';
@@ -14,6 +18,7 @@ import {
 import {
     UserContext
 } from '../context/UserContext';
+
 import userLogin, {
     retrieveUserProfile,
     completeLogin
@@ -23,8 +28,9 @@ import '../styles/SignIn.css';
 
 const SignIn = () => {
 
-    const[eMail, setEmail]              = useState('');
-    const[password, setPassword]        = useState('');
+    const [eMail,       setEmail    ]           = useState('');
+    const [password,    setPassword ]           = useState('');
+    const [loading,     setLoading  ]           = useState(false);
 
     const { setUser }                   = useContext(UserContext);
     
@@ -42,6 +48,8 @@ const SignIn = () => {
 
     async function onSubmitForm(event){
         event.preventDefault();
+
+        setLoading(true);
         
         let userData = {};
         let completeData = false;
@@ -54,14 +62,10 @@ const SignIn = () => {
             alert(`Ingrese contraseña y password`);
         }
 
-        console.log('Aqui ', userData);
-
         localStorage.setItem("loginToken", userData.user.token)
         const user = await retrieveUserProfile(userData.user.token);
 
         if(user){
-
-            console.log('Usuario ', user.userName);
             
             history.push(`/user/summary`, { user });
 
@@ -101,12 +105,27 @@ const SignIn = () => {
                         onChange    = { onChangePassword }
                     />
                 </Form.Group>
-                <Button
-                    variant     = "dark"
-                    type        = "submit"
-                >
-                    Ingresar
-                </Button>
+
+                {
+                    loading?
+                        <Button variant="dark" disabled>
+                            <Spinner
+                                as          = "span"
+                                animation   = "border"
+                                size        = "sm"
+                                role        = "status"
+                                aria-hidden = "true"
+                                className   = "mr-3"
+                            />
+                            Iniciando Sesión
+                        </Button>:
+                        <Button
+                            variant     = "dark"
+                            type        = "submit"
+                        >
+                            Ingresar
+                        </Button>
+                }
 
             </Form>
         </Container>

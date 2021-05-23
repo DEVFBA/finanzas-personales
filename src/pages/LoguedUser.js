@@ -24,6 +24,7 @@ import Investments from '../containers/Investments';
 import Transactions from '../containers/Transactions';
 import Goals from '../containers/Goals';
 import Budget from '../containers/Budget';
+import LoggingIn from '../components/LoggingIn';
 
 import '../styles/LoguedUser.css';
 
@@ -34,6 +35,7 @@ import {
     retrieveUserBudget 
 } from '../utils/UserFunctions';
 
+
 const LoguedUser = (props) => {
 
     const [userName,        setUserName         ]       = useState('');
@@ -43,6 +45,7 @@ const LoguedUser = (props) => {
     const [userInvestments, setUserInvestments  ]       = useState([]);
     const [userBudget,      setUserBudget       ]       = useState([]);
     const [dataChanged,     setDataChange       ]       = useState(true);
+    const [loaded,          setLoaded           ]       = useState(false);
 
     const { path, url } = useRouteMatch();
 
@@ -71,6 +74,7 @@ const LoguedUser = (props) => {
         setUserGoals(savingsGoals);
         setUserInvestments(investments);
         setUserBudget(budgets);
+        setLoaded(true);
 
     }, [dataChanged]);
 
@@ -80,129 +84,134 @@ const LoguedUser = (props) => {
                 className = "logued-user"
                 fluid
             >
-                <Row>
-                    <Col
-                        md={2}
-                        className="p-0"
-                    >
-                        <Container
-                            className="sidebar bg-dark"
-                        >
-                            <div
-                                className="pt-3"
-                            >
-                                <Row
-                                    className="justify-content-center"
-                                >
-                                    <Image
-                                        roundedCircle
-                                        fluid
-                                        src             = {profilePicture}
-                                        className       = "profile-picture"
-                                    />
-                                </Row>
-                                <Row
-                                    className="mt-4 justify-content-center  d-block"
-                                >
-                                    <h6
-                                        className="text-center text-white user-name"
-                                    >
-                                        Bienvenid@
-                                    </h6>
-                                    <h6
-                                        className="text-center text-white user-name"
-                                    >
-                                        { `${userName} ${userLastName}` }
-                                    </h6>
-                                </Row>
-                            </div>
+                {
+                    loaded?
 
-                            <Nav
-                                className   =   "mt-3 flex-column"
+                    <Row>
+                        <Col
+                            md={2}
+                            className="p-0"
+                        >
+                            <Container
+                                className="sidebar bg-dark"
                             >
-                                <Link
-                                    to          =   { `${url}/summary` }
-                                    className   =   "sidebar-link mt-1 ml-3"
+                                <div
+                                    className="pt-3"
                                 >
-                                    Resumen Financiero
-                                </Link>
-                                <Link
-                                    to          =   { `${url}/budget` }
-                                    className   =   "sidebar-link mt-1 ml-3"
+                                    <Row
+                                        className="justify-content-center"
+                                    >
+                                        <Image
+                                            roundedCircle
+                                            fluid
+                                            src             = {profilePicture}
+                                            className       = "profile-picture"
+                                        />
+                                    </Row>
+                                    <Row
+                                        className="mt-4 justify-content-center  d-block"
+                                    >
+                                        <h6
+                                            className="text-center text-white user-name"
+                                        >
+                                            Bienvenid@
+                                        </h6>
+                                        <h6
+                                            className="text-center text-white user-name"
+                                        >
+                                            { `${userName} ${userLastName}` }
+                                        </h6>
+                                    </Row>
+                                </div>
+
+                                <Nav
+                                    className   =   "mt-3 flex-column"
                                 >
-                                    Mi Presupesto
-                                </Link>
-                                <Link
-                                    to          =   { `${url}/goals` }
-                                    className   =   "sidebar-link mt-1 ml-3"
-                                >
-                                    Mis Metas
-                                </Link>
-                                <Link
-                                    to          =   { `${url}/transactions` }
-                                    className   =   "sidebar-link mt-1 ml-3"
-                                >
-                                    Movimientos
-                                </Link>
-                                <Link
-                                    to          =   { `${url}/investments` }
-                                    className   =   "sidebar-link mt-1 ml-3"
-                                >
-                                    Mis Inversiones
-                                </Link>
-                                <Link
-                                    to          =   { `${url}/finMarket` }
-                                    className   =   "sidebar-link mt-1 ml-3"
-                                >
-                                    Mercados Financieros
-                                </Link>
-                                <Link
-                                    to          =   { `/` }
-                                    className   =   "sidebar-link mt-1 ml-3"
-                                >
-                                    Salir
-                                </Link>
-                            </Nav>
-                        </Container>
-                    </Col>
-                    <Col
-                        md={10}
-                        className="logued-user-sections"
-                    >
-                        <Switch>
-                            <Route path = { `${path}/summary` }>
-                                <Summary
-                                    userGoals       = { userGoals }
-                                    userInvestments = { userInvestments }
-                                    userBudget      = { userBudget }
-                                    months          = { months }
-                                    years           = { years }
-                                />
-                            </Route>
-                            <Route exact path = { `${path}/finMarket` }>
-                                <FinancialMarkets />
-                            </Route>
-                            <Route exact path = { `${path}/investments` }>
-                                <Investments 
-                                    userInvestments = { userInvestments }
-                                    dataChange      = { updateDataChange }
-                                />
-                            </Route>
-                            <Route exact path = { `${path}/transactions` }>
-                                <Transactions />
-                            </Route>
-                            <Route exact path = { `${path}/goals` }>
-                                <Goals 
-                                    userGoals       = { userGoals }
-                                    dataChange      = { updateDataChange }
-                                />
-                            </Route>
-                            <Route exact path = { `${path}/budget` }>
-                                <Budget />
-                            </Route>
-                        </Switch>
-                    </Col>
-                </Row>
+                                    <Link
+                                        to          =   { `${url}/summary` }
+                                        className   =   "sidebar-link mt-1 ml-3"
+                                    >
+                                        Resumen Financiero
+                                    </Link>
+                                    <Link
+                                        to          =   { `${url}/budget` }
+                                        className   =   "sidebar-link mt-1 ml-3"
+                                    >
+                                        Mi Presupesto
+                                    </Link>
+                                    <Link
+                                        to          =   { `${url}/goals` }
+                                        className   =   "sidebar-link mt-1 ml-3"
+                                    >
+                                        Mis Metas
+                                    </Link>
+                                    <Link
+                                        to          =   { `${url}/transactions` }
+                                        className   =   "sidebar-link mt-1 ml-3"
+                                    >
+                                        Movimientos
+                                    </Link>
+                                    <Link
+                                        to          =   { `${url}/investments` }
+                                        className   =   "sidebar-link mt-1 ml-3"
+                                    >
+                                        Mis Inversiones
+                                    </Link>
+                                    <Link
+                                        to          =   { `${url}/finMarket` }
+                                        className   =   "sidebar-link mt-1 ml-3"
+                                    >
+                                        Mercados Financieros
+                                    </Link>
+                                    <Link
+                                        to          =   { `/` }
+                                        className   =   "sidebar-link mt-1 ml-3"
+                                    >
+                                        Salir
+                                    </Link>
+                                </Nav>
+                            </Container>
+                        </Col>
+                        <Col
+                            md={10}
+                            className="logued-user-sections"
+                        >
+                            <Switch>
+                                <Route path = { `${path}/summary` }>
+                                    <Summary
+                                        userGoals       = { userGoals }
+                                        userInvestments = { userInvestments }
+                                        userBudget      = { userBudget }
+                                        months          = { months }
+                                        years           = { years }
+                                    />
+                                </Route>
+                                <Route exact path = { `${path}/finMarket` }>
+                                    <FinancialMarkets />
+                                </Route>
+                                <Route exact path = { `${path}/investments` }>
+                                    <Investments 
+                                        userInvestments = { userInvestments }
+                                        dataChange      = { updateDataChange }
+                                    />
+                                </Route>
+                                <Route exact path = { `${path}/transactions` }>
+                                    <Transactions />
+                                </Route>
+                                <Route exact path = { `${path}/goals` }>
+                                    <Goals 
+                                        userGoals       = { userGoals }
+                                        dataChange      = { updateDataChange }
+                                    />
+                                </Route>
+                                <Route exact path = { `${path}/budget` }>
+                                    <Budget />
+                                </Route>
+                            </Switch>
+                        </Col>
+                    </Row>:
+                    <LoggingIn />
+                }
             </Container>
         </BrowserRouter>
     );

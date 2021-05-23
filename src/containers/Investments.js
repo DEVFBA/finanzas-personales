@@ -17,6 +17,7 @@ import {
 
 import InvestmentsChart from '../components/InvestmentsChart';
 import NoDataRegistered from '../components/NoDataRegistered';
+import UpdatingSpinner from '../components/UpdatingSpinner';
 
 import {
     completeInvestment,
@@ -34,17 +35,16 @@ import '../styles/Investments.css';
 
 const Investments = (props) => {
 
-    console.log('Inversiones ', props)
-
-    const [showAdd,             setShowAdd             ]    = useState(false);
-    const [investmentData,      setInvestmentData      ]    = useState(null);
-    const [showDelete,          setShowDelete          ]    = useState(false);
-    const [showUpdate,          setShowUpdate          ]    = useState(false);
-    const [broker,              setBroker              ]    = useState('');
-    const [investmentInstrument,setInvestmentInstrument]    = useState('');
-    const [investedAmount,      setInvestedAmount      ]    = useState(0);
-    const [investmentTotal,     setInvestmentTotal     ]    = useState(0);
-    const [portfolioPerc,       setPortfolioPerc       ]    = useState(0);
+    const [showAdd,             setShowAdd              ]           = useState(false);
+    const [investmentData,      setInvestmentData       ]           = useState(null);
+    const [showDelete,          setShowDelete           ]           = useState(false);
+    const [showUpdate,          setShowUpdate           ]           = useState(false);
+    const [broker,              setBroker               ]           = useState('');
+    const [investmentInstrument,setInvestmentInstrument ]           = useState('');
+    const [investedAmount,      setInvestedAmount       ]           = useState(0);
+    const [investmentTotal,     setInvestmentTotal      ]           = useState(0);
+    const [portfolioPerc,       setPortfolioPerc        ]           = useState(0);
+    const [loading,             setLoading              ]           = useState(false);
 
     useEffect(() => {
 
@@ -132,6 +132,8 @@ const Investments = (props) => {
 
         let completeData = false;
 
+        setLoading(true);
+
         completeData = await completeInvestment(broker, investmentInstrument, investedAmount, investmentTotal);
 
         if(completeData){
@@ -152,6 +154,8 @@ const Investments = (props) => {
 
         props.dataChange();
 
+        setLoading(false);
+
         handleCloseAdd();
 
     }
@@ -171,12 +175,11 @@ const Investments = (props) => {
     async function updateInvestmentId(){
         
         let completeData                    = false;
+
+        setLoading(true);
         
         const investedAmountUpdated            = document.getElementById('invested-amount').value;
         const investmentTotalUpdated           = document.getElementById('investment-total').value;
-
-        console.log('invertido ', investedAmountUpdated);
-        console.log('total ', investmentTotalUpdated);
 
         completeData = await completeUpdateInvestment(investedAmountUpdated, investmentTotalUpdated);
 
@@ -198,6 +201,8 @@ const Investments = (props) => {
         setPortfolioPerc(0);
 
         props.dataChange();
+
+        setLoading(false);
 
         handleCloseUpdate();
 
@@ -378,37 +383,42 @@ const Investments = (props) => {
 
                 <Modal.Body>
 
-                    <Form>
+                    {
+                        loading?
+                            <UpdatingSpinner/>:
+                            <Form>
 
-                        <Form.Control
-                            type            = "text"
-                            placeholder     = "Broker de Inversión"
-                            onChange        = { onChangeBroker }
-                            className       = 'mt-1'
-                        />
+                                <Form.Control
+                                    type            = "text"
+                                    placeholder     = "Broker de Inversión"
+                                    onChange        = { onChangeBroker }
+                                    className       = 'mt-1'
+                                />
 
-                        <Form.Control
-                            type            = "text"
-                            placeholder     = "Instrumento de Inversión"
-                            onChange        = { onChangeInvInstrument }
-                            className       = 'mt-3'
-                        />
+                                <Form.Control
+                                    type            = "text"
+                                    placeholder     = "Instrumento de Inversión"
+                                    onChange        = { onChangeInvInstrument }
+                                    className       = 'mt-3'
+                                />
 
-                        <Form.Control
-                            type            = "number"
-                            placeholder     = "Monto Invertido"
-                            onChange        = { onChangeInvestedAmount }
-                            className       = 'mt-3'
-                        />
+                                <Form.Control
+                                    type            = "number"
+                                    placeholder     = "Monto Invertido"
+                                    onChange        = { onChangeInvestedAmount }
+                                    className       = 'mt-3'
+                                />
 
-                        <Form.Control
-                            type            = "number"
-                            placeholder     = "Saldo Total de la Inversión"
-                            onChange        = { onChangeInvestTotal }
-                            className       = 'mt-3'
-                        />
+                                <Form.Control
+                                    type            = "number"
+                                    placeholder     = "Saldo Total de la Inversión"
+                                    onChange        = { onChangeInvestTotal }
+                                    className       = 'mt-3'
+                                />
 
-                    </Form>
+                            </Form>
+                    }
+
 
                 </Modal.Body>
 
@@ -489,55 +499,60 @@ const Investments = (props) => {
 
                 <Modal.Body>
 
-                    <Form>
+                    {
+                        loading?
+                            <UpdatingSpinner/>:
+                            <Form>
 
-                        <Form.Label
-                            className           = 'mt-1'
-                        >
-                            Broker
-                        </Form.Label>
-                        <Form.Control
-                            type                = 'text'
-                            placeholder         = { localStorage.getItem('broker') }
-                            disabled
-                        />
+                                <Form.Label
+                                    className           = 'mt-1'
+                                >
+                                    Broker
+                                </Form.Label>
+                                <Form.Control
+                                    type                = 'text'
+                                    placeholder         = { localStorage.getItem('broker') }
+                                    disabled
+                                />
 
-                        <Form.Label
-                            className           = 'mt-3'
-                        >
-                            Intrumento de Inversión
-                        </Form.Label>
-                        <Form.Control
-                            type                = 'text'
-                            placeholder         = { localStorage.getItem('investmentInstrument') }
-                            disabled
-                        />
+                                <Form.Label
+                                    className           = 'mt-3'
+                                >
+                                    Intrumento de Inversión
+                                </Form.Label>
+                                <Form.Control
+                                    type                = 'text'
+                                    placeholder         = { localStorage.getItem('investmentInstrument') }
+                                    disabled
+                                />
 
-                        <Form.Label
-                            className           = 'mt-3'
-                        >
-                            Monto Invertido
-                        </Form.Label>
-                        <Form.Control
-                            type                = 'number'
-                            defaultValue        = { convertStrAmountToNum(localStorage.getItem('investedAmount')) }
-                            onClick             = { onChangeUpdateInvested }
-                            id                  = 'invested-amount'
-                        />
+                                <Form.Label
+                                    className           = 'mt-3'
+                                >
+                                    Monto Invertido
+                                </Form.Label>
+                                <Form.Control
+                                    type                = 'number'
+                                    defaultValue        = { convertStrAmountToNum(localStorage.getItem('investedAmount')) }
+                                    onClick             = { onChangeUpdateInvested }
+                                    id                  = 'invested-amount'
+                                />
 
-                        <Form.Label
-                            className           = 'mt-3'
-                        >
-                            Saldo Inversión
-                        </Form.Label>
-                        <Form.Control
-                            type                = 'number'
-                            defaultValue        = { convertStrAmountToNum(localStorage.getItem('investmentTotal')) }
-                            onClick             = { onChangeUpdateTotal }
-                            id                  = 'investment-total'   
-                        />
-                    
-                    </Form>
+                                <Form.Label
+                                    className           = 'mt-3'
+                                >
+                                    Saldo Inversión
+                                </Form.Label>
+                                <Form.Control
+                                    type                = 'number'
+                                    defaultValue        = { convertStrAmountToNum(localStorage.getItem('investmentTotal')) }
+                                    onClick             = { onChangeUpdateTotal }
+                                    id                  = 'investment-total'   
+                                />
+                            
+                            </Form>
+                    }
+
 
                 </Modal.Body>
 

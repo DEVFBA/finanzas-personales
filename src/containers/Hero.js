@@ -2,6 +2,7 @@ import React, {
     useState,
     useEffect
 } from 'react';
+
 import {
     Jumbotron,
     Container
@@ -12,20 +13,23 @@ import HeroCarousel from './HeroCarousel';
 import calcChange, {
     calcPercChange
 } from '../utils/Calculations.js';
+
 import determineTextClass from '../utils/TextFormat.js';
 
 import '../styles/Hero.css';
 
 const Hero = () => {
 
-    const[AAPLLatest,       setAAPLLatest]                  = useState(0);
-    const[AAPLPrevious,     setAAPLPrevious]                = useState(0);
-    const[AMZNLatest,       setAMZNLatest]                  = useState(0);
-    const[AMZNPrevious,     setAMZNPrevious]                = useState(0);
-    const[TSLALatest,       setTSLALatest]                  = useState(0);
-    const[TSLAPrevious,     setTSLAPrevious]                = useState(0);
-    const[FBLatest,         setFBLatest]                    = useState(0);
-    const[FBPrevious,       setFBPrevious]                  = useState(0);
+    const [AAPLLatest,       setAAPLLatest  ]               = useState(0);
+    const [AAPLPrevious,     setAAPLPrevious]               = useState(0);
+    const [AMZNLatest,       setAMZNLatest  ]               = useState(0);
+    const [AMZNPrevious,     setAMZNPrevious]               = useState(0);
+    const [TSLALatest,       setTSLALatest  ]               = useState(0);
+    const [TSLAPrevious,     setTSLAPrevious]               = useState(0);
+    const [FBLatest,         setFBLatest    ]               = useState(0);
+    const [FBPrevious,       setFBPrevious  ]               = useState(0);
+    const [quotesLoaded,     setquotesLoaded]               = useState(false);
+
 
     let AAPLChange                      = 0;
     let AAPLPercChange                  = 0;
@@ -76,6 +80,9 @@ const Hero = () => {
                 const FB = data.filter(ticker => ticker.symbol === 'NVDA');
                 setFBLatest(FB[0].close);
                 setFBPrevious(FB[1].close);
+
+                /* Change quotesLoaded */
+                setquotesLoaded(true);
         })
     }, []);
 
@@ -99,10 +106,11 @@ const Hero = () => {
             >
                 <Container>
                     <HeroCarousel
-                        AAPL    =   { [AAPLLatest,  AAPLChange, AAPLPercChange, AAPLTextClass] }
-                        AMZN    =   { [AMZNLatest,  AMZNChange, AMZNPercChange, AMZNTextClass] }
-                        TSLA    =   { [TSLALatest,  TSLAChange, TSLAPercChange, TSLATextClass] }
-                        FB      =   { [FBLatest,    FBChange,   FBPercChange,   FBTextClass]   }
+                        AAPL            =   { [AAPLLatest,  AAPLChange, AAPLPercChange, AAPLTextClass] }
+                        AMZN            =   { [AMZNLatest,  AMZNChange, AMZNPercChange, AMZNTextClass] }
+                        TSLA            =   { [TSLALatest,  TSLAChange, TSLAPercChange, TSLATextClass] }
+                        FB              =   { [FBLatest,    FBChange,   FBPercChange,   FBTextClass]   }
+                        quotesLoaded    =   { quotesLoaded }
                     />
                 </Container>
             </Jumbotron>

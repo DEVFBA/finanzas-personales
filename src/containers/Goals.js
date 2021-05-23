@@ -1,6 +1,7 @@
 import React, {
     useState,
-    useEffect
+    useEffect,
+    Fragment
 } from 'react';
 
 import {
@@ -18,6 +19,7 @@ import {
 
 import GoalsChart from '../components/GoalsChart';
 import NoDataRegistered from '../components/NoDataRegistered';
+import UpdatingSpinner from '../components/UpdatingSpinner';
 
 import {
     getDateString,
@@ -43,6 +45,7 @@ const Goals = (props) => {
     const [savedAmount,     setSavedAmount  ]           = useState(0);
     const [targetDate,      setTargetDate   ]           = useState(0);
     const [goalData,        setGoalData     ]           = useState(null);
+    const [loading,         setLoading      ]           = useState(false);
 
     useEffect(() => {
 
@@ -121,6 +124,8 @@ const Goals = (props) => {
 
         let completeData = false;
 
+        setLoading(true);
+
         completeData = await completeGoal(goal, targetAmount, targetDate);
 
         if(completeData){
@@ -139,6 +144,8 @@ const Goals = (props) => {
         setTargetDate(null);
 
         props.dataChange();
+
+        setLoading(false);
 
         handleCloseAdd();
 
@@ -159,6 +166,8 @@ const Goals = (props) => {
     async function updateGoalId(){
         
         let completeData                    = false;
+
+        setLoading(true);
         
         const savedAmountUpdated            = document.getElementById('saved-amount').value;
         const targetAmountUpdated           = document.getElementById('target-amount').value;
@@ -179,6 +188,8 @@ const Goals = (props) => {
         setTargetAmount(0);
         setSavedAmount(0);
         props.dataChange();
+
+        setLoading(false);
 
         handleCloseUpdate();
 
@@ -256,6 +267,7 @@ const Goals = (props) => {
         <Container
             className='goals'
         >
+
             <Row>
                 <h3>Mis Metas</h3>
             </Row>
@@ -266,6 +278,7 @@ const Goals = (props) => {
                     type        = 'submit'
                     className   = 'goalsButton mt-5'
                     onClick     = { handleShowAdd }
+                    col         = 'sm-3'
                 >
                     Nuevo Ahorro
                 </Button>
@@ -349,37 +362,41 @@ const Goals = (props) => {
 
                 <Modal.Body>
 
-                    <Form>
+                    {
+                        loading?
+                            <UpdatingSpinner />:
+                            <Form>
 
-                        <Form.Control
-                            type            = "text"
-                            placeholder     = "¿Para qué quieres ahorrar?"
-                            onChange        = { onChangeGoal }
-                            className       = 'mt-1'
-                        />
+                                <Form.Control
+                                    type            = "text"
+                                    placeholder     = "¿Para qué quieres ahorrar?"
+                                    onChange        = { onChangeGoal }
+                                    className       = 'mt-1'
+                                />
 
-                        <Form.Control
-                            type            = "number"
-                            placeholder     = "¿Cuánto quieres ahorrar?"
-                            onChange        = { onChangeTargetAmount }
-                            className       = 'mt-3'
-                        />
+                                <Form.Control
+                                    type            = "number"
+                                    placeholder     = "¿Cuánto quieres ahorrar?"
+                                    onChange        = { onChangeTargetAmount }
+                                    className       = 'mt-3'
+                                />
 
-                        <Form.Control
-                            type            = "number"
-                            placeholder     = "¿Cuánto llevas ahorrado?"
-                            onChange        = { onChangeSavedAmount }
-                            className       = 'mt-3'
-                        />
+                                <Form.Control
+                                    type            = "number"
+                                    placeholder     = "¿Cuánto llevas ahorrado?"
+                                    onChange        = { onChangeSavedAmount }
+                                    className       = 'mt-3'
+                                />
 
-                        <Form.Control
-                            type            = "date"
-                            placeholder     = "¿Para cuándo quieres lograrlo?"
-                            onChange        = { onChangeTargetDate }
-                            className       = 'mt-3'
-                        />
+                                <Form.Control
+                                    type            = "date"
+                                    placeholder     = "¿Para cuándo quieres lograrlo?"
+                                    onChange        = { onChangeTargetDate }
+                                    className       = 'mt-3'
+                                />
 
-                    </Form>
+                            </Form>
+                    }
 
                 </Modal.Body>
 
@@ -460,40 +477,45 @@ const Goals = (props) => {
 
                 <Modal.Body>
 
-                    <Form>
+                    {
+                        loading?
+                            <UpdatingSpinner/>:
+                            <Form>
 
-                        <Form.Control
-                            type                = 'text'
-                            placeholder         = { localStorage.getItem('goalDescription') }
-                            className           = 'mt-1'
-                            disabled
-                        />
+                                <Form.Control
+                                    type                = 'text'
+                                    placeholder         = { localStorage.getItem('goalDescription') }
+                                    className           = 'mt-1'
+                                    disabled
+                                />
 
-                        <Form.Label
-                            className           = 'mt-3'
-                        >
-                            Monto Objetivo
-                        </Form.Label>
-                        <Form.Control
-                            type                = 'number'
-                            defaultValue        = { convertStrAmountToNum(localStorage.getItem('goalTargetAmount')) }
-                            onClick             = { onChangeUpdateTarget }
-                            id                  = 'target-amount'
-                        />
+                                <Form.Label
+                                    className           = 'mt-3'
+                                >
+                                    Monto Objetivo
+                                </Form.Label>
+                                <Form.Control
+                                    type                = 'number'
+                                    defaultValue        = { convertStrAmountToNum(localStorage.getItem('goalTargetAmount')) }
+                                    onClick             = { onChangeUpdateTarget }
+                                    id                  = 'target-amount'
+                                />
 
-                        <Form.Label
-                            className           = 'mt-3'
-                        >
-                            Monto Ahorrado
-                        </Form.Label>
-                        <Form.Control
-                            type                = 'number'
-                            defaultValue        = { convertStrAmountToNum(localStorage.getItem('goalSavedAmount')) }
-                            onClick             = { onChangeUpdateSaved }
-                            id                  = 'saved-amount'   
-                        />
-                    
-                    </Form>
+                                <Form.Label
+                                    className           = 'mt-3'
+                                >
+                                    Monto Ahorrado
+                                </Form.Label>
+                                <Form.Control
+                                    type                = 'number'
+                                    defaultValue        = { convertStrAmountToNum(localStorage.getItem('goalSavedAmount')) }
+                                    onClick             = { onChangeUpdateSaved }
+                                    id                  = 'saved-amount'   
+                                />
+                            
+                            </Form>
+                    }
+
 
                 </Modal.Body>
 
@@ -514,7 +536,7 @@ const Goals = (props) => {
 
                 </Modal.Footer>
             </Modal>
-
+            
         </Container>
     );
 }

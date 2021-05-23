@@ -7,9 +7,9 @@ import '../styles/FormSelect.css';
 const FormSelect = (props) => {
     return(
         <Form.Control
-        as="select"
-        custom
-        className={props.className}
+            as          = "select"
+            custom
+            className   = { props.className }
         >
             {props.options.map((option) => {
                 return(
