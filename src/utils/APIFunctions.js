@@ -16,15 +16,15 @@ async function completeGoal(goal, targetAmount, targetDate) {
 
 async function completeUpdateInvestment(investedAmount, investmentTotal) {
 
-    let completeGoal = false;
+    let completeInvestment = false;
 
     if(investedAmount && investmentTotal){
-        completeGoal = true;
+        completeInvestment = true;
     } else {
-        completeGoal = false;
+        completeInvestment = false;
     }
   
-    return completeGoal;
+    return completeInvestment;
 
 }
 
@@ -184,6 +184,192 @@ async function deleteInvestment(investmentID, token){
 
 }
 
+async function completeIncome(concept, incomeAmount) {
+
+    let completeIncome = false;
+    
+    //Remember to get back and fight with this sh**%y dates
+
+    if(concept && incomeAmount){
+        completeIncome = true;
+    } else {
+        completeIncome = false;
+    }
+  
+    return completeIncome;
+
+}
+
+async function completeExpense(concept, expenseAmount) {
+
+    let completeExpense = false;
+    
+    //Remember to get back and fight with this sh**%y dates
+
+    if(concept && expenseAmount){
+        completeExpense = true;
+    } else {
+        completeExpense = false;
+    }
+  
+    return completeExpense;
+
+}
+
+async function saveIncome(concept, incomeAmount, recurring, token){
+
+    const body = {
+        concept: concept,
+        incomeAmount: incomeAmount,
+        recurring: recurring
+    }
+
+    const response = await fetch('https://personal-finance-mexico.herokuapp.com/v1/incomes', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    const incomeData = await response.json();
+
+    if(response.ok) {
+        return incomeData;
+    } else {
+        return incomeData;
+    }  
+    
+}
+
+async function deleteIncome(incomeID, token){
+
+    const response = await fetch(`https://personal-finance-mexico.herokuapp.com/v1/incomes/${incomeID}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    console.log(response);
+
+}
+
+async function updateIncome(incomeAmount, recurring, incomeID, token){
+
+    const body = {
+        incomeAmount: incomeAmount,
+        recurring: recurring
+    }
+
+    console.log('Body', body);
+
+    const response = await fetch(`https://personal-finance-mexico.herokuapp.com/v1/incomes/${incomeID}`, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    console.log(response);
+
+}
+
+async function completeUpdateIncome(incomeAmount) {
+
+    let completeIncome = false;
+
+    if(incomeAmount){
+        completeIncome = true;
+    } else {
+        completeIncome = false;
+    }
+  
+    return completeIncome;
+
+}
+
+async function saveExpense(concept, expenseAmount, recurring, token){
+
+    const body = {
+        concept: concept,
+        expenseAmount: expenseAmount,
+        recurring: recurring
+    }
+
+    const response = await fetch('https://personal-finance-mexico.herokuapp.com/v1/expenses', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    const expenseData = await response.json();
+
+    if(response.ok) {
+        return expenseData;
+    } else {
+        return expenseData;
+    }  
+    
+}
+
+async function deleteExpense(expenseID, token){
+
+    const response = await fetch(`https://personal-finance-mexico.herokuapp.com/v1/expenses/${expenseID}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    console.log(response);
+
+}
+
+async function completeUpdateExpense(expenseAmount) {
+
+    let completeExpense = false;
+
+    if(expenseAmount){
+        completeExpense = true;
+    } else {
+        completeExpense = false;
+    }
+  
+    return completeExpense;
+
+}
+
+async function updateExpense(expenseAmount, recurring, expenseID, token){
+
+    const body = {
+        expenseAmount: expenseAmount,
+        recurring: recurring
+    }
+
+    console.log('Body', body);
+
+    const response = await fetch(`https://personal-finance-mexico.herokuapp.com/v1/expenses/${expenseID}`, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    console.log(response);
+
+}
+
 export default completeGoal;
 export {
     saveGoal,
@@ -194,5 +380,15 @@ export {
     saveInvestment,
     deleteInvestment,
     completeUpdateInvestment,
-    updateInvestment
+    updateInvestment,
+    completeIncome,
+    saveIncome,
+    deleteIncome,
+    updateIncome,
+    completeUpdateIncome,
+    completeExpense,
+    saveExpense,
+    deleteExpense,
+    completeUpdateExpense,
+    updateExpense
 }

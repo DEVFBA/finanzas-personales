@@ -276,9 +276,8 @@ const Goals = (props) => {
                 <Button
                     variant     = 'outline-light'
                     type        = 'submit'
-                    className   = 'goalsButton mt-5'
+                    className   = 'goalsButton mt-2'
                     onClick     = { handleShowAdd }
-                    col         = 'sm-3'
                 >
                     Nuevo Ahorro
                 </Button>

@@ -56,9 +56,20 @@ function convertStrAmountToNum(stringAmount){
 
 }
 
+function recurringString(recurring){
+    
+    let string = '';
+
+    recurring ? string = 'Recurrente' : string = 'No Recurrente';
+
+    return string;
+
+}
+
 export default determineTextClass;
 export { 
     determineProgressColor,
     getDateString,
-    convertStrAmountToNum
+    convertStrAmountToNum,
+    recurringString
 };

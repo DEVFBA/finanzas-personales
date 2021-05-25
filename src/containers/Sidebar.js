@@ -3,7 +3,8 @@ import {
     Nav,
     Container,
     Row,
-    Image
+    Image,
+    Button
 } from 'react-bootstrap';
 import {
     withRouter, 
@@ -89,6 +90,7 @@ const Sidebar = (props) => {
                 <Link
                     to          =   { `/` }
                     className   =   "sidebar-link mt-1 ml-3"
+                    onClick     =   { localStorage.removeItem('loginToken') }
                 >
                     Salir
                 </Link>

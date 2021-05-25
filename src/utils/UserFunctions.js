@@ -157,6 +157,38 @@ async function retrieveUserBudget(token){
 
 }
 
+async function retrieveUserIncomes(token){
+  
+  const response = await fetch('https://personal-finance-mexico.herokuapp.com/v1/incomes', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    }
+  });
+
+    const userIncomes = await response.json();
+
+    return userIncomes;
+
+}
+
+async function retrieveUserExpenses(token){
+  
+  const response = await fetch('https://personal-finance-mexico.herokuapp.com/v1/expenses', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    }
+  });
+
+    const userExpenses = await response.json();
+
+    return userExpenses;
+
+}
+
 
 export default userLogin;
 export {
@@ -167,5 +199,7 @@ export {
   retrieveUserGoals,
   retrieveUserInvestments,
   retrieveUserBudget,
-  signUp
+  signUp,
+  retrieveUserIncomes,
+  retrieveUserExpenses
 };

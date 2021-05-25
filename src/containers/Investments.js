@@ -271,12 +271,12 @@ const Investments = (props) => {
 
     async function removeInvestmentLocalStorage(){
 
-        localStorage.removeItem('investmentID', investmentData.investmentId);
-        localStorage.removeItem('broker', investmentData.investingCompany);
-        localStorage.removeItem('investmentInstrument', investmentData.investmentInstrument);
-        localStorage.removeItem('investedAmount', investmentData.investedAmount);
-        localStorage.removeItem('investmentTotal', investmentData.investmentTotal);
-        localStorage.removeItem('portfolioPerc', investmentData.portfolioPerc);
+        localStorage.removeItem('investmentID');
+        localStorage.removeItem('broker');
+        localStorage.removeItem('investmentInstrument');
+        localStorage.removeItem('investedAmount');
+        localStorage.removeItem('investmentTotal');
+        localStorage.removeItem('portfolioPerc');
 
     }
 
@@ -292,7 +292,7 @@ const Investments = (props) => {
                 <Button
                     variant     = 'outline-light'
                     type        = 'submit'
-                    className   = 'investmentsButton mt-5'
+                    className   = 'investmentsButton mt-2'
                     onClick     = { handleShowAdd }
                 >
                     Nueva Inversión

@@ -1,7 +1,29 @@
-.budget {
+.budgets {
   margin-top: 5rem;
   width: 100%;
   height: 100vh;
+}
+.budgets .budget-table {
+  color: white;
+}
+.budgets .budget-table th {
+  text-align: center;
+  vertical-align: middle;
+}
+.budgets .budget-table .td-amount {
+  text-align: center;
+  vertical-align: middle;
+}
+.budgets .budget-table .td-date {
+  text-align: center;
+  vertical-align: middle;
+}
+.budgets .budget-table a {
+  text-decoration: none;
+  color: white;
+}
+.budgets .budget-table a:hover {
+  text-decoration: underline;
 }
 
 /*# sourceMappingURL=Budget.css.map */

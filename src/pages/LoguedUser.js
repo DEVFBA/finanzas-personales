@@ -2,20 +2,24 @@ import React, {
     useState,
     useEffect
 } from 'react';
+
 import {
     Container,
     Row,
     Col, 
     Image,
-    Nav
+    Nav,
+    Button
 } from 'react-bootstrap';
+
 import {
     BrowserRouter,
     Route,
     Switch,
     withRouter,
     useRouteMatch,
-    Link
+    Link,
+    useHistory
 } from 'react-router-dom';
 
 import Summary from '../containers/Summary';
@@ -32,11 +36,15 @@ import {
     retrieveUserProfileByID,
     retrieveUserGoals,
     retrieveUserInvestments,
-    retrieveUserBudget 
+    retrieveUserBudget,
+    retrieveUserIncomes,
+    retrieveUserExpenses 
 } from '../utils/UserFunctions';
 
 
 const LoguedUser = (props) => {
+
+    const history = useHistory();
 
     const [userName,        setUserName         ]       = useState('');
     const [userLastName,    setUserLastName     ]       = useState('');
@@ -44,6 +52,8 @@ const LoguedUser = (props) => {
     const [userGoals,       setUserGoals        ]       = useState([]);
     const [userInvestments, setUserInvestments  ]       = useState([]);
     const [userBudget,      setUserBudget       ]       = useState([]);
+    const [userIncomes,     setUserIncomes      ]       = useState([]);
+    const [userExpenses,    setUserExpenses     ]       = useState([]);
     const [dataChanged,     setDataChange       ]       = useState(true);
     const [loaded,          setLoaded           ]       = useState(false);
 
@@ -67,6 +77,10 @@ const LoguedUser = (props) => {
         const investments = await retrieveUserInvestments(localStorage.getItem("loginToken"));
 
         const budgets = await retrieveUserBudget(localStorage.getItem("loginToken"));
+
+        const incomes = await retrieveUserIncomes(localStorage.getItem("loginToken"));
+
+        const expenses = await retrieveUserExpenses(localStorage.getItem("loginToken"));
         
         setUserName(userProfile.userName);
         setProfilePicture(userProfile.profilePicture);
@@ -74,9 +88,24 @@ const LoguedUser = (props) => {
         setUserGoals(savingsGoals);
         setUserInvestments(investments);
         setUserBudget(budgets);
+        setUserIncomes(incomes);
+        setUserExpenses(expenses);
         setLoaded(true);
 
+        console.log('Goals ', userGoals);
+        console.log('Investments ', userInvestments);
+        console.log('Incomes ', userIncomes);
+        console.log('Expenses ', userExpenses);
+
     }, [dataChanged]);
+
+    const logOut = () => {
+
+        localStorage.removeItem('loginToken');
+
+        history.push('/');
+
+    }
 
    return(
         <BrowserRouter>
@@ -163,12 +192,19 @@ const LoguedUser = (props) => {
                                     >
                                         Mercados Financieros
                                     </Link>
-                                    <Link
+{/*                                     <Link
                                         to          =   { `/` }
                                         className   =   "sidebar-link mt-1 ml-3"
                                     >
                                         Salir
-                                    </Link>
+                                    </Link> */}
+                                    <Button
+                                        onClick     = { logOut }
+                                        variant     = 'dark'
+                                        className   = 'text-left'
+                                    >
+                                        Salir
+                                    </Button>
                                 </Nav>
                             </Container>
                         </Col>
@@ -205,7 +241,11 @@ const LoguedUser = (props) => {
                                     />
                                 </Route>
                                 <Route exact path = { `${path}/budget` }>
-                                    <Budget />
+                                    <Budget 
+                                        userIncomes     = { userIncomes }
+                                        userExpenses    = { userExpenses }
+                                        dataChange      = { updateDataChange }
+                                    />
                                 </Route>
                             </Switch>
                         </Col>
