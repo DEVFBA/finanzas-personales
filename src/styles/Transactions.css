@@ -3,5 +3,27 @@
   width: 100%;
   height: 100vh;
 }
+.transactions .transactions-table {
+  color: white;
+}
+.transactions .transactions-table th {
+  text-align: center;
+  vertical-align: middle;
+}
+.transactions .transactions-table .td-amount {
+  text-align: center;
+  vertical-align: middle;
+}
+.transactions .transactions-table .td-date {
+  text-align: center;
+  vertical-align: middle;
+}
+.transactions .transactions-table a {
+  text-decoration: none;
+  color: white;
+}
+.transactions .transactions-table a:hover {
+  text-decoration: underline;
+}
 
 /*# sourceMappingURL=Transactions.css.map */

@@ -38,7 +38,9 @@ import {
     retrieveUserInvestments,
     retrieveUserBudget,
     retrieveUserIncomes,
-    retrieveUserExpenses 
+    retrieveUserExpenses,
+    retrieveUserTransactions,
+    retrieveUserBankTransactions 
 } from '../utils/UserFunctions';
 
 
@@ -54,6 +56,8 @@ const LoguedUser = (props) => {
     const [userBudget,      setUserBudget       ]       = useState([]);
     const [userIncomes,     setUserIncomes      ]       = useState([]);
     const [userExpenses,    setUserExpenses     ]       = useState([]);
+    const [userTransactions,setUserTransactions ]       = useState([]);
+    const [userBankTrans,   setUserBankTrans    ]       = useState([]);
     const [dataChanged,     setDataChange       ]       = useState(true);
     const [loaded,          setLoaded           ]       = useState(false);
 
@@ -81,6 +85,10 @@ const LoguedUser = (props) => {
         const incomes = await retrieveUserIncomes(localStorage.getItem("loginToken"));
 
         const expenses = await retrieveUserExpenses(localStorage.getItem("loginToken"));
+
+        const transactions = await retrieveUserTransactions(localStorage.getItem("loginToken"));
+
+        const bankTransactions = await retrieveUserBankTransactions(localStorage.getItem("loginToken"));
         
         setUserName(userProfile.userName);
         setProfilePicture(userProfile.profilePicture);
@@ -90,6 +98,8 @@ const LoguedUser = (props) => {
         setUserBudget(budgets);
         setUserIncomes(incomes);
         setUserExpenses(expenses);
+        setUserTransactions(transactions);
+        setUserBankTrans(bankTransactions);
         setLoaded(true);
 
         console.log('Goals ', userGoals);
@@ -203,7 +213,7 @@ const LoguedUser = (props) => {
                                         variant     = 'dark'
                                         className   = 'text-left'
                                     >
-                                        Salir
+                                        Salir   
                                     </Button>
                                 </Nav>
                             </Container>
@@ -232,7 +242,11 @@ const LoguedUser = (props) => {
                                     />
                                 </Route>
                                 <Route exact path = { `${path}/transactions` }>
-                                    <Transactions />
+                                    <Transactions 
+                                        userTransactions    = { userTransactions }
+                                        userBankTrans       = { userBankTrans }
+                                        dataChange          = { updateDataChange }
+                                    />
                                 </Route>
                                 <Route exact path = { `${path}/goals` }>
                                     <Goals 

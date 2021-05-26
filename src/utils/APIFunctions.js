@@ -370,6 +370,56 @@ async function updateExpense(expenseAmount, recurring, expenseID, token){
 
 }
 
+async function completeTransaction(type, concept, description, amount, date, origin) {
+
+    let completeTransaction = false;
+    
+    //Remember to get back and fight with this sh**%y dates
+
+    if(type && concept && description && amount && date && origin){
+        completeTransaction = true;
+    } else {
+        completeTransaction = false;
+    }
+  
+    return completeTransaction;
+
+}
+
+async function saveTransaction(type, concept, date, description, amount, recurring, origin, accountNumber, token){
+
+    const body = {
+        type: type,
+        concept: concept,
+        description: description,
+        amount: amount,
+        recurring: recurring,
+        date: date,
+        origin: origin,
+        accountNumber: accountNumber
+    }
+
+    console.log('Body ', body);
+
+    const response = await fetch('https://personal-finance-mexico.herokuapp.com/v1/transactions', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    const transactionData = await response.json();
+
+    if(response.ok) {
+        return transactionData;
+    } else {
+        return transactionData;
+    }  
+    
+}
+
 export default completeGoal;
 export {
     saveGoal,
@@ -390,5 +440,7 @@ export {
     saveExpense,
     deleteExpense,
     completeUpdateExpense,
-    updateExpense
+    updateExpense,
+    completeTransaction,
+    saveTransaction
 }

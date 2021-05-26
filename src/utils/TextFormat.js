@@ -24,6 +24,22 @@ function determineProgressColor(value) {
     return color;
 }
 
+function completeString(string){
+
+    string = String(string);
+
+    let newString = '';
+
+    if(string.length === 1){
+        newString = '0' + string;
+    } else {
+        newString = string;
+    }
+
+    return newString;
+
+}
+
 function getDateString(date){
 
     let dateString = '';
@@ -32,11 +48,11 @@ function getDateString(date){
 
     dateToFormat = new Date(dateToFormat.setDate(dateToFormat.getDate() + 1));
 
-    const day = dateToFormat.getDate();
-    const month = dateToFormat.getMonth() + 1;
+    const day = completeString(dateToFormat.getDate());
+    const month = completeString(dateToFormat.getMonth() + 1);
     const year = dateToFormat.getFullYear();
 
-    dateString = `${day} / ${month} / ${year}`
+    dateString = `${day}/${month}/${year}`
 
     return dateString;
 

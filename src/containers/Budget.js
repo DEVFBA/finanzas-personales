@@ -40,6 +40,8 @@ import '../styles/Budget.css';
 
 const Budget = (props) => {
 
+    console.log('Budget ', props);
+
     const [showAddIncome,       setShowAddIncome        ]           = useState(false);
     const [showAddExpense,      setShowAddExpense       ]           = useState(false);
     const [incomeData,          setIncomeData           ]           = useState(null);
@@ -385,6 +387,8 @@ const Budget = (props) => {
         setLoading(true);
 
         completeData = await completeIncome(concept, incomeAmount);
+
+        console.log('Datos a pasar Goal ', recurring)
 
         if(completeData){
 

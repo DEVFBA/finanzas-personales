@@ -389,7 +389,6 @@ const Goals = (props) => {
 
                                 <Form.Control
                                     type            = "date"
-                                    placeholder     = "¿Para cuándo quieres lograrlo?"
                                     onChange        = { onChangeTargetDate }
                                     className       = 'mt-3'
                                 />
