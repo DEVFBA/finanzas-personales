@@ -420,6 +420,73 @@ async function saveTransaction(type, concept, date, description, amount, recurri
     
 }
 
+async function saveTransactionFromBank(body, token){
+
+    console.log('Body Bank ', body);
+
+    const response = await fetch('https://personal-finance-mexico.herokuapp.com/v1/transactions', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    const transactionData = await response.json();
+
+    if(response.ok) {
+        return transactionData;
+    } else {
+        return transactionData;
+    }  
+    
+}
+
+async function updateTransaction(body, transactionID, token){
+
+    const response = await fetch(`https://personal-finance-mexico.herokuapp.com/v1/transactions/${transactionID}`, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    console.log(response);
+
+}
+
+async function deleteTransaction(transactionID, token){
+
+    const response = await fetch(`https://personal-finance-mexico.herokuapp.com/v1/transactions/${transactionID}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    console.log(response);
+
+}
+
+async function updateBankTransaction(body, id, token){
+
+    const response = await fetch(`https://personal-finance-mexico.herokuapp.com/v1/bankTransactions/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
+    });
+
+    console.log(response);
+
+}
+
 export default completeGoal;
 export {
     saveGoal,
@@ -442,5 +509,9 @@ export {
     completeUpdateExpense,
     updateExpense,
     completeTransaction,
-    saveTransaction
+    saveTransaction,
+    deleteTransaction,
+    updateTransaction,
+    saveTransactionFromBank,
+    updateBankTransaction
 }

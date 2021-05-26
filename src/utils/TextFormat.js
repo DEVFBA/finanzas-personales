@@ -58,6 +58,20 @@ function getDateString(date){
 
 }
 
+function unformatDate(dateString){
+
+    let date;
+    
+    const year      = dateString.slice(6, 10);
+    const month     = dateString.slice(3, 5);
+    const day       = dateString.slice(0, 2);
+
+    date = year + '-' + month + '-' + day;
+
+    return date;
+
+}
+
 function convertStrAmountToNum(stringAmount){
     
     let amount = 0;
@@ -87,5 +101,6 @@ export {
     determineProgressColor,
     getDateString,
     convertStrAmountToNum,
-    recurringString
+    recurringString,
+    unformatDate
 };

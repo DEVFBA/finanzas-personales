@@ -23,12 +23,17 @@ import UpdatingSpinner from '../components/UpdatingSpinner';
 import {
     getDateString,
     convertStrAmountToNum,
-    recurringString
+    recurringString,
+    unformatDate
 } from '../utils/TextFormat';
 
 import {
     completeTransaction, 
-    saveTransaction
+    saveTransaction,
+    deleteTransaction,
+    updateTransaction,
+    saveTransactionFromBank,
+    updateBankTransaction
 } from '../utils/APIFunctions';
 
 import '../styles/Transactions.css';
@@ -48,7 +53,7 @@ const Transactions = (props) => {
     const [loading,             setLoading          ]           = useState(false);
     const [origin,              setOrigin           ]           = useState('');
     const [accountNumber,       setAccountNumber    ]           = useState('');
-    const [bankTransactions,    setBankTransactions ]           = useState([]);
+    const [bankTransId,         setBankTransId      ]           = useState('');
 
     useEffect(() => {
 
@@ -56,14 +61,7 @@ const Transactions = (props) => {
 
     });
 
-    console.log('User Transactions ', props);
-
     const handleShowAdd = () => {
-
-        setBankTransactions(props.userBankTrans);
-
-        console.log('1 ', props.userBankTrans);
-        console.log('2 ', bankTransactions);
 
         setShowAdd(true);
 
@@ -79,7 +77,7 @@ const Transactions = (props) => {
         setType('');
         setOrigin('');
         setAccountNumber('');
-        setBankTransactions([]);
+        setBankTransId('');
         
         setShowAdd(false);
 
@@ -105,9 +103,26 @@ const Transactions = (props) => {
 
     }
 
+    const handleCloseUpdate = () => {
+
+        removeTransactionLocalStorage();
+
+        setTransactionData(null);
+        setShowUpdate(false);
+
+    }
+
+    const handleCloseDelete = () => {
+
+        removeTransactionLocalStorage()
+        
+        setTransactionData(null);
+        setShowDelete(false);
+
+    }
+
     const onChangeType = (event) => {
         setType(event.target.value);
-        console.log('Type ', type);
     }
 
     const onChangeDescription = (event) => {
@@ -116,7 +131,6 @@ const Transactions = (props) => {
 
     const onChangeConcept = (event) => {
         setConcept(event.target.value);
-        console.log('Concept ', props.userBankTrans);
     }
 
     const onChangeAmount = (event) => {
@@ -140,7 +154,7 @@ const Transactions = (props) => {
         setAccountNumber(event.target.value);
     }
 
-    async function saveNewTransaction(){
+    async function saveCashTransaction(){
 
         let completeData = false;
 
@@ -166,12 +180,138 @@ const Transactions = (props) => {
         setType('');
         setOrigin('');
         setAccountNumber('');
+        setBankTransId('');
 
         props.dataChange();
 
         setLoading(false);
 
         handleCloseAdd();
+
+    }
+
+    async function saveNewTransaction(){
+
+        if(origin === 'Efectivo'){
+            await saveCashTransaction();
+        } else {
+            await saveBankTransaction();
+        }
+
+    }
+
+    async function updateTransactionId(){
+        
+        let completeData                    = false;
+        let descriptionUpdated              = '';
+        let amountUpdated                   = 0;
+        let recurring                       = false;
+        let conceptUpdated                  = '';
+        let body                            = {};
+
+        setLoading(true);
+
+        if(localStorage.getItem('origin') === 'Efectivo'){
+
+            descriptionUpdated                = document.getElementById('transaction-description').value;
+            amountUpdated                     = document.getElementById('transaction-amount').value;
+            recurring                         = document.getElementById('recurring').checked;
+
+            body = {
+                description: descriptionUpdated,
+                amount: amountUpdated,
+                recurring: recurring
+            }
+
+        } else {
+
+            conceptUpdated                    = document.getElementById('transaction-concept').value;
+            descriptionUpdated                = document.getElementById('transaction-description').value;
+
+            body = {
+                concept: conceptUpdated,
+                description: descriptionUpdated
+            }
+
+        }
+
+        console.log('Body ', body);
+
+        
+
+        const userToken                 = localStorage.getItem('loginToken');
+        const id                        = localStorage.getItem('transactionID');
+
+        await updateTransaction(body, id, userToken);
+
+        setAmount(0);
+        setConcept('');
+        setDate('');
+        setDescription('');
+        setRecurring('');
+        setType('');
+        setOrigin('');
+        setAccountNumber('');
+        setBankTransId('');
+
+        props.dataChange();
+
+        setLoading(false);
+
+        handleCloseUpdate();
+
+    }
+
+    async function deleteCashTransaction(){
+
+        setLoading(true);
+
+        const id = localStorage.getItem('transactionID');
+        const token = localStorage.getItem('loginToken');
+
+        await deleteTransaction(id, token);
+
+        props.dataChange();
+
+        handleCloseDelete();
+
+        setLoading(false);
+
+    }
+
+    async function uncategorizeBankTransaction(){
+
+        setLoading(true);
+        
+        const token         = localStorage.getItem('loginToken');
+        const bankTransId   = localStorage.getItem('bankTransId');
+        const transactionID = localStorage.getItem('transactionID');
+
+        let body;
+
+        body = {
+            categorized: false
+        }
+
+        await updateBankTransaction(body, bankTransId, token);
+
+        await deleteTransaction(transactionID, token);
+
+        setLoading(false);
+
+        props.dataChange();
+
+        handleCloseDelete();
+
+    }
+
+    async function deleteTransactionId(){
+
+        if(localStorage.getItem('origin') === 'Efectivo'){
+            await deleteCashTransaction();
+        } else {
+            await uncategorizeBankTransaction();
+        }
 
     }
 
@@ -186,6 +326,7 @@ const Transactions = (props) => {
         localStorage.setItem('recurring', transactionData.recurring);
         localStorage.setItem('origin', transactionData.origin);
         localStorage.setItem('accountNumber', transactionData.accountNumber);
+        localStorage.setItem('bankTransId', transactionData.bankTransId);
 
     }
 
@@ -200,10 +341,82 @@ const Transactions = (props) => {
         localStorage.removeItem('recurring');
         localStorage.removeItem('origin');
         localStorage.removeItem('accountNumber');
+        localStorage.removeItem('bankTransId');
+
+    }
+
+    async function saveBankTransaction(){
+
+        const table = document.getElementById('bank-table');
+
+        setLoading(true);
+
+        if(table){
+
+            const origin                = document.getElementById('select-origin').value;
+            const transactionConcept    = document.getElementById('select-concept').value;
+
+            for(let i = 1; i < table.rows.length; i++){
+     
+                const save = table.rows[i].childNodes[6].childNodes[0].childNodes[0].checked;
+
+                if(save){
+
+                    const bankTransId           = table.rows[i].childNodes[0].innerHTML;
+                    const accountNumber         = table.rows[i].childNodes[1].innerHTML;
+                    const transactionDate       = unformatDate(table.rows[i].childNodes[2].innerHTML);
+                    const transactionType       = table.rows[i].childNodes[3].innerHTML === 'Cargo'?'Egreso':'Ingreso';
+                    const transactionDescription= table.rows[i].childNodes[4].innerHTML;
+                    const transactionAmount     = convertStrAmountToNum(table.rows[i].childNodes[5].innerHTML);
+                    const token                 = localStorage.getItem('loginToken');
+
+                    let body;
+
+                    body = {
+                        origin: origin,
+                        accountNumber: accountNumber,
+                        amount: transactionAmount,
+                        concept: transactionConcept,
+                        date: transactionDate,
+                        description: transactionDescription,
+                        recurring: false,
+                        type: transactionType,
+                        bankTransId: bankTransId
+                    }
+
+                    await saveTransactionFromBank(body, token);
+
+                    body = {
+                        categorized: true
+                    }
+
+                    await updateBankTransaction(body, bankTransId, token);
+
+                }
+            }
+
+        }
+
+        setAmount(0);
+        setConcept('');
+        setDate('');
+        setDescription('');
+        setRecurring('');
+        setType('');
+        setOrigin('');
+        setAccountNumber('');
+        setBankTransId('');
+
+        props.dataChange();
+
+        setLoading(false);
+
+        handleCloseAdd();
 
     }
 
     async function getRowText(){
+
         const table = document.getElementById('transactions-table');
 
         if(table){
@@ -216,6 +429,7 @@ const Transactions = (props) => {
 
             }
         }
+
     }
 
     async function tableText(tableRow) {
@@ -229,6 +443,7 @@ const Transactions = (props) => {
         const origin                        = tableRow.childNodes[6].innerHTML;
         const accountNumber                 = tableRow.childNodes[7].innerHTML;
         const recurring                     = tableRow.childNodes[8].innerHTML;
+        const bankTransId                   = tableRow.childNodes[9].innerHTML;
 
 
         const transactionData = {
@@ -240,10 +455,23 @@ const Transactions = (props) => {
             transactionAmount: transactionAmount,
             recurring: recurring,
             origin: origin,
-            accountNumber: accountNumber
+            accountNumber: accountNumber,
+            bankTransId: bankTransId
         }
 
         setTransactionData(transactionData);
+
+    }
+
+    const checkRecurring = (recurring) => {
+
+        let checked = false;
+
+        if(recurring === 'Recurrente'){
+            checked = true;
+        }
+
+        return checked;
 
     }
 
@@ -288,6 +516,7 @@ const Transactions = (props) => {
                         <th>Origen</th>
                         <th>No. Cuenta</th>
                         <th hidden = 'hidden'>Recurrente</th>
+                        <th hidden = 'hidden'>Bank Trans Id</th>
                         <th> </th>
                     </tr>
                 </thead>
@@ -303,7 +532,7 @@ const Transactions = (props) => {
                                 <td>
                                     { transaction.type }
                                 </td>
-                                <td className="td-date">
+                                <td className = "td-date">
                                     { getDateString(transaction.date) }
                                 </td>
                                 <td>
@@ -312,7 +541,7 @@ const Transactions = (props) => {
                                 <td>
                                     { transaction.description }
                                 </td>
-                                <td className="td-amount">
+                                <td className = "td-amount">
                                     { transaction.amount.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
                                 </td>
                                 <td>
@@ -324,7 +553,10 @@ const Transactions = (props) => {
                                 <td className = "td-date" hidden = 'hidden'>
                                     { recurringString(transaction.recurring) }
                                 </td>
-                                <td className="td-buttons text-center">
+                                <td hidden = 'hidden'>
+                                    { transaction.bankTransId }
+                                </td>
+                                <td className = "td-buttons text-center">
                                     <Link
                                         className               = 'mr-3'
                                         onClick                 = { handleShowUpdate }
@@ -373,6 +605,7 @@ const Transactions = (props) => {
                                         <Form.Control
                                             as          = 'select'
                                             onChange    = { onChangeType }
+                                            id          = 'select-type'
                                         >
                                             <option></option>
                                             <option>Ingreso</option>
@@ -390,6 +623,7 @@ const Transactions = (props) => {
                                     <Form.Control
                                         as          = 'select'
                                         onChange    = { onChangeOrigin }
+                                        id          = 'select-origin'
                                     >
                                         <option></option>
                                         <option>Efectivo</option>
@@ -412,6 +646,7 @@ const Transactions = (props) => {
                                                     <Form.Control
                                                         as          = 'select'
                                                         onChange    = { onChangeConcept }
+                                                        id          = 'select-concept'
                                                     >
                                                         <option></option>
                                                         <option>Salario</option>
@@ -431,6 +666,7 @@ const Transactions = (props) => {
                                                         <Form.Control
                                                             as          = 'select'
                                                             onChange    = { onChangeConcept }
+                                                            id          = 'select-concept'
                                                         >
                                                             <option></option>
                                                             <option>Alimentos</option>
@@ -500,6 +736,7 @@ const Transactions = (props) => {
                                                             >
                                                                 Object ID
                                                             </th>
+                                                            <th>No. Cuenta</th>
                                                             <th>Fecha</th>
                                                             <th>Tipo</th>
                                                             <th>Descripción</th>
@@ -508,7 +745,21 @@ const Transactions = (props) => {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {props.userBankTrans.map((bankTrans) => {   
+                                                        {props.userBankTrans.filter((bankTrans) => {
+                                                            return bankTrans.categorized === false;
+                                                        }).filter((bankTrans) => {
+                                                            let type = document.getElementById('select-type').value;
+                                                            
+                                                            if(type === 'Ingreso'){
+                                                                type = 'Abono'
+                                                            } else {
+                                                                type = 'Cargo'
+                                                            }
+
+
+                                                            return bankTrans.transactionType === type;
+
+                                                        }).map((bankTrans) => {   
                                                             return(
                                                                 <tr
                                                                     key     = { bankTrans._id }
@@ -518,6 +769,7 @@ const Transactions = (props) => {
                                                                     >
                                                                         { bankTrans._id }
                                                                     </td>
+                                                                    <td>{ bankTrans.accountNumber }</td>
                                                                     <td
                                                                         className   = 'td-date'
                                                                     >
@@ -567,7 +819,200 @@ const Transactions = (props) => {
                 </Modal.Footer>
             </Modal>
 
-            
+            <Modal 
+                        show            = { showDelete } 
+                        onHide          = { handleCloseDelete }
+                        className       = 'delete-transactions-modal'
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>
+                                Borrar Transacción
+                            </Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+
+                            {localStorage.getItem('origin') === 'Efectivo'?
+
+                                <Fragment>
+
+                                    <h6>
+                                        ¿Deseas borrar esta transacción?
+                                    </h6>
+                                    <h6>
+                                        { `Concepto: ${localStorage.getItem('concept')}` }
+                                    </h6>
+                                    <h6>
+                                        { `Descripción: ${localStorage.getItem('description')}` }
+                                    </h6>
+                                    <h6>
+                                        { `Monto: ${localStorage.getItem('amount')}` }
+                                    </h6>
+
+                                </Fragment>:
+                                <Fragment>
+
+                                    <h6>
+                                        ¿Deseas descategorizar esta transacción?
+                                    </h6>
+                                    <h6>
+                                        { `Concepto: ${localStorage.getItem('concept')}` }
+                                    </h6>
+                                    <h6>
+                                        { `Descripción: ${localStorage.getItem('description')}` }
+                                    </h6>
+                                    <h6>
+                                        { `No. Cuenta: ${localStorage.getItem('accountNumber')}` }
+                                    </h6>
+
+                                </Fragment>
+
+                            }
+
+
+                        </Modal.Body>
+
+                        <Modal.Footer>
+
+                            <Button 
+                                variant             = "secondary" 
+                                onClick             = { handleCloseDelete }
+                            >
+                                Cerrar
+                            </Button>
+                            <Button 
+                                variant             ="primary" 
+                                onClick             = { deleteTransactionId }
+                            >
+                                {localStorage.getItem('origin') === 'Efectivo'?
+                                    'Borrar Transacción': 'Descategorizar'
+                                }
+                            </Button>
+
+                        </Modal.Footer>
+                    </Modal>
+
+                    <Modal 
+                        show            = { showUpdate } 
+                        onHide          = { handleCloseUpdate }
+                        className       = 'update-transactions-modal'
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>
+                                Actualizar Transacción
+                            </Modal.Title>
+                        </Modal.Header>
+
+                        <Modal.Body>
+
+                            {
+                                loading?
+                                    <UpdatingSpinner/>:
+                                        localStorage.getItem('origin') === 'Efectivo'?
+                                            <Fragment>
+
+                                                <Form>
+                                                    <Form.Label>
+                                                        Concept
+                                                    </Form.Label>
+                                                    <Form.Control
+                                                        type        = 'text'
+                                                        placeholder = { localStorage.getItem('concept') }
+                                                        disabled
+                                                    />
+
+                                                    <Form.Label>
+                                                        Description
+                                                    </Form.Label>
+                                                    <Form.Control
+                                                        type        = 'text'
+                                                        defaultValue= { localStorage.getItem('description') }
+                                                        id          = 'transaction-description'
+                                                    />
+
+                                                    <Form.Label>
+                                                        Monto
+                                                    </Form.Label>
+                                                    <Form.Control
+                                                        type        = 'number'
+                                                        defaultValue= { convertStrAmountToNum(localStorage.getItem('amount')) }
+                                                        id          = 'transaction-amount'
+                                                    />
+
+                                                    <Form.Check
+                                                        defaultChecked      = { checkRecurring(localStorage.getItem('recurring')) }
+                                                        id                  = 'recurring'
+                                                        label               = 'Recurrente'
+                                                    />
+
+                                                </Form>
+
+                                            </Fragment>:
+                                            <Fragment>
+                                                
+                                                <Form>
+
+                                                    <Form.Label>
+                                                        Número de Cuenta
+                                                    </Form.Label>
+                                                    <Form.Control
+                                                        type                = 'text'
+                                                        placeholder         = { localStorage.getItem('accountNumber') }
+                                                        disabled
+                                                    />
+
+                                                    <Form.Label>
+                                                        Concepto
+                                                    </Form.Label>
+                                                    <Form.Control
+                                                            as          = 'select'
+                                                            onChange    = { onChangeConcept }
+                                                            defaultValue= { localStorage.getItem('concept') }
+                                                            id          = 'transaction-concept'
+                                                        >
+                                                            <option>Alimentos</option>
+                                                            <option>Transporte</option>
+                                                            <option>Alquiler</option>
+                                                            <option>Hogar</option>
+                                                            <option>Teléfono</option>
+                                                            <option>Internet</option>
+                                                            <option>Otros</option>
+                                                    </Form.Control>
+
+                                                    <Form.Label>
+                                                        Descripción
+                                                    </Form.Label>
+                                                    <Form.Control
+                                                        type        = 'text'
+                                                        defaultValue= { localStorage.getItem('description') }
+                                                        id          = 'transaction-description'
+                                                    />
+
+                                                </Form>
+
+                                            </Fragment>
+                            }
+
+
+                        </Modal.Body>
+
+                        <Modal.Footer>
+
+                            <Button 
+                                variant             = "secondary" 
+                                onClick             = { handleCloseUpdate }
+                            >
+                                Cerrar
+                            </Button>
+                            <Button 
+                                variant             ="primary" 
+                                onClick             = { updateTransactionId }
+                            >
+                                Actualizar Transacción
+                            </Button>
+
+                        </Modal.Footer>
+                    </Modal>
 
         </Container>
     );
