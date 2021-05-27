@@ -62,21 +62,21 @@ const Transactions = (props) => {
 
         getRowText();
 
-        const incomeTotal = props.userTransactions.filter((transaction) => {
+        const incomeTotal = props.userTransactions > 0?props.userTransactions.filter((transaction) => {
             return transaction.type === 'Ingreso';
         }).map((income) => {
             return income.amount;
         }).reduce((total, income) => {
             return total + income;
-        });
+        }):0;
 
-        const expenseTotal = props.userTransactions.filter((transaction) => {
+        const expenseTotal = props.userTransactions.length > 0?props.userTransactions.filter((transaction) => {
             return transaction.type === 'Egreso';
         }).map((expense) => {
             return expense.amount;
         }).reduce((total, expense) => {
             return total + expense;
-        });
+        }):0;
 
         setIncomes(incomeTotal);
         setExpenses(expenseTotal);

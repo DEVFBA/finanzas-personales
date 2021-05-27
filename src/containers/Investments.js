@@ -46,28 +46,33 @@ const Investments = (props) => {
     const [investedAmount,      setInvestedAmount       ]           = useState(0);
     const [investmentTotal,     setInvestmentTotal      ]           = useState(0);
     const [loading,             setLoading              ]           = useState(false);
+    const [totalInvestment,     setTotalInvestment      ]           = useState(0);
+    const [totalInvested,       setTotalInvested        ]           = useState(0);
 
     useEffect(() => {
 
         getRowText();
 
+        const investmentAmounts = props.userInvestments.map((investment) => {
+            return investment.total;
+        });
+    
+        const totalInvestment = investmentAmounts.length > 0?investmentAmounts.reduce((total, investmentAmount) => {
+            return total + investmentAmount;
+        }, 0):0;
+    
+        const investedAmounts = props.userInvestments.map((investment) => {
+            return investment.investedAmount;
+        });
+    
+        const totalInvested = investedAmounts > 0?investedAmounts.reduce((total, investedAmount) => {
+            return total + investedAmount;
+        }):0;
+
+        setTotalInvestment(totalInvestment);
+        setTotalInvested(totalInvested);
+
     });
-
-    const investmentAmounts = props.userInvestments.map((investment) => {
-        return investment.total;
-    })
-
-    const totalInvestment = investmentAmounts.reduce((total, investmentAmount) => {
-        return total + investmentAmount;
-    }, 0)
-
-    const investedAmounts = props.userInvestments.map((investment) => {
-        return investment.investedAmount;
-    })
-
-    const totalInvested = investedAmounts.reduce((total, investedAmount) => {
-        return total + investedAmount;
-    })
 
     const handleCloseAdd = () => {
         
@@ -320,7 +325,7 @@ const Investments = (props) => {
                             <Fragment>
 
                                 <h4>
-                                    { `Rendimiento Total ${ (((totalInvestment / totalInvested) - 1) * 100).toFixed(2) } %` }
+                                    { `Rendimiento Total ${ totalInvested?(((totalInvestment / totalInvested) - 1) * 100).toFixed(2):'' } %` }
                                 </h4>
 
                             </Fragment>:

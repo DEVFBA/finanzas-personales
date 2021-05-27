@@ -69,17 +69,17 @@ const Budget = (props) => {
             return income.incomeAmount;
         });
 
-        const incomeTotal = incomes.reduce((total, income) => {
+        const incomeTotal = incomes.length > 0?incomes.reduce((total, income) => {
             return total + income;
-        });
+        }):0;
 
         const expenses = props.userExpenses.map((expense) => {
             return expense.expenseAmount;
         });
 
-        const expenseTotal = expenses.reduce((total, expense) => {
+        const expenseTotal = expenses.length > 0?expenses.reduce((total, expense) => {
             return total + expense;
-        });
+        }):0;
 
         setTotalIncome(incomeTotal);
         setTotalExpense(expenseTotal);
