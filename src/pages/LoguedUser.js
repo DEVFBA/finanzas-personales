@@ -60,6 +60,7 @@ const LoguedUser = (props) => {
     const [userBankTrans,   setUserBankTrans    ]       = useState([]);
     const [dataChanged,     setDataChange       ]       = useState(true);
     const [loaded,          setLoaded           ]       = useState(false);
+    const [loadingData,     setLoadingdata      ]       = useState(false);
 
     const { path, url } = useRouteMatch();
 
@@ -73,6 +74,8 @@ const LoguedUser = (props) => {
     }
 
     useEffect(async() => {
+
+        setLoadingdata(true);
 
         const userProfile = await retrieveUserProfileByID(localStorage.getItem("loginToken"));
 
@@ -101,11 +104,7 @@ const LoguedUser = (props) => {
         setUserTransactions(transactions);
         setUserBankTrans(bankTransactions);
         setLoaded(true);
-
-        console.log('Goals ', userGoals);
-        console.log('Investments ', userInvestments);
-        console.log('Incomes ', userIncomes);
-        console.log('Expenses ', userExpenses);
+        setLoadingdata(false);
 
     }, [dataChanged]);
 
@@ -237,8 +236,9 @@ const LoguedUser = (props) => {
                                 </Route>
                                 <Route exact path = { `${path}/investments` }>
                                     <Investments 
-                                        userInvestments = { userInvestments }
-                                        dataChange      = { updateDataChange }
+                                        userInvestments     = { userInvestments }
+                                        dataChange          = { updateDataChange }
+                                        loading              = { loadingData }
                                     />
                                 </Route>
                                 <Route exact path = { `${path}/transactions` }>
@@ -246,19 +246,22 @@ const LoguedUser = (props) => {
                                         userTransactions    = { userTransactions }
                                         userBankTrans       = { userBankTrans }
                                         dataChange          = { updateDataChange }
+                                        loading              = { loadingData }
                                     />
                                 </Route>
                                 <Route exact path = { `${path}/goals` }>
                                     <Goals 
-                                        userGoals       = { userGoals }
-                                        dataChange      = { updateDataChange }
+                                        userGoals           = { userGoals }
+                                        dataChange          = { updateDataChange }
+                                        loading              = { loadingData }
                                     />
                                 </Route>
                                 <Route exact path = { `${path}/budget` }>
                                     <Budget 
-                                        userIncomes     = { userIncomes }
-                                        userExpenses    = { userExpenses }
-                                        dataChange      = { updateDataChange }
+                                        userIncomes         = { userIncomes }
+                                        userExpenses        = { userExpenses }
+                                        dataChange          = { updateDataChange }
+                                        loading              = { loadingData }
                                     />
                                 </Route>
                             </Switch>

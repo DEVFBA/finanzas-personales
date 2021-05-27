@@ -54,10 +54,33 @@ const Transactions = (props) => {
     const [origin,              setOrigin           ]           = useState('');
     const [accountNumber,       setAccountNumber    ]           = useState('');
     const [bankTransId,         setBankTransId      ]           = useState('');
+    const [incomes,             setIncomes          ]           = useState(0);
+    const [expenses,            setExpenses         ]           = useState(0);
+    const [balance,             setBalance          ]           = useState(0);
 
     useEffect(() => {
 
         getRowText();
+
+        const incomeTotal = props.userTransactions.filter((transaction) => {
+            return transaction.type === 'Ingreso';
+        }).map((income) => {
+            return income.amount;
+        }).reduce((total, income) => {
+            return total + income;
+        });
+
+        const expenseTotal = props.userTransactions.filter((transaction) => {
+            return transaction.type === 'Egreso';
+        }).map((expense) => {
+            return expense.amount;
+        }).reduce((total, expense) => {
+            return total + expense;
+        });
+
+        setIncomes(incomeTotal);
+        setExpenses(expenseTotal);
+        setBalance(incomeTotal - expenseTotal);
 
     });
 
@@ -484,14 +507,37 @@ const Transactions = (props) => {
             </Row>
 
             <Row>
-                <Button
-                    variant     = 'outline-light'
-                    type        = 'submit'
-                    className   = 'transactionsButton mt-2'
-                    onClick     = { handleShowAdd }
-                >
-                    Nueva Transacción
-                </Button>
+
+                <Col>
+                
+                    <Button
+                        variant     = 'outline-light'
+                        type        = 'submit'
+                        className   = 'transactionsButton mt-2'
+                        onClick     = { handleShowAdd }
+                    >
+                        Nueva Transacción
+                    </Button>
+
+                </Col>
+
+                <Col>
+
+                    {
+                        loading?
+                            <UpdatingSpinner/>:
+                            <Fragment>
+
+                                <h4>
+                                    { `Saldo:   ${balance.toLocaleString('en', { style: 'currency', currency: 'USD' })}` }
+                                </h4>
+
+                            </Fragment>
+                    }
+                
+                
+                </Col>      
+
             </Row>
 
             <Table 
@@ -521,7 +567,22 @@ const Transactions = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.userTransactions.map((transaction) => {
+                    {props.userTransactions.sort((a, b) => {
+                        
+                        const dateA = new Date(a.date);
+                        const dateB = new Date(b.date);
+
+                        if(dateA > dateB){
+                            return 1;
+                        }
+
+                        if(dateA < dateB){
+                            return -1;
+                        }
+
+                        return 0;
+
+                    }).map((transaction) => {
                         return(
                             <tr
                                 key = { transaction._id }
@@ -832,42 +893,52 @@ const Transactions = (props) => {
 
                         <Modal.Body>
 
-                            {localStorage.getItem('origin') === 'Efectivo'?
+                            {
+                                loading?
+                                    <UpdatingSpinner/>:
+                                    <Fragment>
 
-                                <Fragment>
+                                        {localStorage.getItem('origin') === 'Efectivo'?
 
-                                    <h6>
-                                        ¿Deseas borrar esta transacción?
-                                    </h6>
-                                    <h6>
-                                        { `Concepto: ${localStorage.getItem('concept')}` }
-                                    </h6>
-                                    <h6>
-                                        { `Descripción: ${localStorage.getItem('description')}` }
-                                    </h6>
-                                    <h6>
-                                        { `Monto: ${localStorage.getItem('amount')}` }
-                                    </h6>
+                                            <Fragment>
 
-                                </Fragment>:
-                                <Fragment>
+                                                <h6>
+                                                    ¿Deseas borrar esta transacción?
+                                                </h6>
+                                                <h6>
+                                                    { `Concepto: ${localStorage.getItem('concept')}` }
+                                                </h6>
+                                                <h6>
+                                                    { `Descripción: ${localStorage.getItem('description')}` }
+                                                </h6>
+                                                <h6>
+                                                    { `Monto: ${localStorage.getItem('amount')}` }
+                                                </h6>
 
-                                    <h6>
-                                        ¿Deseas descategorizar esta transacción?
-                                    </h6>
-                                    <h6>
-                                        { `Concepto: ${localStorage.getItem('concept')}` }
-                                    </h6>
-                                    <h6>
-                                        { `Descripción: ${localStorage.getItem('description')}` }
-                                    </h6>
-                                    <h6>
-                                        { `No. Cuenta: ${localStorage.getItem('accountNumber')}` }
-                                    </h6>
+                                            </Fragment>:
+                                            <Fragment>
 
-                                </Fragment>
+                                                <h6>
+                                                    ¿Deseas descategorizar esta transacción?
+                                                </h6>
+                                                <h6>
+                                                    { `Concepto: ${localStorage.getItem('concept')}` }
+                                                </h6>
+                                                <h6>
+                                                    { `Descripción: ${localStorage.getItem('description')}` }
+                                                </h6>
+                                                <h6>
+                                                    { `No. Cuenta: ${localStorage.getItem('accountNumber')}` }
+                                                </h6>
 
+                                            </Fragment>
+
+                                        }
+
+                                    </Fragment>
                             }
+
+
 
 
                         </Modal.Body>

@@ -1,6 +1,7 @@
 import React, {
     useState,
-    useEffect
+    useEffect,
+    Fragment
 } from 'react';
 import {
     Container,
@@ -8,7 +9,8 @@ import {
     Table,
     Modal,
     Form,
-    Button
+    Button,
+    Col
 } from 'react-bootstrap';
 
 import { 
@@ -43,7 +45,6 @@ const Investments = (props) => {
     const [investmentInstrument,setInvestmentInstrument ]           = useState('');
     const [investedAmount,      setInvestedAmount       ]           = useState(0);
     const [investmentTotal,     setInvestmentTotal      ]           = useState(0);
-    const [portfolioPerc,       setPortfolioPerc        ]           = useState(0);
     const [loading,             setLoading              ]           = useState(false);
 
     useEffect(() => {
@@ -52,13 +53,21 @@ const Investments = (props) => {
 
     });
 
-    const investedAmounts = props.userInvestments.map((investment) => {
+    const investmentAmounts = props.userInvestments.map((investment) => {
         return investment.total;
     })
 
-    const totalInvested = investedAmounts.reduce((total, investmentAmount) => {
+    const totalInvestment = investmentAmounts.reduce((total, investmentAmount) => {
         return total + investmentAmount;
     }, 0)
+
+    const investedAmounts = props.userInvestments.map((investment) => {
+        return investment.investedAmount;
+    })
+
+    const totalInvested = investedAmounts.reduce((total, investedAmount) => {
+        return total + investedAmount;
+    })
 
     const handleCloseAdd = () => {
         
@@ -66,7 +75,6 @@ const Investments = (props) => {
         setInvestmentInstrument('');
         setInvestedAmount(0);
         setInvestmentTotal(0);
-        setPortfolioPerc(0);
         
         setShowAdd(false);
 
@@ -150,7 +158,6 @@ const Investments = (props) => {
         setInvestmentInstrument('');
         setInvestedAmount(0);
         setInvestmentTotal(0);
-        setPortfolioPerc(0);
 
         props.dataChange();
 
@@ -198,7 +205,6 @@ const Investments = (props) => {
         setInvestmentInstrument('');
         setInvestedAmount(0);
         setInvestmentTotal(0);
-        setPortfolioPerc(0);
 
         props.dataChange();
 
@@ -210,12 +216,16 @@ const Investments = (props) => {
 
     async function deleteInvestmentId(){
 
+        setLoading(true);
+
         const id = localStorage.getItem('investmentID');
         const token = localStorage.getItem('loginToken');
 
         await deleteInvestment(id, token);
 
         props.dataChange();
+
+        setLoading(false);
 
         handleCloseDelete();
 
@@ -289,14 +299,37 @@ const Investments = (props) => {
             </Row>
 
             <Row>
-                <Button
-                    variant     = 'outline-light'
-                    type        = 'submit'
-                    className   = 'investmentsButton mt-2'
-                    onClick     = { handleShowAdd }
-                >
-                    Nueva Inversión
-                </Button>
+
+                <Col>
+                
+                    <Button
+                        variant     = 'outline-light'
+                        type        = 'submit'
+                        className   = 'investmentsButton mt-2'
+                        onClick     = { handleShowAdd }
+                    >
+                        Nueva Inversión
+                    </Button>
+
+                </Col>
+
+                <Col>
+
+                    {
+                        !props.loading?
+                            <Fragment>
+
+                                <h4>
+                                    { `Rendimiento Total ${ (((totalInvestment / totalInvested) - 1) * 100).toFixed(2) } %` }
+                                </h4>
+
+                            </Fragment>:
+                            <UpdatingSpinner/>
+                    }
+                
+                
+                </Col>
+
             </Row>
 
             <Table 
@@ -318,6 +351,7 @@ const Investments = (props) => {
                         <th>$ Aportado</th>
                         <th>Total Inversión</th>
                         <th>% Portafolio</th>
+                        <th>Rendimiento</th>
                         <th> </th>
                     </tr>
                 </thead>
@@ -343,7 +377,10 @@ const Investments = (props) => {
                                     { investment.total.toLocaleString('en', { style: 'currency', currency: 'USD' }) }
                                 </td>
                                 <td className="td-date">
-                                    { `${(((investment.total) / totalInvested) * 100).toFixed(2)} %` }
+                                    { `${(((investment.total) / totalInvestment) * 100).toFixed(2)} %` }
+                                </td>
+                                <td>
+                                    { `${(((investment.total / investment.investedAmount) - 1) * 100).toFixed(2)} %` }
                                 </td>
                                 <td className="td-buttons text-center">
                                     <Link
@@ -434,7 +471,7 @@ const Investments = (props) => {
                         variant             ="primary" 
                         onClick             = { saveNewInvestment }
                     >
-                        Guardar Ahorro
+                        Guardar Inversión
                     </Button>
 
                 </Modal.Footer>
@@ -453,18 +490,27 @@ const Investments = (props) => {
 
                 <Modal.Body>
 
-                    <h6>
-                        { `¿Ya no cuentas con la siguiente inversión y deseas borrarla?` }
-                    </h6>
-                    <h6>
-                        { `Broker: ${localStorage.getItem('broker')}` }
-                    </h6>
-                    <h6>
-                        { `Intrumento de Inversión: ${localStorage.getItem('investmentInstrument')}` }
-                    </h6>
-                    <h6>
-                        { `Total: ${localStorage.getItem('investmentTotal')}` }
-                    </h6>
+                    {
+                        loading?
+                            <UpdatingSpinner/>:
+                            <Fragment>
+
+                                <h6>
+                                    { `¿Ya no cuentas con la siguiente inversión y deseas borrarla?` }
+                                </h6>
+                                <h6>
+                                    { `Broker: ${localStorage.getItem('broker')}` }
+                                </h6>
+                                <h6>
+                                    { `Intrumento de Inversión: ${localStorage.getItem('investmentInstrument')}` }
+                                </h6>
+                                <h6>
+                                    { `Total: ${localStorage.getItem('investmentTotal')}` }
+                                </h6>
+
+                            </Fragment>
+                    }
+
 
                 </Modal.Body>
 

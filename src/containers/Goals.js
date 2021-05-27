@@ -10,7 +10,8 @@ import {
     Button,
     Table,
     Modal,
-    Form
+    Form,
+    Col
 } from 'react-bootstrap';
 
 import { 
@@ -197,12 +198,16 @@ const Goals = (props) => {
 
     async function deleteGoalId(){
 
+        setLoading(true);
+
         const id = localStorage.getItem('goalID');
         const token = localStorage.getItem('loginToken');
 
         await deleteGoal(id, token);
 
         props.dataChange();
+
+        setLoading(false);
 
         handleCloseDelete();
 
@@ -273,14 +278,29 @@ const Goals = (props) => {
             </Row>
             
             <Row>
-                <Button
-                    variant     = 'outline-light'
-                    type        = 'submit'
-                    className   = 'goalsButton mt-2'
-                    onClick     = { handleShowAdd }
-                >
-                    Nuevo Ahorro
-                </Button>
+
+                <Col>
+
+                    <Button
+                        variant     = 'outline-light'
+                        type        = 'submit'
+                        className   = 'goalsButton mt-2'
+                        onClick     = { handleShowAdd }
+                    >
+                        Nuevo Ahorro
+                    </Button>
+                
+                </Col>
+
+                <Col>
+                
+                    {
+                        props.loading?
+                            <UpdatingSpinner/>:
+                            <Fragment></Fragment>
+                    }
+                
+                </Col>
             </Row>
 
             <Table 
@@ -429,18 +449,27 @@ const Goals = (props) => {
 
                 <Modal.Body>
 
-                    <h6>
-                        { `Has cumplido tu meta de ahorro ${localStorage.getItem('goalDescription')} y ¿deseas borrarla?. Recuerda que la disciplina te puede llevar a lograr todo eso que tanto anhelas` }
-                    </h6>
-                    <h6>
-                        { `Meta de Ahorro: ${localStorage.getItem('goalTargetAmount')}` }
-                    </h6>
-                    <h6>
-                        { `Monto Ahorrado: ${localStorage.getItem('goalSavedAmount')}` }
-                    </h6>
-                    <h6>
-                        { `Fecha Objetivo: ${localStorage.getItem('goalTargetDate')}` }
-                    </h6>
+                    {
+                        loading?
+                            <UpdatingSpinner/>:
+                            <Fragment>
+
+                                <h6>
+                                    { `Has cumplido tu meta de ahorro ${localStorage.getItem('goalDescription')} y ¿deseas borrarla?. Recuerda que la disciplina te puede llevar a lograr todo eso que tanto anhelas` }
+                                </h6>
+                                <h6>
+                                    { `Meta de Ahorro: ${localStorage.getItem('goalTargetAmount')}` }
+                                </h6>
+                                <h6>
+                                    { `Monto Ahorrado: ${localStorage.getItem('goalSavedAmount')}` }
+                                </h6>
+                                <h6>
+                                    { `Fecha Objetivo: ${localStorage.getItem('goalTargetDate')}` }
+                                </h6>
+
+                            </Fragment>
+                    }
+
 
                 </Modal.Body>
 

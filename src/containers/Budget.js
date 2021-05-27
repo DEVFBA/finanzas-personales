@@ -1,6 +1,7 @@
 import React, {
     useState,
-    useEffect
+    useEffect,
+    Fragment
 } from 'react';
 
 import {
@@ -9,7 +10,8 @@ import {
     Button,
     Table,
     Modal,
-    Form
+    Form,
+    Col
 } from 'react-bootstrap';
 
 import { 
@@ -40,8 +42,6 @@ import '../styles/Budget.css';
 
 const Budget = (props) => {
 
-    console.log('Budget ', props);
-
     const [showAddIncome,       setShowAddIncome        ]           = useState(false);
     const [showAddExpense,      setShowAddExpense       ]           = useState(false);
     const [incomeData,          setIncomeData           ]           = useState(null);
@@ -55,11 +55,39 @@ const Budget = (props) => {
     const [expenseAmount,       setExpenseAmount        ]           = useState(0);
     const [recurring,           setRecurring            ]           = useState(false);
     const [loading,             setLoading              ]           = useState(false);
+    const [totalIncome,         setTotalIncome          ]           = useState(0);
+    const [totalExpense,        setTotalExpense         ]           = useState(0);
+    const [budgetDifference,    setBudgetDifference     ]           = useState(0);
+    const [budgetString,        setBudgetString         ]           = useState('');
 
     useEffect(() => {
 
         getRowText();
         getRowTextExpense();
+
+        const incomes = props.userIncomes.map((income) => {
+            return income.incomeAmount;
+        });
+
+        const incomeTotal = incomes.reduce((total, income) => {
+            return total + income;
+        });
+
+        const expenses = props.userExpenses.map((expense) => {
+            return expense.expenseAmount;
+        });
+
+        const expenseTotal = expenses.reduce((total, expense) => {
+            return total + expense;
+        });
+
+        setTotalIncome(incomeTotal);
+        setTotalExpense(expenseTotal);
+        setBudgetDifference(incomeTotal - expenseTotal);
+
+        const superavitDeficit = budgetDifference < 0?'Déficit':'Súperavit';
+
+        setBudgetString(superavitDeficit);
 
     });
 
@@ -179,12 +207,12 @@ const Budget = (props) => {
 
     async function updateIncomeId(){
         
-        let completeData                    = false;
+        let completeData                        = false;
 
         setLoading(true);
         
-        const incomeAmountUpdated            = document.getElementById('income-amount').value;
-        const recurringUpdated           = document.getElementById('recurring').checked;
+        const incomeAmountUpdated               = document.getElementById('income-amount').value;
+        const recurringUpdated                  = document.getElementById('recurring').checked;
 
         completeData = await completeUpdateIncome(incomeAmountUpdated);
 
@@ -288,22 +316,16 @@ const Budget = (props) => {
             recurring: recurring
         } 
 
-        console.log('Data ', expenseData)
-
         setExpenseData(expenseData);
 
     }
 
     const onChangeConcept = (event) => {
         setConcept(event.target.value);
-
-        console.log('Concepto', concept)
     }
 
     const onChangeIncomeAmount = (event) => {
         setIncomeAmount(event.target.value);
-
-        console.log(incomeAmount)
     }
 
     const onChangeExpenseAmount = (event) => {
@@ -326,6 +348,8 @@ const Budget = (props) => {
 
     async function deleteIncomeId(){
 
+        setLoading(true);
+
         const id = localStorage.getItem('incomeID');
         const token = localStorage.getItem('loginToken');
 
@@ -333,11 +357,15 @@ const Budget = (props) => {
 
         props.dataChange();
 
+        setLoading(false);
+
         handleCloseDeleteIncome();
 
     }
 
     async function deleteExpenseId(){
+
+        setLoading(true);
 
         const id = localStorage.getItem('expenseID');
         const token = localStorage.getItem('loginToken');
@@ -345,6 +373,8 @@ const Budget = (props) => {
         await deleteExpense(id, token);
 
         props.dataChange();
+
+        setLoading(false);
 
         handleCloseDeleteExpense();
 
@@ -495,14 +525,37 @@ const Budget = (props) => {
                     </Row>
 
                     <Row>
-                        <Button
-                            variant     = 'outline-light'
-                            type        = 'submit'
-                            className   = 'incomesButton mt-2'
-                            onClick     = { handleShowAddIncome }
-                        >
-                            Nuevo Ingreso
-                        </Button>
+
+                        <Col>
+                        
+                            <Button
+                                variant     = 'outline-light'
+                                type        = 'submit'
+                                className   = 'incomesButton mt-2'
+                                onClick     = { handleShowAddIncome }
+                            >
+                                Nuevo Ingreso
+                            </Button>
+
+                        </Col>
+
+                        <Col>
+
+                            {
+                                loading?
+                                    <UpdatingSpinner/>:
+                                    <Fragment>
+
+                                        <h4>
+                                            { `Total Ingresos:   ${ totalIncome.toLocaleString('en', { style: 'currency', currency: 'USD' })}` }
+                                        </h4>
+
+                                    </Fragment>
+                            }
+                        
+
+                        </Col>
+
                     </Row>
 
                     <Table 
@@ -658,15 +711,24 @@ const Budget = (props) => {
 
                         <Modal.Body>
 
-                            <h6>
-                                { `¿Deseas borrar este ingreso de tu presupuesto?` }
-                            </h6>
-                            <h6>
-                                { `Concepto: ${localStorage.getItem('concept')}` }
-                            </h6>
-                            <h6>
-                                { `Monto: ${localStorage.getItem('incomeAmount')}` }
-                            </h6>
+                            {
+                                loading?
+                                    <UpdatingSpinner/>:
+                                    <Fragment>
+
+                                        <h6>
+                                            { `¿Deseas borrar este ingreso de tu presupuesto?` }
+                                        </h6>
+                                        <h6>
+                                            { `Concepto: ${localStorage.getItem('concept')}` }
+                                        </h6>
+                                        <h6>
+                                            { `Monto: ${localStorage.getItem('incomeAmount')}` }
+                                        </h6>
+
+                                    </Fragment>
+                            }
+
 
                         </Modal.Body>
 
@@ -771,6 +833,9 @@ const Budget = (props) => {
                 </Row>
 
                 <Row>
+
+                    <Col>
+                    
                         <Button
                             variant     = 'outline-light'
                             type        = 'submit'
@@ -779,6 +844,26 @@ const Budget = (props) => {
                         >
                             Nuevo Gasto
                         </Button>
+
+                    </Col>
+
+                    <Col>
+
+                        {
+                            loading?
+                                <UpdatingSpinner/>:
+                                <Fragment>
+
+                                    <h4>
+                                        { `Total Egresos:   ${ totalExpense.toLocaleString('en', { style: 'currency', currency: 'USD' })}` }
+                                    </h4>
+
+                                </Fragment>
+                        }
+                        
+
+                    </Col>
+
                 </Row>
 
                 <Table 
@@ -847,6 +932,18 @@ const Budget = (props) => {
                             })}
                         </tbody>
                     </Table>
+
+                    <Row>
+                        <Col
+                            className = 'offset-md-6'
+                        >
+                        
+                            <h4>
+                                { `${budgetString}:   ${budgetDifference.toLocaleString('en', { style: 'currency', currency: 'USD' })}` }
+                            </h4>
+
+                        </Col>
+                    </Row>
 
                     <Modal 
                         show            = { showAddExpense } 
@@ -937,15 +1034,23 @@ const Budget = (props) => {
 
                         <Modal.Body>
 
-                            <h6>
-                                { `¿Deseas borrar este gasto de tu presupuesto?` }
-                            </h6>
-                            <h6>
-                                { `Concepto: ${localStorage.getItem('concept')}` }
-                            </h6>
-                            <h6>
-                                { `Monto: ${localStorage.getItem('expenseAmount')}` }
-                            </h6>
+                            {
+                                loading?
+                                    <UpdatingSpinner/>:
+                                    <Fragment>
+
+                                        <h6>
+                                            { `¿Deseas borrar este gasto de tu presupuesto?` }
+                                        </h6>
+                                        <h6>
+                                            { `Concepto: ${localStorage.getItem('concept')}` }
+                                        </h6>
+                                        <h6>
+                                            { `Monto: ${localStorage.getItem('expenseAmount')}` }
+                                        </h6>
+
+                                    </Fragment>
+                            }
 
                         </Modal.Body>
 
